@@ -1,0 +1,2158 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" style="color-scheme: light;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>115年度創業稅負決策試算｜離線網頁版</title>
+<style id="offline-utility-css">
+/* 精簡離線樣式：僅保留本頁實際使用的 utility，取代完整 Tailwind 編譯檔。 */
+:root{--slate-50:#f8fafc;--slate-100:#f1f5f9;--slate-200:#e2e8f0;--slate-300:#cbd5e1;--slate-400:#94a3b8;--slate-500:#64748b;--slate-600:#475569;--slate-700:#334155;--slate-800:#1e293b;--slate-900:#0f172a;--emerald-50:#ecfdf5;--emerald-100:#d1fae5;--emerald-600:#059669;--emerald-900:#064e3b;--sky-50:#f0f9ff;--sky-200:#bae6fd;--sky-700:#0369a1;--amber-50:#fffbeb;--amber-200:#fde68a;--amber-700:#b45309;--amber-800:#92400e;--red-50:#fef2f2;--red-200:#fecaca;--red-600:#dc2626}
+*,:before,:after{box-sizing:border-box}html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}body{margin:0}button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}table{border-collapse:collapse;text-indent:0}h1,h2,h3,h4,p{margin-top:0}::selection{background:var(--emerald-100);color:var(--emerald-900)}
+.absolute{position:absolute}.relative{position:relative}.hidden{display:none!important}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.flex-1{flex:1}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.self-center{align-self:center}.pointer-events-none{pointer-events:none}.cursor-pointer{cursor:pointer}.overflow-auto{overflow:auto}.overflow-hidden{overflow:hidden}.min-h-screen{min-height:100vh}.w-full{width:100%}.max-w-7xl{max-width:80rem}.min-w-\[110px\]{min-width:110px}.mx-auto{margin-left:auto;margin-right:auto}
+.h-10{height:2.5rem}.h-11{height:2.75rem}.h-12{height:3rem}.top-1\/2{top:50%}.right-3{right:.75rem}.-translate-y-1\/2{transform:translateY(-50%)}
+.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mb-1{margin-bottom:.25rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.pt-5{padding-top:1.25rem}.pt-14{padding-top:3.5rem}.pb-8{padding-bottom:2rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-8{padding-top:2rem;padding-bottom:2rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-8{padding-left:2rem;padding-right:2rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.pr-8{padding-right:2rem}
+.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-y-2>:not([hidden])~:not([hidden]){margin-top:.5rem}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+.rounded-md{border-radius:.375rem}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.rounded-2xl{border-radius:1rem}.border{border:1px solid}.border-2{border:2px solid}.border-b{border-bottom:1px solid}.border-t{border-top:1px solid}.border-t-2{border-top:2px solid}.border-slate-100{border-color:var(--slate-100)}.border-slate-200{border-color:var(--slate-200)}.border-slate-300{border-color:var(--slate-300)}.border-amber-200{border-color:var(--amber-200)}.border-red-200{border-color:var(--red-200)}.border-sky-200{border-color:var(--sky-200)}.divide-y>:not([hidden])~:not([hidden]){border-top:1px solid}.divide-slate-100>:not([hidden])~:not([hidden]){border-color:var(--slate-100)}
+.bg-white{background:#fff}.bg-transparent{background:transparent}.bg-slate-50{background:var(--slate-50)}.bg-slate-100{background:var(--slate-100)}.bg-slate-900{background:var(--slate-900)}.bg-amber-50{background:var(--amber-50)}.bg-gradient-to-br{background-image:linear-gradient(to bottom right,var(--tw-gradient-from),var(--tw-gradient-via),var(--tw-gradient-to))}.from-sky-50{--tw-gradient-from:#f0f9ff}.via-slate-50{--tw-gradient-via:#f8fafc}.to-emerald-50{--tw-gradient-to:#ecfdf5}
+.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.text-xs{font-size:.75rem;line-height:1rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.font-medium{font-weight:500}.font-semibold{font-weight:600}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace}.font-sans{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}.leading-5{line-height:1.25rem}.leading-6{line-height:1.5rem}.tracking-tight{letter-spacing:-.025em}.whitespace-nowrap{white-space:nowrap}
+.text-white{color:#fff}.text-slate-400{color:var(--slate-400)}.text-slate-500{color:var(--slate-500)}.text-slate-600{color:var(--slate-600)}.text-slate-700{color:var(--slate-700)}.text-slate-900{color:var(--slate-900)}.text-emerald-600{color:var(--emerald-600)}.text-sky-700{color:var(--sky-700)}.text-amber-700{color:var(--amber-700)}.text-amber-800{color:var(--amber-800)}.text-red-600{color:var(--red-600)}
+.shadow-sm{box-shadow:0 1px 2px rgba(15,23,42,.05)}.shadow{box-shadow:0 1px 3px rgba(15,23,42,.1),0 1px 2px rgba(15,23,42,.06)}.transition-colors{transition:color .15s,background-color .15s,border-color .15s}.caption-bottom{caption-side:bottom}
+.hover\:bg-slate-50:hover{background:var(--slate-50)}.hover\:bg-slate-800:hover{background:var(--slate-800)}.hover\:bg-sky-50:hover{background:var(--sky-50)}.hover\:bg-amber-50:hover{background:var(--amber-50)}.hover\:bg-red-50:hover{background:var(--red-50)}.focus\:outline-none:focus{outline:none}.focus\:border-slate-500:focus{border-color:var(--slate-500)}.focus\:ring-1:focus{box-shadow:0 0 0 1px var(--slate-400)}.focus\:ring-slate-400:focus{--ring-color:var(--slate-400)}.disabled\:cursor-not-allowed:disabled{cursor:not-allowed}.disabled\:text-slate-400:disabled{color:var(--slate-400)}
+@media(min-width:768px){.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.md\:p-8{padding:2rem}.md\:pt-20{padding-top:5rem}.md\:pb-10{padding-bottom:2.5rem}.md\:py-14{padding-top:3.5rem;padding-bottom:3.5rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}}
+@media(min-width:1024px){.lg\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}.lg\:col-span-5{grid-column:span 5/span 5}.lg\:col-span-7{grid-column:span 7/span 7}}
+
+</style>
+<style>
+        /* 畫面版：加寬內容區並提高可讀性 */
+        @media (min-width: 1024px) {
+            main section > .relative.mx-auto,
+            main section.mx-auto,
+            footer > div { max-width: 1280px !important; }
+        }
+        .result-detail { display:block; margin-top:4px; font-size:12px; line-height:1.45; color:#64748b; font-weight:400; }
+        .tax-total-detail { display:block; margin-top:5px; font-size:12px; line-height:1.45; color:#475569; font-weight:500; }
+
+        
+
+
+/* ===== 2026.09.15_v1：Chrome / Edge 跨瀏覽器列印穩定修正 ===== */
+
+
+
+
+/* ===== 2026.09.15_v1：兩頁內自然排版，超過兩頁才啟用雙欄 ===== */
+
+
+
+
+/* ===== 2026.09.15_v1：列印大片空白根本修正 ===== */
+
+
+
+
+/* ===== 2026.09.15_v1：列印標題列不再獨佔一頁 ===== */
+#print-title-inline {
+  display: none;
+}
+
+
+
+
+
+/* ===== 2026.09.15_v1：列印時完全移除整塊標題區 ===== */
+
+
+
+
+/* ===== 2026.09.15_v1：列印保留標題，但自動壓縮高度 ===== */
+
+
+
+
+/* ===== 2026.09.15_v1：統一列印規則（移除所有舊版列印衝突） ===== */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 5mm;
+  }
+
+  html,
+  body {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+    font-size: 8.2pt !important;
+    line-height: 1.08 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    flex: none !important;
+  }
+
+  main,
+  body > main,
+  main.flex-1 {
+    display: block !important;
+    flex: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .no-print,
+  button,
+  #save-status,
+  #print-footer-note,
+  footer,
+  [role="dialog"],
+  #print-title-inline {
+    display: none !important;
+  }
+
+  /* 最上方標題保留，但壓成精簡高度，絕不獨立成頁 */
+  #top-title-section {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 0 1.2mm !important;
+    padding: 1.2mm 2mm !important;
+    background: #f8fafc !important;
+    overflow: visible !important;
+    break-before: auto !important;
+    page-break-before: auto !important;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  #top-title-section > div {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #top-title-section h1 {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 12.5pt !important;
+    line-height: 1 !important;
+    font-weight: 800 !important;
+  }
+
+  #top-title-section #pageSubtitle {
+    margin: .6mm 0 0 !important;
+    padding: 0 !important;
+    font-size: 7pt !important;
+    line-height: 1.04 !important;
+  }
+
+  #top-title-section #page-notice {
+    margin: .7mm 0 0 !important;
+    padding: .65mm 1.2mm !important;
+    border: 1px solid #f59e0b !important;
+    border-radius: 2px !important;
+    font-size: 6.4pt !important;
+    line-height: 1.02 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* 主內容直接接在標題後面 */
+  main > section:nth-of-type(2) {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    break-before: avoid !important;
+    page-break-before: avoid !important;
+  }
+
+  /* 預設：基礎資料 + 試算比較表可在同一頁，維持左右配置 */
+  main > section:nth-of-type(2) > .grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr) !important;
+    gap: 3mm !important;
+    align-items: start !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #print-basic-card,
+  #print-result-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 2.2mm !important;
+    border-width: 1px !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+    break-before: auto !important;
+    page-break-before: auto !important;
+    break-after: auto !important;
+    page-break-after: auto !important;
+  }
+
+  #print-basic-card h3,
+  #print-result-card h3 {
+    margin: 0 0 1.5mm !important;
+    font-size: 10pt !important;
+    line-height: 1.05 !important;
+  }
+
+  #basic-data-print-grid {
+    gap: 2px !important;
+  }
+
+  input,
+  select {
+    height: 21px !important;
+    min-height: 21px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    font-size: 7.7pt !important;
+    border-width: 1px !important;
+  }
+
+  label {
+    font-size: 7.5pt !important;
+    line-height: 1.03 !important;
+  }
+
+  p,
+  .text-xs,
+  .text-sm,
+  .text-base,
+  .text-lg {
+    line-height: 1.05 !important;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    table-layout: fixed !important;
+    font-size: 7.4pt !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  th,
+  td {
+    padding: 1.6mm 1.3mm !important;
+    line-height: 1.06 !important;
+  }
+
+  tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .rounded-2xl,
+  .rounded-xl,
+  .rounded-lg,
+  section {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  /* 只有預估超過2頁時才啟用：
+     第一頁基礎資料雙欄；第二頁從稅額試算比較表開始 */
+  body.print-force-basic-two-columns main > section:nth-of-type(2) > .grid {
+    display: block !important;
+  }
+
+  body.print-force-basic-two-columns #print-basic-card {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 1.8mm !important;
+  }
+
+  body.print-force-basic-two-columns #basic-data-print-grid {
+    display: block !important;
+    column-count: 2 !important;
+    column-gap: 4mm !important;
+    column-fill: balance !important;
+    width: 100% !important;
+  }
+
+  /* 一般小區塊保持完整，但不再用 Grid 的「整列高度」分頁方式 */
+  body.print-force-basic-two-columns #basic-data-print-grid > *:not(#optional-deductions-section):not(.no-print) {
+    display: inline-block !important;
+    vertical-align: top !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 0 1.2mm !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* 特別扣除額內容較多時允許自然分散，不整塊推到下一頁 */
+  body.print-force-basic-two-columns #optional-deductions-section {
+    display: block !important;
+    width: 100% !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  body.print-force-basic-two-columns #optional-deductions-fields {
+    display: block !important;
+  }
+
+  body.print-force-basic-two-columns #optional-deductions-fields > * {
+    display: inline-block !important;
+    width: 100% !important;
+    margin-bottom: 1mm !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  body.print-force-basic-two-columns #print-result-card {
+    width: 100% !important;
+    margin-top: 0 !important;
+    break-before: page !important;
+    page-break-before: always !important;
+  }
+
+  /* 第二級緊湊 */
+  body.print-force-basic-two-columns.print-basic-extra-tight #print-basic-card {
+    padding: 1mm !important;
+  }
+
+  body.print-force-basic-two-columns.print-basic-extra-tight #basic-data-print-grid {
+    column-gap: 3mm !important;
+  }
+
+  body.print-force-basic-two-columns.print-basic-extra-tight #print-basic-card input,
+  body.print-force-basic-two-columns.print-basic-extra-tight #print-basic-card select {
+    height: 18px !important;
+    min-height: 18px !important;
+    font-size: 6.9pt !important;
+  }
+
+  body.print-force-basic-two-columns.print-basic-extra-tight #print-basic-card label {
+    font-size: 6.8pt !important;
+  }
+
+  body.print-force-basic-two-columns.print-basic-extra-tight #print-basic-card p,
+  body.print-force-basic-two-columns.print-basic-extra-tight #print-basic-card .text-xs,
+  body.print-force-basic-two-columns.print-basic-extra-tight #print-basic-card .text-sm {
+    font-size: 6pt !important;
+    line-height: 1 !important;
+  }
+
+  /* 左右卡片只依自己的內容高度，不互相拉成同高度 */
+  main > section:nth-of-type(2) > .grid {
+    align-items: start !important;
+  }
+
+  #print-basic-card,
+  #print-result-card {
+    align-self: start !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+}
+
+
+
+/* ===== 2026.09.15_v1：新增自定義欄位（不改原有欄位） ===== */
+.custom-fields-zone:empty{display:none!important}
+.custom-field-row{
+  display:grid;
+  grid-template-columns:minmax(120px,220px) 1fr;
+  gap:10px;
+  align-items:center;
+  padding:8px 10px;
+  margin:0 0 8px;
+  border:1px solid #dbe3ea;
+  border-radius:8px;
+  background:#fff;
+}
+.custom-field-label{font-weight:700;color:#334155}
+.custom-field-value{color:#0f172a;white-space:pre-wrap;word-break:break-word}
+#custom-fields-topmost,
+#custom-fields-fixed{padding:6px 16px 0}
+#custom-fields-topmost .custom-field-row,
+#custom-fields-fixed .custom-field-row{
+  max-width:1280px;
+  margin-left:auto;
+  margin-right:auto;
+}
+#custom-fields-fixed{background:#f8fafc}
+@media(max-width:700px){
+  .custom-field-row{grid-template-columns:1fr;gap:3px}
+}
+@media print{
+  .custom-field-row{
+    grid-template-columns:34% 66%!important;
+    gap:2mm!important;
+    padding:1mm 1.5mm!important;
+    margin-bottom:1mm!important;
+    border-radius:2px!important;
+    font-size:7pt!important;
+    line-height:1.05!important;
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
+  #custom-fields-topmost,
+  #custom-fields-fixed{
+    padding:0!important;
+    margin:0 0 1mm!important;
+  }
+}
+
+
+
+/* ===== 2026.09.15_v1：獨立自定義版面（不改預定列印方式） ===== */
+.custom-layout-block{
+  width:100%;
+  border:1px solid #dbe3ea;
+  border-radius:10px;
+  padding:12px;
+  margin:0 0 10px;
+  background:#fff;
+  overflow:hidden;
+}
+.custom-layout-label{font-weight:800;margin-bottom:4px}
+.custom-layout-value{white-space:pre-wrap;word-break:break-word;line-height:1.55}
+.custom-layout-image{display:block;max-width:100%;height:auto;object-fit:contain}
+.custom-layout-block.image-top{display:flex;flex-direction:column;gap:10px}
+.custom-layout-block.image-left,
+.custom-layout-block.image-right{display:flex;gap:12px;align-items:center}
+.custom-layout-block.image-left .custom-layout-image,
+.custom-layout-block.image-right .custom-layout-image{flex:0 0 auto}
+.custom-layout-block.image-left .custom-layout-text,
+.custom-layout-block.image-right .custom-layout-text{flex:1 1 auto;min-width:0}
+@media(max-width:700px){
+  .custom-layout-block.image-left,
+  .custom-layout-block.image-right{flex-direction:column;align-items:stretch}
+}
+
+
+
+/* ===== 跨瀏覽器 / 行動裝置螢幕顯示最佳化（僅 screen，不改列印規則） ===== */
+@media screen {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    min-width: 0;
+    overflow-x: hidden;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+
+  input, select, textarea, button {
+    max-width: 100%;
+    font: inherit;
+  }
+
+  input, select, textarea {
+    min-width: 0;
+  }
+
+  button, .btn {
+    touch-action: manipulation;
+  }
+
+  img, svg, canvas {
+    max-width: 100%;
+    height: auto;
+  }
+
+  table {
+    max-width: 100%;
+  }
+
+  .table-wrap,
+  .result-table-wrap,
+  .audit-table-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* 手機 / 小尺寸瀏覽器：只優化螢幕閱讀，不改既有列印版面與分頁 */
+@media screen and (max-width: 768px) {
+  body {
+    margin: 0;
+  }
+
+  .container,
+  .page,
+  main {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  input, select, textarea, button, .btn {
+    min-height: 44px;
+  }
+
+  .actions,
+  .button-row,
+  .toolbar {
+    flex-wrap: wrap;
+  }
+}
+
+/* Safari / iOS 可讀性補強；不干預 window.print() 與既有 print CSS */
+@supports (-webkit-touch-callout: none) {
+  @media screen {
+    input, select, textarea {
+      font-size: 16px;
+    }
+  }
+}
+
+</style>
+</head>
+<body class="flex min-h-screen flex-col bg-white font-sans text-slate-900 selection:bg-emerald-100 selection:text-emerald-900">
+<div id="custom-fields-topmost" class="custom-fields-zone"></div>
+<!-- Main Content -->
+    <main class="flex-1">
+        <section id="top-title-section" class="relative overflow-hidden bg-gradient-to-br from-sky-50 via-slate-50 to-emerald-50 pt-14 pb-8 md:pt-20 md:pb-10">
+            <div class="relative mx-auto max-w-7xl px-5">
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 md:text-4xl">115年度創業稅負決策試算</h1>
+                <p id="pageSubtitle" class="mt-3 text-lg text-slate-600">輸入您的所得與營業條件，快速比較商號與公司兩種組織型態的稅負差異。</p>
+                <div class="mt-3 flex flex-wrap gap-2 text-xs text-slate-600" aria-label="工具特色"><span class="rounded-md border border-slate-200 bg-white px-3 py-2">115年度參數</span><span class="rounded-md border border-slate-200 bg-white px-3 py-2">離線可用</span><span class="rounded-md border border-slate-200 bg-white px-3 py-2">多組儲存</span><span class="rounded-md border border-slate-200 bg-white px-3 py-2">列印比較</span></div>
+                <div id="page-notice" class="notice-important mt-4 rounded-lg px-4 py-3 text-sm leading-6">
+                    <strong>重點提醒：</strong><span id="page-notice-text">本頁為試算工具；扶養、長照、學前子女等資格仍應依實際申報條件判斷。若資格不符，試算結果可能與實際申報不同。</span>
+                </div>
+            </div>
+        </section>
+        <div id="custom-fields-fixed" class="custom-fields-zone"></div>
+
+        <section class="mx-auto max-w-7xl px-5 py-10 md:py-14">
+            <div id="print-title-inline" class="hidden">
+                <div class="print-title-main">115年度創業稅負決策試算</div>
+                <div id="print-title-subtitle" class="print-title-subtitle">輸入您的所得與營業條件，快速比較商號與公司兩種組織型態的稅負差異。</div>
+                <div id="print-title-notice" class="print-title-notice"><strong>重點提醒：</strong><span id="print-title-notice-text">本頁為試算工具；扶養、長照、學前子女等資格仍應依實際申報條件判斷。若資格不符，試算結果可能與實際申報不同。</span></div>
+            </div>
+            <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
+                
+                <!-- 輸入表單區 -->
+                <div id="print-basic-card" class="rounded-2xl border border-slate-200 bg-white p-6 md:p-8 shadow-sm lg:col-span-5">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-5" id="basic-data-title">一、輸入試算條件</h3>
+                    <div id="custom-fields-basic" class="custom-fields-zone"></div>
+                    <div class="flex flex-col gap-6" id="basic-data-print-grid">
+                        
+                        <div class="flex flex-col gap-2.5">
+                            <label class="text-lg font-semibold text-slate-700" for="marital">婚姻狀態</label>
+                            <select id="marital" class="flex h-12 w-full rounded-md border border-slate-300 bg-transparent px-3 py-2 text-base shadow-sm focus:outline-none focus:ring-1 focus:ring-slate-400">
+                                <option value="single">單身</option>
+                                <option value="married">已婚</option>
+                            </select>
+<p class="text-xs text-slate-500 mb-1">金額皆以千分位格式顯示，例如 100,000。</p>
+                        <p id="spouse-salary-hint" class="text-xs text-slate-500">單身時不計入配偶薪資所得；選擇「已婚」後即可輸入。</p>
+                        </div>
+
+                        <div class="flex flex-col gap-2.5">
+                            <label class="text-lg font-semibold text-slate-700" for="dependents">扶養人數</label>
+                            <div class="relative">
+                                <input type="number" id="dependents" min="0" value="0" class="flex h-10 w-full rounded-md border-2 border-slate-300 bg-white px-3 py-1.5 text-base shadow-sm focus:outline-none focus:border-slate-500">
+                                <span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm text-slate-500">人</span>
+                            </div>
+                            <p class="text-xs text-slate-500">基本生活費計算人數固定先含本人 1 人；已婚再自動加配偶 1 人，另加本欄扶養人數。</p>
+                        </div>
+
+                        <!-- 115 年度個人所得資料 -->
+                        <div class="border-t border-slate-100 pt-5">
+                            <h4 id="personal-income-year-title" class="text-base font-semibold text-slate-700 mb-4">個人所得資料</h4>
+                            <div class="flex flex-col gap-4">
+                                <div class="flex flex-col gap-2.5">
+                                    <label class="font-semibold text-slate-700" for="salary-self">本人薪資所得</label>
+                                    <div class="relative">
+                                        <input type="text" id="salary-self" inputmode="numeric" value="0" class="money-input flex h-10 w-full rounded-md border-2 border-slate-300 bg-white px-3 py-1.5 text-base shadow-sm focus:outline-none focus:border-slate-500 pr-8">
+                                        <span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm text-slate-500">元</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-2.5">
+                                    <label class="font-semibold text-slate-700" for="salary-spouse">配偶薪資所得</label>
+                                    <div class="relative">
+                                        <input type="text" id="salary-spouse" inputmode="numeric" value="0" disabled aria-disabled="true" class="money-input flex h-10 w-full rounded-md border-2 border-slate-300 bg-slate-100 px-3 py-1.5 text-base shadow-sm focus:outline-none focus:border-slate-500 pr-8 disabled:cursor-not-allowed disabled:text-slate-400">
+                                        <span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm text-slate-500">元</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-2.5">
+                                    <label class="font-semibold text-slate-700" for="dividend">全戶股利所得</label>
+                                    <div class="relative">
+                                        <input type="text" id="dividend" inputmode="numeric" value="0" class="money-input flex h-10 w-full rounded-md border-2 border-slate-300 bg-white px-3 py-1.5 text-base shadow-sm focus:outline-none focus:border-slate-500 pr-8">
+                                        <span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm text-slate-500">元</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p id="personal-tax-standard-note" class="mt-3 text-xs leading-5 text-slate-500"></p>
+                        </div>
+
+                        <div id="optional-deductions-section" class="hidden border-t border-slate-100 pt-5">
+                            <h4 class="text-base font-semibold text-slate-700 mb-4">已啟用免稅額／特別扣除額</h4>
+                            <div id="optional-deductions-fields" class="flex flex-col gap-4"></div>
+                            <p class="mt-3 text-xs leading-5 text-slate-500">本區只顯示後台已啟用的項目；輸入後會同步納入商號與公司兩種情境的個人綜合所得稅計算。</p>
+                        </div>
+
+                        <div class="flex flex-col gap-2.5">
+                            <label class="text-lg font-semibold text-slate-700" for="revenue">預估年度營業額</label>
+                            <div class="relative">
+                                <input inputmode="numeric" type="text" id="revenue" placeholder="例: 10000000" value="10000000" class="flex h-10 w-full rounded-md border-2 border-slate-300 bg-white px-3 py-1.5 text-base shadow-sm focus:outline-none focus:border-slate-500 pr-8 money-input">
+                                <span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm text-slate-500">元</span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-2.5">
+                            <label class="text-lg font-semibold text-slate-700" for="margin">預估書審率 (淨利率)</label>
+                            <div class="relative">
+                                <input type="number" id="margin" min="1" max="100" value="6" class="flex h-10 w-full rounded-md border-2 border-slate-300 bg-white px-3 py-1.5 text-base shadow-sm focus:outline-none focus:border-slate-500 pr-8">
+                                <span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm text-slate-500">%</span>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-slate-100 pt-5">
+                            <h4 class="text-base font-semibold text-slate-700 mb-4">商號／公司權益比例</h4>
+                            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                <div class="flex flex-col gap-2.5">
+                                    <label class="text-base font-semibold text-slate-700" for="business-type">商號組織型態</label>
+                                    <select id="business-type" class="flex h-10 w-full rounded-md border-2 border-slate-300 bg-white px-3 py-1.5 text-base shadow-sm focus:outline-none focus:border-slate-500">
+                                        <option value="sole">獨資</option>
+                                        <option value="partnership">合夥</option>
+                                    </select>
+                                </div>
+                                <div class="flex flex-col gap-2.5">
+                                    <label class="text-base font-semibold text-slate-700" for="company-ownership">本人持股／盈餘分配比例</label>
+                                    <div class="relative">
+                                        <input type="number" id="company-ownership" min="0" max="100" step="0.01" value="100" class="flex h-10 w-full rounded-md border-2 border-slate-300 bg-white px-3 py-1.5 text-base shadow-sm focus:outline-none focus:border-slate-500 pr-8">
+                                        <span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm text-slate-500">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p id="ownership-hint" class="mt-2 text-xs leading-5 text-slate-500">獨資商號固定按 100% 歸課；合夥時依合夥契約之盈餘分配比例；公司則依本人持股比例。</p>
+                        </div>
+
+                        <button id="calc-btn" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors bg-slate-900 text-white shadow hover:bg-slate-800 h-11 rounded-md px-8 w-full cursor-pointer">立即計算比較</button>
+                        <div class="mt-3 no-print space-y-2">
+                            <div class="flex flex-wrap gap-2 justify-center">
+                                <button id="save-data-btn" type="button" class="px-4 py-2 rounded-md border border-slate-300 bg-white text-slate-700 hover:bg-slate-50">💾 儲存目前資料</button>
+                                <button id="load-data-btn" type="button" class="px-4 py-2 rounded-md border border-sky-200 bg-white text-sky-700 hover:bg-sky-50">📂 開啟儲存資料</button>
+                            </div>
+                            <div class="flex flex-wrap gap-2 justify-center">
+                                <button id="reset-data-btn" type="button" class="px-4 py-2 rounded-md border border-amber-200 bg-white text-amber-700 hover:bg-amber-50">↺ 歸零</button>
+                                <button id="clear-data-btn" type="button" class="px-4 py-2 rounded-md border border-red-200 bg-white text-red-600 hover:bg-red-50">🗑️ 清除儲存資料</button>
+                            </div>
+                            <div class="flex justify-center">
+                                <button id="print-btn" type="button" class="px-5 py-2 rounded-md border border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🖨️ 列印本頁</button>
+                            </div>
+                            <div class="flex justify-center">
+                                <span id="save-status" class="text-sm text-slate-500 self-center"></span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-slate-500 text-center" id="print-footer-note">以 115 年度 (2026) 稅率、免稅額及扣除額基礎計算</p>
+                    </div>
+                </div>
+
+                <!-- 試算結果表格區 -->
+                <div id="print-result-card" class="rounded-2xl border border-slate-200 bg-white p-6 md:p-8 shadow-sm lg:col-span-7">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-5" id="tax-result-title">二、比較試算結果</h3>
+                    <div id="custom-fields-tax" class="custom-fields-zone"></div>
+                    <div class="relative w-full overflow-auto">
+                        <table class="w-full caption-bottom text-sm">
+                            <thead>
+                                <tr class="border-b transition-colors">
+                                    <th class="h-10 px-2 text-left font-medium text-slate-500">稅別項目</th>
+                                    <th class="h-10 px-2 text-right font-medium text-slate-500 min-w-[110px]">商號組織</th>
+                                    <th class="h-10 px-2 text-right font-medium text-slate-500 min-w-[110px]">公司組織</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr>
+                                    <td class="p-3 text-base text-slate-600">核定營利所得</td>
+                                    <td id="res-income-so" class="p-3 text-right font-mono">-</td>
+                                    <td id="res-income-co" class="p-3 text-right font-mono">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-base text-slate-600">營利事業所得稅</td>
+                                    <td id="res-biz-tax-so" class="p-3 text-right font-mono text-slate-500">無 (併入個人綜合所得)</td>
+                                    <td id="res-biz-tax-co" class="p-3 text-right font-mono">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-base text-slate-600">稅後盈餘 / 股利分配</td>
+                                    <td id="res-dividend-so" class="p-3 text-right font-mono">不適用</td>
+                                    <td id="res-dividend-co" class="p-3 text-right font-mono">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-base text-slate-600">個人免稅額與扣除額</td>
+                                    <td id="res-deduction-so" class="p-3 text-right font-mono">-</td>
+                                    <td id="res-deduction-co" class="p-3 text-right font-mono">-</td>
+                                </tr>
+                                <tr class="bg-amber-50">
+                                    <td class="p-3 text-base font-semibold text-slate-700">基本生活費比較</td>
+                                    <td id="res-basic-living-so" class="p-3 text-right font-mono">213,000 元</td>
+                                    <td id="res-basic-living-co" class="p-3 text-right font-mono">213,000 元</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-base text-slate-600">適用綜所稅率</td>
+                                    <td id="res-rate-so" class="p-3 text-right font-mono">0%</td>
+                                    <td id="res-rate-co" class="p-3 text-right font-mono">0%</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-base text-slate-600">個人綜合所得稅</td>
+                                    <td id="res-pit-so" class="p-3 text-right font-mono">0 元</td>
+                                    <td id="res-pit-co" class="p-3 text-right font-mono">0 元</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-base text-slate-600">股利課稅最佳方案</td>
+                                    <td id="res-dividend-method-so" class="p-3 text-right font-mono">無股利</td>
+                                    <td id="res-dividend-method-co" class="p-3 text-right font-mono">無股利</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-base text-slate-600">合併計稅／分開計稅比較</td>
+                                    <td id="res-dividend-compare-so" class="p-3 text-right font-mono">合併 0／28% 0</td>
+                                    <td id="res-dividend-compare-co" class="p-3 text-right font-mono">合併 0／28% 0</td>
+                                </tr>
+                                <tr class="border-t-2 border-slate-200">
+                                    <td class="p-3 text-lg font-bold text-slate-900">本人經濟歸屬總稅負</td>
+                                    <td id="res-total-so" class="p-3 text-right font-mono text-lg font-bold text-emerald-600">0 元</td>
+                                    <td id="res-total-co" class="p-3 text-right font-mono text-lg font-bold text-emerald-600">0 元</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-slate-700">
+                        <div class="font-semibold">基本生活費差額比較說明</div>
+                        <div class="mt-1">本列僅作比較，不納入本版綜合所得稅應納稅額計算。本版應納稅額僅減除免稅額＋標準扣除額。</div>
+                        <div class="mt-1">比較人數：本人固定 1 人＋配偶（已婚時 1 人）＋扶養人數。表格顯示基本生活費總額；基本生活費差額另依基本生活費總額與免稅額、標準扣除額等規定項目比較。</div>
+                        <div id="basic-living-year-note" class="mt-1 text-amber-800"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="mt-6 rounded-xl bg-slate-50 p-4 text-xs leading-6 text-slate-500">
+                <p id="tax-note-main"></p>
+                <p id="tax-note-deduction" class="mt-1"></p>
+                <p class="mt-1"><strong>持股／分配比例說明：</strong>獨資商號固定以 100% 計入資本主營利所得；合夥時，本欄代表合夥契約約定之盈餘分配比例；公司則代表本人持股比例。</p>
+                <p class="mt-1"><strong>公司稅負說明：</strong>公司營利事業所得稅依法仍由公司負擔；本工具另以「公司營所稅 × 本人持股比例」計算本人經濟歸屬公司稅負，僅供不同組織型態之經濟效果比較，並非股東個人法定應納稅額。</p>
+                <p id="tax-note-reserve" class="mt-1"></p>
+                <p id="tax-note-basis" class="mt-1"></p>
+                <p class="mt-1">（免責聲明）本計算表為簡易試算；基本生活費僅作比較顯示，且未涵蓋所有特別扣除額、最低稅負及個別申報特殊情形；實際申報仍應以財政部及國稅局當年度規定為準。</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 bg-white py-8">
+        <div class="mx-auto max-w-7xl px-5 text-center text-sm text-slate-400">
+            © 2026.09.15_v1
+        </div>
+    </footer>
+
+    <!-- 計算邏輯 Script -->
+    <script>
+        // ===== GitHub 參數化版本：正式參數由 tax-config.json 載入 =====
+const DEFAULT_TAX_CONFIG = {
+    pageTitle: "115年度創業稅負決策試算",
+    pageSubtitle: "輸入您的所得與營業條件，快速比較商號與公司兩種組織型態的稅負差異。",
+    pageNotice: "本頁為試算工具；扶養、長照、學前子女等資格仍應依實際申報條件判斷。若資格不符，試算結果可能與實際申報不同。",
+    showHeaderSection: true,
+    taxYear: 115,
+    siteVersion: "2026.09.15_v1",
+    basicLivingExpense: 213000,
+    exemption: 101000,
+    standardDeductionSingle: 136000,
+    standardDeductionMarried: 272000,
+    salarySpecialDeduction: 227000,
+    disabilitySpecialDeduction: 227000,
+    savingsInvestmentDeduction: 270000,
+    educationTuitionDeduction: 25000,
+    preschoolFirstChildDeduction: 150000,
+    preschoolAdditionalChildDeduction: 225000,
+    longTermCareDeduction: 180000,
+    houseRentDeduction: 180000,
+    dividendCreditRate: 0.085,
+    dividendCreditCap: 80000,
+    dividendSeparateRate: 0.28,
+    legalReserveRate: 0.10,
+    businessTaxExemptThreshold: 120000,
+    businessTaxTransitionThreshold: 200000,
+    businessTaxTransitionRate: 0.50,
+    businessTaxRate: 0.20,
+    brackets: [
+        { limit: 610000, rate: 0.05, diff: 0 },
+        { limit: 1380000, rate: 0.12, diff: 42700 },
+        { limit: 2770000, rate: 0.20, diff: 153100 },
+        { limit: 5190000, rate: 0.30, diff: 430100 },
+        { limit: null, rate: 0.40, diff: 949100 }
+    ],
+    customParameters: []
+};
+let TAX_CONFIG = structuredClone(DEFAULT_TAX_CONFIG);
+let TAX_115 = TAX_CONFIG;
+let BASIC_LIVING_EXPENSE_COMPARE = TAX_CONFIG.basicLivingExpense;
+
+function normalizeTaxConfig(raw) {
+    const cfg = {...DEFAULT_TAX_CONFIG, ...(raw || {})};
+    cfg.brackets = (raw?.brackets || DEFAULT_TAX_CONFIG.brackets).map(b => ({
+        limit: b.limit === null || b.limit === '' ? Infinity : Number(b.limit),
+        rate: Number(b.rate), diff: Number(b.diff || 0)
+    }));
+    return cfg;
+}
+
+
+function fmtMoney(v){
+    return Number(v || 0).toLocaleString('en-US');
+}
+function fmtPct(v){
+    return (Number(v || 0) * 100).toLocaleString('zh-TW', {maximumFractionDigits: 2}) + '%';
+}
+function buildBracketText(brackets){
+    const rows = (brackets || []);
+    let prev = 0;
+    return rows.map((b, i) => {
+        const rate = fmtPct(b.rate);
+        if (!Number.isFinite(b.limit)) {
+            return `${fmtMoney(prev + 1)} 元以上 ${rate}`;
+        }
+        const limit = Number(b.limit);
+        const text = i === 0
+            ? `${fmtMoney(limit)} 元以下 ${rate}`
+            : `${fmtMoney(prev + 1)}～${fmtMoney(limit)} 元 ${rate}`;
+        prev = limit;
+        return text;
+    }).join('、');
+}
+function applyDynamicTaxNotes(){
+    const topTitleSection=document.getElementById('top-title-section');
+    if(topTitleSection) topTitleSection.style.display=(TAX_CONFIG.showHeaderSection===false) ? 'none' : '';
+    const noticeText=document.getElementById('page-notice-text');
+    if(noticeText) noticeText.textContent=TAX_CONFIG.pageNotice || DEFAULT_TAX_CONFIG.pageNotice;
+    const noticeBox=document.getElementById('page-notice');
+    if(noticeBox) noticeBox.style.display=(TAX_CONFIG.pageNotice || '').trim() ? '' : 'none';
+    const y = Number(TAX_CONFIG.taxYear || 115);
+    const adYear = y + 1911;
+    const filingYear = y + 1;
+    const singleBase = Number(TAX_CONFIG.exemption || 0) + Number(TAX_CONFIG.standardDeductionSingle || 0);
+    const main = document.getElementById('tax-note-main');
+    const deduction = document.getElementById('tax-note-deduction');
+    const reserve = document.getElementById('tax-note-reserve');
+    const basis = document.getElementById('tax-note-basis');
+
+    if(main) main.innerHTML =
+        `<strong>${y} 年度計稅基準備註：</strong>本工具以 ${y} 年度（${adYear}）綜合所得稅參數試算：` +
+        `每人免稅額 ${fmtMoney(TAX_CONFIG.exemption)} 元；標準扣除額單身 ${fmtMoney(TAX_CONFIG.standardDeductionSingle)} 元、夫妻 ${fmtMoney(TAX_CONFIG.standardDeductionMarried)} 元；` +
+        `${deductionEnabled('salarySpecialDeduction')?'薪資所得特別扣除額已依後台設定啟用；':'薪資所得特別扣除額目前未啟用；'}綜所稅級距為 ${buildBracketText(TAX_CONFIG.brackets)}。` +
+        `股利所得採「合併計稅」與「分開計稅 ${fmtPct(TAX_CONFIG.dividendSeparateRate)}」二方案試算，` +
+        `合併計稅之股利可抵減稅額按 ${fmtPct(TAX_CONFIG.dividendCreditRate)}、每戶上限 ${fmtMoney(TAX_CONFIG.dividendCreditCap)} 元，系統自動選擇稅負較低方案。`;
+
+    if(deduction) deduction.innerHTML =
+        `<strong>免稅額＋標準扣除額：</strong>單身且無扶養時為 ${fmtMoney(TAX_CONFIG.exemption)}＋${fmtMoney(TAX_CONFIG.standardDeductionSingle)}＝${fmtMoney(singleBase)} 元；` +
+        `已婚或有扶養者依人數及婚姻狀態調整。其他已啟用項目會另行加計扣除。`;
+
+    if(reserve) reserve.innerHTML =
+        `<strong>法定盈餘公積假設：</strong>本工具暫以本期稅後盈餘 ${fmtPct(TAX_CONFIG.legalReserveRate)} 提列法定盈餘公積。` +
+        `若公司既有法定盈餘公積已達實收資本額，或實際盈餘分派條件不同，應依公司法及股東會決議另行調整。`;
+
+    if(basis) basis.textContent =
+        `${y} 年度本工具採用基準：每人免稅額 ${fmtMoney(TAX_CONFIG.exemption)} 元、標準扣除額單身 ${fmtMoney(TAX_CONFIG.standardDeductionSingle)} 元／夫妻 ${fmtMoney(TAX_CONFIG.standardDeductionMarried)} 元。` +
+        `本版依試算目的不計算薪資所得特別扣除額；${y} 年度資料於 ${filingYear} 年 5 月申報 ${y} 年度所得時適用。`;
+}
+
+function applyTaxConfig(raw) {
+    TAX_CONFIG = normalizeTaxConfig(raw);
+    TAX_115 = TAX_CONFIG;
+    BASIC_LIVING_EXPENSE_COMPARE = Number(TAX_CONFIG.basicLivingExpense || 0);
+    const badge = document.querySelector('header .rounded-md.bg-emerald-100');
+    if (badge) badge.textContent = TAX_CONFIG.siteVersion || '2026.09.15_v1';
+    const y = Number(TAX_CONFIG.taxYear || 115);
+    const adYear = y + 1911;
+    document.title = `${TAX_CONFIG.pageTitle || '115年度創業稅負決策試算'}｜${y}年所得最佳化`;
+    const incomeTitle=document.getElementById('personal-income-year-title');
+    if(incomeTitle) incomeTitle.textContent=`${y} 年度個人所得資料`;
+    const livingNote=document.getElementById('basic-living-year-note');
+    if(livingNote) livingNote.textContent=`${y} 年度每人基本生活費比較基準：${Number(TAX_CONFIG.basicLivingExpense||0).toLocaleString('en-US')} 元。`;
+    const note = document.querySelector('p.text-sm.text-slate-500.text-center');
+    if (note) note.textContent = `以 ${TAX_CONFIG.taxYear || 115} 年度稅率、免稅額及扣除額基礎計算`;
+    document.querySelectorAll('[id^=res-basic-living-]').forEach(el => { if (el) el.textContent = Number(TAX_CONFIG.basicLivingExpense||0).toLocaleString('en-US') + ' 元'; });
+    renderOptionalDeductionFields();
+    updatePersonalTaxStandardNote();
+    applyDynamicTaxNotes();
+}
+
+async function loadTaxConfig() {
+    try {
+        const res = await fetch('./tax-config.json?ts=' + Date.now(), {cache:'no-store'});
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        applyTaxConfig(await res.json());
+    } catch (err) {
+        console.warn('tax-config.json 載入失敗，使用內建預設參數：', err);
+        applyTaxConfig(DEFAULT_TAX_CONFIG);
+    }
+}
+
+        
+const OPTIONAL_DEDUCTION_FRONT_META = {
+  seniorExemption:{
+    label:'70歲以上受扶養直系尊親屬人數', type:'count', suffix:'人',
+    help:()=>`每人改按高齡免稅額 ${formatCurrency(TAX_CONFIG.seniorExemption)} 元計算；本欄僅填受扶養直系尊親屬。`
+  },
+  salarySpecialDeduction:{
+    label:'薪資所得特別扣除額', type:'auto', suffix:'',
+    help:()=>`依本人／配偶薪資自動計算，每人最高 ${formatCurrency(TAX_CONFIG.salarySpecialDeduction)} 元。`
+  },
+  disabilitySpecialDeduction:{
+    label:'身心障礙特別扣除資格人數', type:'count', suffix:'人',
+    help:()=>`每人 ${formatCurrency(TAX_CONFIG.disabilitySpecialDeduction)} 元；可與70歲以上、教育學費、幼兒學前及長照資格重疊。`
+  },
+  savingsInvestmentDeduction:{
+    label:'儲蓄投資特別扣除額', type:'money', suffix:'元',
+    help:()=>`請輸入實際符合資格金額；每戶最高 ${formatCurrency(TAX_CONFIG.savingsInvestmentDeduction)} 元。`
+  },
+  educationTuitionDeduction:{
+    label:'教育學費特別扣除', type:'education', suffix:'',
+    help:()=>`限申報扶養就讀大專以上院校子女；每人最高 ${formatCurrency(TAX_CONFIG.educationTuitionDeduction)} 元，不足上限者按實際學費。`
+  },
+  preschoolFirstChildDeduction:{
+    label:'幼兒學前特別扣除符合資格子女人數', type:'count', suffix:'人',
+    help:()=>`6歲以下符合資格子女總人數；第1名扣除 ${formatCurrency(TAX_CONFIG.preschoolFirstChildDeduction)} 元，第2名起每人扣除 ${formatCurrency(TAX_CONFIG.preschoolAdditionalChildDeduction)} 元。`
+  },
+  longTermCareDeduction:{
+    label:'長期照顧特別扣除資格人數', type:'count', suffix:'人',
+    help:()=>`每人 ${formatCurrency(TAX_CONFIG.longTermCareDeduction)} 元；可與身心障礙等資格重疊，但仍須另確認法定排除條件。`
+  },
+  houseRentDeduction:{
+    label:'房屋租金支出特別扣除額', type:'money', suffix:'元',
+    help:()=>`請輸入實際符合資格金額；每戶最高 ${formatCurrency(TAX_CONFIG.houseRentDeduction)} 元，仍須另確認法定適用及排除條件。`
+  }
+}
+function deductionEnabled(key){
+  if(key==='preschoolFirstChildDeduction'){
+    return !!(
+      TAX_CONFIG.deductionSettings &&
+      (
+        TAX_CONFIG.deductionSettings.preschoolFirstChildDeduction?.enabled ||
+        TAX_CONFIG.deductionSettings.preschoolAdditionalChildDeduction?.enabled
+      )
+    );
+  }
+  return !!(TAX_CONFIG.deductionSettings && TAX_CONFIG.deductionSettings[key] && TAX_CONFIG.deductionSettings[key].enabled);
+}
+function renderOptionalDeductionFields(){
+  const section=document.getElementById('optional-deductions-section');
+  const box=document.getElementById('optional-deductions-fields');
+  if(!section || !box) return;
+
+  const active=Object.entries(OPTIONAL_DEDUCTION_FRONT_META).filter(([k])=>deductionEnabled(k));
+  section.classList.toggle('hidden', active.length===0);
+  box.innerHTML='';
+
+  if(active.length){
+    const note=document.createElement('div');
+    note.className='notice-important md:col-span-2 rounded-md px-3 py-2 text-sm';
+    note.innerHTML='<strong>注意：</strong> 人數條件分兩類：① 70歲以上受扶養直系尊親屬、教育學費子女、幼兒學前子女屬不同身分／年齡群，三類合計不得超過扶養人數；② 幼兒學前只輸入符合資格子女總人數，1人按第1名扣除額，超過1人的部分才按第2名以上扣除額計算；③ 身心障礙與長照可與其他資格重疊。教育學費另以實際學費金額計算。';
+    box.appendChild(note);
+  }
+
+  function buildDeductionField(key,m){
+    const wrap=document.createElement('div');
+    wrap.className='flex flex-col gap-2.5';
+    wrap.dataset.deductionKey=key;
+    const id='deduction-'+key;
+
+    if(m.type==='auto'){
+      wrap.innerHTML=`<label class="font-semibold text-slate-700">${m.label}</label>
+        <div id="${id}" class="rounded-md border-2 border-slate-200 bg-slate-50 px-3 py-2 text-slate-700">計算時自動依薪資所得帶入</div>
+        <p class="text-xs text-slate-500">${m.help()}</p>`;
+      return wrap;
+    }
+
+    if(m.type==='education'){
+      wrap.className='education-deduction-group flex flex-col gap-3 rounded-lg border border-slate-200 bg-slate-50/60 p-4';
+      wrap.innerHTML=`
+        <div class="font-semibold text-slate-800">${m.label}</div>
+        <div class="flex flex-col gap-2">
+          <label class="font-semibold text-slate-700" for="${id}">符合資格子女人數</label>
+          <div class="relative">
+            <input id="${id}" type="number" min="0" step="1" value="0"
+              class="flex h-10 w-full rounded-md border-2 border-slate-300 bg-white px-3 py-1.5 text-base shadow-sm focus:outline-none focus:border-slate-500 pr-8">
+            <span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm text-slate-500">人</span>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label class="font-semibold text-slate-700" for="deduction-educationTuitionAmount">實際可扣除教育學費</label>
+          <div class="relative">
+            <input id="deduction-educationTuitionAmount" type="text" inputmode="numeric" value="0"
+              class="money-input flex h-10 w-full rounded-md border-2 border-slate-300 bg-white px-3 py-1.5 text-base shadow-sm focus:outline-none focus:border-slate-500 pr-8">
+            <span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm text-slate-500">元</span>
+          </div>
+        </div>
+        <p class="text-xs text-slate-500">${m.help()}</p>`;
+      return wrap;
+    }
+
+    const isMoney=m.type==='money';
+    const maxAttr=m.type==='count01'?' max="1"':'';
+    wrap.innerHTML=`<label class="font-semibold text-slate-700" for="${id}">${m.label}</label>
+      <div class="relative">
+        <input id="${id}" ${isMoney?'type="text" inputmode="numeric"':'type="number" min="0" step="1"'+maxAttr} value="0"
+          class="${isMoney?'money-input ':''}flex h-10 w-full rounded-md border-2 border-slate-300 bg-white px-3 py-1.5 text-base shadow-sm focus:outline-none focus:border-slate-500 pr-8">
+        <span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm text-slate-500">${m.suffix}</span>
+      </div>
+      <p class="text-xs text-slate-500">${m.help()}</p>`;
+    return wrap;
+  }
+
+  const activeMap=new Map(active);
+  const groupedKeys=new Set([
+    'educationTuitionDeduction',
+    'preschoolFirstChildDeduction'
+  ]);
+
+  active.forEach(([key,m])=>{
+    if(groupedKeys.has(key)) return;
+    box.appendChild(buildDeductionField(key,m));
+  });
+
+  if(activeMap.has('educationTuitionDeduction')){
+    box.appendChild(buildDeductionField('educationTuitionDeduction',activeMap.get('educationTuitionDeduction')));
+  }
+
+  if(activeMap.has('preschoolFirstChildDeduction')){
+    const group=document.createElement('div');
+    group.className='preschool-deduction-group flex flex-col gap-3 rounded-lg border border-slate-200 bg-slate-50/60 p-4';
+    group.innerHTML='<div class="font-semibold text-slate-800">幼兒學前特別扣除</div>';
+    group.appendChild(buildDeductionField('preschoolFirstChildDeduction',activeMap.get('preschoolFirstChildDeduction')));
+    box.appendChild(group);
+  }
+
+  bindMoneyInputs(box);
+  updateDependentLimitedMax();
+
+  const controlledKeys=[
+    'seniorExemption',
+    'disabilitySpecialDeduction',
+    'educationTuitionDeduction',
+    'preschoolFirstChildDeduction',
+    'longTermCareDeduction'
+  ];
+
+  controlledKeys.forEach((key)=>{
+    const el=document.getElementById('deduction-'+key);
+    if(!el || el.tagName!=='INPUT') return;
+
+    el.addEventListener('beforeinput',(ev)=>{
+      if(el.dataset.limitLocked==='1' && ev.inputType && ev.inputType.startsWith('insert')){
+        ev.preventDefault();
+      }
+    });
+    el.addEventListener('keydown',(ev)=>{
+      if(el.dataset.limitLocked==='1'){
+        const allowedKeys=['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Home','End'];
+        if(!allowedKeys.includes(ev.key)) ev.preventDefault();
+      }
+    });
+    el.addEventListener('input',()=>{
+      updateDependentLimitedMax();
+      validateDependentLimitedDeductions(false);
+      updateEducationTuitionAmountMax();
+    });
+    el.addEventListener('change',()=>{
+      updateDependentLimitedMax();
+      validateDependentLimitedDeductions(false);
+      updateEducationTuitionAmountMax();
+    });
+  });
+
+  const eduAmount=document.getElementById('deduction-educationTuitionAmount');
+  if(eduAmount){
+    eduAmount.addEventListener('input',()=>setTimeout(updateEducationTuitionAmountMax,0));
+    eduAmount.addEventListener('blur',updateEducationTuitionAmountMax);
+  }
+}
+
+function bindMoneyInputs(root=document){
+  root.querySelectorAll('.money-input').forEach(el=>{
+    if(el.dataset.moneyBound==='1') return;
+    el.dataset.moneyBound='1';
+    el.addEventListener('focus',()=>{el.value=String(parseMoney(el.value)||'');});
+    el.addEventListener('blur',()=>formatInput(el));
+    el.addEventListener('input',()=>{el.value=el.value.replace(/[^\d]/g,'');});
+    el.addEventListener('paste',()=>setTimeout(()=>{el.value=el.value.replace(/[^\d]/g,'');formatInput(el)},0));
+    formatInput(el);
+  });
+}
+function readDynamicInput(key){
+  const el=document.getElementById('deduction-'+key);
+  if(!el) return 0;
+  if(el.tagName==='INPUT'){
+    return el.classList.contains('money-input')
+      ? parseMoney(el.value)
+      : Math.max(0, Number(el.value)||0);
+  }
+  return 0;
+}
+
+const DEPENDENT_LIMITED_DEDUCTIONS = [
+  ['seniorExemption','70歲以上受扶養直系尊親屬'],
+  ['disabilitySpecialDeduction','身心障礙特別扣除'],
+  ['educationTuitionDeduction','教育學費特別扣除'],
+  ['preschoolFirstChildDeduction','幼兒學前特別扣除子女'],
+  ['longTermCareDeduction','長期照顧特別扣除']
+];
+
+function getExclusiveDependentCounts(){
+  return {
+    senior: deductionEnabled('seniorExemption') ? Math.max(0,Math.floor(Number(document.getElementById('deduction-seniorExemption')?.value)||0)) : 0,
+    education: deductionEnabled('educationTuitionDeduction') ? Math.max(0,Math.floor(Number(document.getElementById('deduction-educationTuitionDeduction')?.value)||0)) : 0,
+    preschool: deductionEnabled('preschoolFirstChildDeduction') ? Math.max(0,Math.floor(Number(document.getElementById('deduction-preschoolFirstChildDeduction')?.value)||0)) : 0
+  };
+}
+
+function updateEducationTuitionAmountMax(){
+  const count=Math.max(0,Math.floor(Number(document.getElementById('deduction-educationTuitionDeduction')?.value)||0));
+  const maxAmount=count*Math.max(0,Number(TAX_CONFIG.educationTuitionDeduction||0));
+  const el=document.getElementById('deduction-educationTuitionAmount');
+  if(!el) return;
+  const current=Math.max(0,parseMoney(el.value));
+  if(current>maxAmount) el.value=formatCurrency(maxAmount);
+  el.dataset.maxAmount=String(maxAmount);
+  el.title=count===0
+    ? '請先輸入符合資格子女人數'
+    : `依目前 ${count} 人，教育學費最高可扣除 ${formatCurrency(maxAmount)} 元；不足上限者以實際發生數為限`;
+}
+
+function updateDependentLimitedMax(){
+  const dependents=Math.max(0,parseInt(document.getElementById('dependents')?.value)||0);
+  const counts=getExclusiveDependentCounts();
+
+  const exclusiveMap={
+    seniorExemption: counts.education + counts.preschool,
+    educationTuitionDeduction: counts.senior + counts.preschool,
+    preschoolFirstChildDeduction: counts.senior + counts.education
+  };
+
+  DEPENDENT_LIMITED_DEDUCTIONS.forEach(([key])=>{
+    const el=document.getElementById('deduction-'+key);
+    if(!el || el.tagName!=='INPUT') return;
+
+    let allowed=dependents;
+    if(Object.prototype.hasOwnProperty.call(exclusiveMap,key)){
+      allowed=Math.max(0,dependents-exclusiveMap[key]);
+    }
+
+    el.max=String(allowed);
+
+    let current=Math.max(0,Math.floor(Number(el.value)||0));
+    if(current>allowed){
+      el.value=String(allowed);
+      current=allowed;
+    }
+
+    const shouldLock=current>=allowed;
+    el.dataset.limitLocked=shouldLock?'1':'0';
+
+    if(shouldLock){
+      el.classList.add('bg-slate-100','text-slate-500','cursor-not-allowed');
+      el.setAttribute('aria-disabled','true');
+      if(Object.prototype.hasOwnProperty.call(exclusiveMap,key)){
+        el.title=`此資格屬扶養身分互斥群組；目前可輸入上限為 ${allowed} 人`;
+      }else{
+        el.title=dependents===0
+          ? '目前扶養人數為 0，請先增加扶養人數'
+          : `目前可輸入上限為 ${allowed} 人`;
+      }
+    }else{
+      el.classList.remove('bg-slate-100','text-slate-500','cursor-not-allowed');
+      el.removeAttribute('aria-disabled');
+      el.title='';
+    }
+  });
+
+  updateEducationTuitionAmountMax();
+}
+
+function validateDependentLimitedDeductions(showMessage=true){
+  const dependents=Math.max(0,parseInt(document.getElementById('dependents')?.value)||0);
+
+  // 身心障礙、長照等人數型資格本身仍不得超過扶養人數。
+  for(const [key,label] of DEPENDENT_LIMITED_DEDUCTIONS){
+    if(!deductionEnabled(key)) continue;
+    const el=document.getElementById('deduction-'+key);
+    if(!el || el.tagName!=='INPUT') continue;
+    const count=Math.max(0,Math.floor(Number(el.value)||0));
+    if(count>dependents){
+      if(showMessage){
+        alert(`「${label}」人數不得超過扶養人數。\n目前扶養人數：${dependents} 人；${label}：${count} 人。`);
+        el.focus();
+      }
+      return false;
+    }
+  }
+
+  // 互斥群組：直系尊親屬／大專以上子女／6歲以下子女不會是同一扶養人。
+  const counts=getExclusiveDependentCounts();
+  const exclusiveTotal=counts.senior+counts.education+counts.preschool;
+
+  if(exclusiveTotal>dependents){
+    if(showMessage){
+      alert(`扶養資格人數設定不符：\n「70歲以上受扶養直系尊親屬＋教育學費子女＋幼兒學前子女」合計不得超過扶養人數。\n\n扶養人數：${dependents} 人\n70歲以上：${counts.senior} 人\n教育學費：${counts.education} 人\n幼兒學前：${counts.preschool} 人`);
+    }
+    return false;
+  }
+
+  // 教育學費採實際發生額，但不得超過人數 × 每人上限。
+  if(deductionEnabled('educationTuitionDeduction')){
+    const count=counts.education;
+    const maxAmount=count*Math.max(0,Number(TAX_CONFIG.educationTuitionDeduction||0));
+    const amount=Math.max(0,parseMoney(document.getElementById('deduction-educationTuitionAmount')?.value||0));
+    if(amount>maxAmount){
+      if(showMessage){
+        alert(`教育學費特別扣除額超過可扣除上限。\n目前符合資格子女：${count} 人\n最高可扣除：${formatCurrency(maxAmount)} 元`);
+        document.getElementById('deduction-educationTuitionAmount')?.focus();
+      }
+      return false;
+    }
+  }
+
+  return true;
+}
+
+// 特別扣除額依資格類型分組：扶養身分互斥群組不得超過扶養人數；身障與長照可重疊。
+function calculateOptionalDeductions(isMarried, dependents, salarySelf, salarySpouse){
+  const items=[];
+  let total=0;
+
+  if(deductionEnabled('seniorExemption')){
+    const count=Math.min(Math.max(0,Math.floor(readDynamicInput('seniorExemption'))),Math.max(0,dependents));
+    const extraPer=Math.max(0,Number(TAX_CONFIG.seniorExemption||0)-Number(TAX_CONFIG.exemption||0));
+    const amount=count*extraPer;
+    if(amount>0) items.push(['70歲以上免稅額差額',amount]);
+    total+=amount;
+  }
+
+  if(deductionEnabled('salarySpecialDeduction')){
+    const cap=Math.max(0,Number(TAX_CONFIG.salarySpecialDeduction||0));
+    const selfAmt=Math.min(Math.max(0,salarySelf),cap);
+    const spouseAmt=isMarried?Math.min(Math.max(0,salarySpouse),cap):0;
+    const amount=selfAmt+spouseAmt;
+    const auto=document.getElementById('deduction-salarySpecialDeduction');
+    if(auto) auto.textContent=`自動扣除 ${formatCurrency(amount)} 元（本人 ${formatCurrency(selfAmt)}${isMarried?'＋配偶 '+formatCurrency(spouseAmt):''}）`;
+    if(amount>0) items.push(['薪資所得特別扣除額',amount]);
+    total+=amount;
+  }
+
+  // 身心障礙、長照：定額 × 符合資格人數
+  const countRules=[
+    ['disabilitySpecialDeduction','身心障礙特別扣除額'],
+    ['longTermCareDeduction','長期照顧特別扣除額']
+  ];
+
+  countRules.forEach(([key,label])=>{
+    if(!deductionEnabled(key)) return;
+    let count=Math.max(0,Math.floor(readDynamicInput(key)));
+    count=Math.min(count,Math.max(0,dependents));
+    const amount=count*Math.max(0,Number(TAX_CONFIG[key]||0));
+    if(amount>0) items.push([label,amount]);
+    total+=amount;
+  });
+
+  // 幼兒學前：單一總人數欄位。
+  // 0人=0；1人=第1名扣除額；2人以上=第1名 + (總人數-1)×第2名以上每人扣除額。
+  if(deductionEnabled('preschoolFirstChildDeduction')){
+    const count=Math.min(
+      Math.max(0,Math.floor(readDynamicInput('preschoolFirstChildDeduction'))),
+      Math.max(0,dependents)
+    );
+    let amount=0;
+    if(count>=1){
+      amount=Math.max(0,Number(TAX_CONFIG.preschoolFirstChildDeduction||0))
+        + Math.max(0,count-1)*Math.max(0,Number(TAX_CONFIG.preschoolAdditionalChildDeduction||0));
+    }
+    if(amount>0) items.push([`幼兒學前特別扣除（${count}人）`,amount]);
+    total+=amount;
+  }
+
+  // 教育學費：每名子女有上限，但不足上限者採實際發生數。
+  if(deductionEnabled('educationTuitionDeduction')){
+    const count=Math.min(Math.max(0,Math.floor(readDynamicInput('educationTuitionDeduction'))),Math.max(0,dependents));
+    const maxAmount=count*Math.max(0,Number(TAX_CONFIG.educationTuitionDeduction||0));
+    const actual=Math.max(0,parseMoney(document.getElementById('deduction-educationTuitionAmount')?.value||0));
+    const amount=Math.min(actual,maxAmount);
+    if(amount>0) items.push(['教育學費特別扣除額',amount]);
+    total+=amount;
+  }
+
+  const cappedMoneyRules=[
+    ['savingsInvestmentDeduction','儲蓄投資特別扣除額'],
+    ['houseRentDeduction','房屋租金支出特別扣除額']
+  ];
+  cappedMoneyRules.forEach(([key,label])=>{
+    if(!deductionEnabled(key)) return;
+    const amount=Math.min(readDynamicInput(key),Math.max(0,Number(TAX_CONFIG[key]||0)));
+    if(amount>0) items.push([label,amount]);
+    total+=amount;
+  });
+
+  return {total,items};
+}
+
+function updatePersonalTaxStandardNote(){
+  const el=document.getElementById('personal-tax-standard-note');
+  if(!el) return;
+  const enabled=Object.keys(OPTIONAL_DEDUCTION_FRONT_META)
+    .filter(deductionEnabled)
+    .map(k=>OPTIONAL_DEDUCTION_FRONT_META[k].label);
+  el.textContent=`${TAX_CONFIG.taxYear} 年度標準：每人免稅額 ${formatCurrency(TAX_CONFIG.exemption)} 元；單身／夫妻標準扣除額 ${formatCurrency(TAX_CONFIG.standardDeductionSingle)}／${formatCurrency(TAX_CONFIG.standardDeductionMarried)} 元。`+
+    (enabled.length?` 已啟用：${enabled.join('、')}。`:' 目前未啟用其他特別扣除額。')+
+    ` 股利所得可比較合併計稅或分開計稅 ${fmtPct(TAX_CONFIG.dividendSeparateRate)}。`;
+}
+
+function parseMoney(value) {
+            return Number(String(value).replace(/,/g, '').replace(/[^\d.-]/g, '')) || 0;
+        }
+
+        function formatCurrency(num) {
+            return Math.round(Math.max(0, num)).toLocaleString('en-US');
+        }
+
+        function formatInput(el) {
+            const raw = parseMoney(el.value);
+            el.value = raw ? raw.toLocaleString('en-US') : '0';
+        }
+
+        // 依 115 年度級距計算一般綜合所得稅。
+        // 本版不計算薪資所得特別扣除額，薪資全額直接併入綜合所得。
+        function calculateProgressiveTax(taxableIncome) {
+            const taxable = Math.max(0, Math.floor(taxableIncome));
+            if (taxable <= 0) return 0;
+            const b = TAX_115.brackets.find(x => taxable <= x.limit);
+            return Math.max(0, taxable * b.rate - b.diff);
+        }
+
+        function getHouseholdDeductions(isMarried, dependents, salarySelf=0, salarySpouse=0) {
+            const people = 1 + (isMarried ? 1 : 0) + Math.max(0, dependents);
+            const exemption = people * TAX_115.exemption;
+            const standard = isMarried
+                ? TAX_115.standardDeductionMarried
+                : TAX_115.standardDeductionSingle;
+            const optional = calculateOptionalDeductions(isMarried, dependents, salarySelf, salarySpouse);
+            return { people, exemption, standard, optional, total: exemption + standard + optional.total };
+        }
+
+        function getRate(taxableIncome) {
+            const taxable = Math.max(0, taxableIncome);
+            if (taxable <= 0) return '0%';
+            return (TAX_115.brackets.find(x => taxable <= x.limit).rate * 100) + '%';
+        }
+
+        function getSalaryTaxableIncome(salary) {
+            // 依本版試算設定：不計算薪資所得特別扣除額，薪資全額列入所得。
+            return Math.max(0, Number(salary) || 0);
+        }
+
+        function calculateDividendOptimization(baseIncome, dividend, deductions) {
+            const base = Math.max(0, Number(baseIncome) || 0);
+            const div = Math.max(0, Number(dividend) || 0);
+            // 分開計稅時：股利不併入一般綜合所得，因此先計算股利以外所得淨額。
+            const baseTaxable = Math.max(0, base - deductions.total);
+            // 合併計稅時：免稅額、標準扣除額應對『base + 股利』整體扣除，
+            // 不可先把 base 扣到 0 後才加股利，否則在無薪資／其他所得時會漏扣扣除額。
+            const mergedTaxable = Math.max(0, base + div - deductions.total);
+
+            // 方案 A：股利合併計稅
+            // 股利併入綜合所得，股利及盈餘可抵減稅額為 8.5%，
+            // 每一申報戶每年上限 80,000 元。
+            const mergedGrossTax = calculateProgressiveTax(mergedTaxable);
+            const dividendCredit = Math.min(
+                div * TAX_115.dividendCreditRate,
+                TAX_115.dividendCreditCap
+            );
+            const mergedTax = Math.max(0, mergedGrossTax - dividendCredit);
+
+            // 方案 B：股利分開按 28% 計稅
+            // 其他所得仍照原本累進稅率計算，股利另計 28%。
+            const baseTax = calculateProgressiveTax(baseTaxable);
+            const separateDividendTax = div * TAX_115.dividendSeparateRate;
+            const separateTax = baseTax + separateDividendTax;
+
+            const mergedBetter = mergedTax <= separateTax;
+            return {
+                baseTaxable,
+                mergedTaxable,
+                mergedTax,
+                separateTax,
+                dividendCredit,
+                separateDividendTax,
+                baseTax,
+                bestTax: mergedBetter ? mergedTax : separateTax,
+                method: div <= 0 ? '無股利' : (mergedBetter ? '合併計稅' : '分開計稅 28%'),
+                saving: div <= 0 ? 0 : Math.abs(mergedTax - separateTax)
+            };
+        }
+
+        function calculatePITFromInputs(isMarried, dependents, salarySelf, salarySpouse, dividend) {
+            const deductions = getHouseholdDeductions(isMarried, dependents, salarySelf, salarySpouse);
+
+            const selfSalaryTaxable = getSalaryTaxableIncome(salarySelf);
+            const spouseSalaryTaxable = isMarried ? getSalaryTaxableIncome(salarySpouse) : 0;
+            const salaryIncome = selfSalaryTaxable + spouseSalaryTaxable;
+
+            const optimized = calculateDividendOptimization(
+                salaryIncome,
+                Math.max(0, dividend),
+                deductions
+            );
+
+            const baseTaxable = Math.max(0, salaryIncome - deductions.total);
+
+            return {
+                deductions,
+                selfSalaryTaxable,
+                spouseSalaryTaxable,
+                salaryIncome,
+                baseTaxable,
+                ...optimized
+            };
+        }
+
+        function updateSpouseSalaryState() {
+            const marital = document.getElementById('marital');
+            const spouseSalary = document.getElementById('salary-spouse');
+            const hint = document.getElementById('spouse-salary-hint');
+            if (!marital || !spouseSalary) return;
+
+            const married = marital.value === 'married';
+            spouseSalary.disabled = !married;
+
+            if (!married) {
+                // 單身時清除配偶薪資，避免殘留數值被計入。
+                spouseSalary.value = '0';
+                if (hint) hint.innerText = '單身時不計入配偶薪資所得；選擇「已婚」後即可輸入。';
+            } else {
+                if (hint) hint.innerText = '已婚：可輸入配偶薪資所得，系統會納入全戶綜所稅計算。';
+            }
+        }
+
+        function updateBusinessShareState() {
+            const type = document.getElementById('business-type');
+            const hint = document.getElementById('ownership-hint');
+            if (!type) return;
+            if (hint) {
+                hint.innerText = type.value === 'sole'
+                    ? '獨資商號固定按 100% 歸課；本欄僅作為公司持股比例。'
+                    : '合夥：本欄為合夥盈餘分配比例；公司比較時同時作為本人持股比例。';
+            }
+        }
+
+        function calculateTax() {
+            if (!validateDependentLimitedDeductions(true)) return;
+            const revenue = parseMoney(document.getElementById('revenue').value);
+            const margin = (parseFloat(document.getElementById('margin').value) || 0) / 100;
+            const businessType = document.getElementById('business-type').value;
+            const companyOwnership = Math.min(100, Math.max(0, parseFloat(document.getElementById('company-ownership').value) || 0)) / 100;
+            // 獨資商號固定 100%；合夥時直接共用「本人持股比例」作為盈餘分配比例。
+            const businessShare = businessType === 'sole' ? 1 : companyOwnership;
+            const isMarried = document.getElementById('marital').value === 'married';
+            const dependents = Math.max(0, parseInt(document.getElementById('dependents').value) || 0);
+            const salarySelf = parseMoney(document.getElementById('salary-self').value);
+            const salarySpouse = parseMoney(document.getElementById('salary-spouse').value);
+            const householdDividend = parseMoney(document.getElementById('dividend').value);
+
+            const netIncome = revenue * margin;
+
+            // 基本生活費差額僅作比較顯示，不加入課稅扣除額。
+            const basicLivingBasePerson = 1; // 納稅義務人本人固定先計 1 人
+            const householdMembers = basicLivingBasePerson + (isMarried ? 1 : 0) + dependents;
+            const basicLivingTotalCompare = BASIC_LIVING_EXPENSE_COMPARE * householdMembers;
+
+            // 商號：獨資應為 100%；合夥依合夥契約約定之盈餘分配比例計算本人應分配盈餘。
+            // 所得稅法第14條：合夥人應分配盈餘屬營利所得，按核定營利事業所得額及分配比例歸課個人綜所稅。
+            const soOwnerIncome = netIncome * businessShare;
+            const soBaseOtherIncome = soOwnerIncome;
+            const soPIT = calculatePITFromInputs(
+                isMarried, dependents,
+                salarySelf, salarySpouse,
+                householdDividend
+            );
+
+            // 行號：薪資所得 + 行號營利所得先形成股利以外的綜合所得，
+            // 再比較股利「合併計稅」與「分開計稅 28%」。
+            const soFullBase = soPIT.salaryIncome + soBaseOtherIncome;
+            // 本版依使用者指定：應納稅額僅減除免稅額＋標準扣除額；不計薪資所得特別扣除額。基本生活費差額僅另列比較，不加入應納稅額。
+            const soOpt = calculateDividendOptimization(
+                soFullBase, householdDividend, soPIT.deductions
+            );
+            const soPit = soOpt.bestTax;
+
+            // 公司：115年營所稅後盈餘先提列法定盈餘公積，再依本人持股比例計算本人可分配股利，並與家庭既有股利合併最佳化。
+            // 115 年度營利事業所得稅
+            // 課稅所得額 P：
+            // P <= 120,000：免徵
+            // 120,000 < P <= 200,000：T = (P - 120,000) × 50%
+            // P > 200,000：T = P × 20%
+            function calculateBusinessIncomeTax115(P) {
+                const taxable = Math.max(0, Math.floor(P));
+                if (taxable <= TAX_CONFIG.businessTaxExemptThreshold) return 0;
+                if (taxable <= TAX_CONFIG.businessTaxTransitionThreshold) return (taxable - TAX_CONFIG.businessTaxExemptThreshold) * TAX_CONFIG.businessTaxTransitionRate;
+                return taxable * TAX_CONFIG.businessTaxRate;
+            }
+
+            const coBizTax = calculateBusinessIncomeTax115(netIncome);
+
+            const retainedEarnings = Math.max(0, netIncome - coBizTax);
+
+            // 公司法第237條：法定盈餘公積原則上按稅後盈餘 10% 提列，
+            // 直到法定盈餘公積達實收資本額為止。
+            // 本試算未另提供「既有法定盈餘公積／實收資本額」欄位，
+            // 因此依使用者指定，以稅後盈餘的 10% 提列後，
+            // 剩餘 90% 作為本次可分配股利。
+            const legalReserve = retainedEarnings * TAX_CONFIG.legalReserveRate;
+            const distributableProfit = retainedEarnings - legalReserve;
+            // 公司稅後盈餘提列法定盈餘公積後，再依本人持股比例計算本人可分配股利。
+            const ownerDividend = distributableProfit * companyOwnership;
+            const coFullDividend = householdDividend + ownerDividend;
+            const coPIT = calculatePITFromInputs(
+                isMarried, dependents,
+                salarySelf, salarySpouse,
+                coFullDividend
+            );
+            // 本版依使用者指定：公司情境同樣僅減除免稅額＋標準扣除額。
+            const coOpt = calculateDividendOptimization(
+                coPIT.salaryIncome, coFullDividend, coPIT.deductions
+            );
+            const coPit = coOpt.bestTax;
+            // 比較「本人經濟歸屬稅負」：公司營所稅依法由公司負擔；此處僅按本人持股比例作經濟歸屬比較。
+            const allocatedCompanyTax = coBizTax * companyOwnership;
+            const customCalc = getCustomCalculationAdjustments();
+            const coTotal = Math.max(0, allocatedCompanyTax + coPit + customCalc.company);
+
+            // 顯示
+            document.getElementById('res-income-so').innerText =
+                formatCurrency(soOwnerIncome) +
+                '（核定所得 ' + formatCurrency(netIncome) +
+                ' × 分配比例 ' + (businessShare * 100).toFixed(2).replace(/\.00$/, '') + '%）';
+            document.getElementById('res-income-co').innerText = formatCurrency(netIncome);
+            document.getElementById('res-biz-tax-so').innerText = '無（併入個人綜合所得）';
+            document.getElementById('res-biz-tax-co').innerHTML =
+                formatCurrency(coBizTax) + ' 元' +
+                '<span class="result-detail">公司依法負擔之全年營所稅；另按本人持股 ' +
+                (companyOwnership * 100).toFixed(2).replace(/\.00$/, '') + '% 計算經濟歸屬 ' +
+                formatCurrency(allocatedCompanyTax) + ' 元</span>';
+            document.getElementById('res-dividend-co').innerHTML =
+                formatCurrency(coFullDividend) +
+                '<span class="result-detail">本人股利 ' + formatCurrency(ownerDividend) +
+                '（稅後盈餘 ' + formatCurrency(retainedEarnings) +
+                '－法定公積 ' + formatCurrency(legalReserve) +
+                '；可分配 ' + formatCurrency(distributableProfit) +
+                ' × 持股 ' + (companyOwnership * 100).toFixed(2).replace(/\.00$/, '') + '%）</span>';
+
+
+            const deductionDetail = soPIT.deductions.optional.items.length
+                ? '<span class="result-detail">基本免稅額＋標準扣除額 ' +
+                  formatCurrency(soPIT.deductions.exemption + soPIT.deductions.standard) +
+                  ' 元；另加 ' +
+                  soPIT.deductions.optional.items.map(x=>x[0]+' '+formatCurrency(x[1])+' 元').join('、') +
+                  '</span>'
+                : '<span class="result-detail">免稅額＋標準扣除額</span>';
+            document.getElementById('res-deduction-so').innerHTML =
+                formatCurrency(soPIT.deductions.total) + ' 元' + deductionDetail;
+            document.getElementById('res-deduction-co').innerHTML =
+                formatCurrency(coPIT.deductions.total) + ' 元' + deductionDetail;
+
+            const basicLivingCompareSO = Math.max(
+                0,
+                basicLivingTotalCompare - soPIT.deductions.exemption - soPIT.deductions.standard
+            );
+            const basicLivingCompareCO = Math.max(
+                0,
+                basicLivingTotalCompare - coPIT.deductions.exemption - coPIT.deductions.standard
+            );
+
+            document.getElementById('res-basic-living-so').innerText =
+                formatCurrency(basicLivingTotalCompare) + ' 元（' + householdMembers + '人 × ' + formatCurrency(BASIC_LIVING_EXPENSE_COMPARE) + '）';
+            document.getElementById('res-basic-living-co').innerText =
+                formatCurrency(basicLivingTotalCompare) + ' 元（' + householdMembers + '人 × ' + formatCurrency(BASIC_LIVING_EXPENSE_COMPARE) + '）';
+document.getElementById('res-rate-so').innerText =
+                householdDividend > 0
+                    ? getRate(soOpt.mergedTaxable)
+                    : getRate(soOpt.baseTaxable);
+            document.getElementById('res-rate-co').innerText =
+                coFullDividend > 0
+                    ? getRate(coOpt.mergedTaxable)
+                    : getRate(coOpt.baseTaxable);
+
+            document.getElementById('res-pit-so').innerText =
+                formatCurrency(soPit) + '（' + soOpt.method + '）';
+            document.getElementById('res-pit-co').innerText =
+                formatCurrency(coPit) + '（' + coOpt.method + '）';
+
+            const soDividendMethod = householdDividend > 0 ? soOpt.method : '無股利';
+            const coDividendMethod = coFullDividend > 0 ? coOpt.method : '無股利';
+
+            document.getElementById('res-dividend-method-so').innerText = soDividendMethod;
+            document.getElementById('res-dividend-method-co').innerText = coDividendMethod;
+
+            document.getElementById('res-dividend-compare-so').innerText =
+                householdDividend > 0
+                    ? '合併計稅 ' + formatCurrency(soOpt.mergedTax) + ' 元' +
+                      '／分開計稅 ' + formatCurrency(soOpt.separateTax) + ' 元' +
+                      '（股利28% ' + formatCurrency(soOpt.separateDividendTax) + ' 元' +
+                      (soOpt.baseTax > 0 ? '＋其他所得稅 ' + formatCurrency(soOpt.baseTax) + ' 元' : '') + '）' +
+                      '，省 ' + formatCurrency(soOpt.saving) + ' 元'
+                    : '無股利，無需比較';
+
+            document.getElementById('res-dividend-compare-co').innerText =
+                coFullDividend > 0
+                    ? '合併計稅 ' + formatCurrency(coOpt.mergedTax) + ' 元' +
+                      '／分開計稅 ' + formatCurrency(coOpt.separateTax) + ' 元' +
+                      '（股利28% ' + formatCurrency(coOpt.separateDividendTax) + ' 元' +
+                      (coOpt.baseTax > 0 ? '＋其他所得稅 ' + formatCurrency(coOpt.baseTax) + ' 元' : '') + '）' +
+                      '，省 ' + formatCurrency(coOpt.saving) + ' 元'
+                    : '無股利，無需比較';
+
+            const soTotal = Math.max(0, soPit + customCalc.sole);
+            renderCustomCalculationRows(customCalc);
+            document.getElementById('res-total-so').innerText = formatCurrency(soTotal) + ' 元';
+            document.getElementById('res-total-co').innerHTML =
+                formatCurrency(coTotal) + ' 元' +
+                '<span class="tax-total-detail">本人經濟歸屬公司稅負 ' + formatCurrency(allocatedCompanyTax) +
+                ' 元（公司營所稅 ' + formatCurrency(coBizTax) + ' × 持股 ' +
+                (companyOwnership * 100).toFixed(2).replace(/\.00$/, '') + '%）<br>' +
+                '＋本人依法負擔綜所稅 ' + formatCurrency(coPit) + ' 元</span>';
+
+            document.getElementById('res-dividend-so').innerText =
+                '商號本人營利所得 ' + formatCurrency(soOwnerIncome) +
+                '（已直接併入綜所稅，不屬公司股利）';
+
+            // 確保結果表四個新增欄位永遠有可讀值，不留下原始 placeholder。
+            ['res-rate-so','res-rate-co','res-pit-so','res-pit-co',
+             'res-dividend-method-so','res-dividend-method-co',
+             'res-dividend-compare-so','res-dividend-compare-co'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el && (el.innerText.trim() === '-' || el.innerText.trim() === '')) {
+                    el.innerText = '0';
+                }
+            });
+        }
+
+        // 千分位：金額輸入欄位即時格式化；計算時再轉回數值。
+        document.querySelectorAll('.money-input').forEach(el => {
+            el.addEventListener('focus', () => {
+                const value = parseMoney(el.value);
+                el.value = value ? String(value) : '';
+            });
+            el.addEventListener('blur', () => formatInput(el));
+            el.addEventListener('input', () => {
+                el.value = el.value.replace(/[^\d]/g, '');
+            });
+            el.addEventListener('paste', () => {
+                setTimeout(() => {
+                    el.value = el.value.replace(/[^\d]/g, '');
+                    formatInput(el);
+                }, 0);
+            });
+        });
+
+        document.getElementById('marital').addEventListener('change', () => {
+            updateSpouseSalaryState();
+        });
+
+        // ===== 多組資料儲存／清除／列印 =====
+        const STORAGE_KEY = 'tax_calculator_115_user_inputs_v3';
+        const STORAGE_LIST_KEY = 'tax_calculator_115_saved_sets_v4';
+
+        function collectUserData() {
+            const fields = {};
+            document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
+                if (el.disabled) return;
+                fields[el.id] = (el.type === 'checkbox' || el.type === 'radio') ? el.checked : el.value;
+            });
+            return fields;
+        }
+
+        function applyUserData(fields) {
+            // 舊版相容：若舊資料只有 business-share，將其帶入目前共用的持股比例欄位。
+            if (fields && fields['company-ownership'] == null && fields['business-share'] != null) {
+                fields = { ...fields, 'company-ownership': fields['business-share'] };
+            }
+            // 先套用會影響其他欄位啟用狀態的選項。
+            if (fields && fields.marital !== undefined) document.getElementById('marital').value = fields.marital;
+            if (fields && fields['business-type'] !== undefined) document.getElementById('business-type').value = fields['business-type'];
+            if (fields && fields.dependents !== undefined) document.getElementById('dependents').value = fields.dependents;
+            updateSpouseSalaryState();
+            updateBusinessShareState();
+            updateDependentLimitedMax();
+            Object.entries(fields || {}).forEach(([id, value]) => {
+                const el = document.getElementById(id);
+                if (!el || el.disabled) return;
+                if (el.type === 'checkbox' || el.type === 'radio') el.checked = Boolean(value);
+                else el.value = value ?? '';
+            });
+            document.querySelectorAll('.money-input').forEach(formatInput);
+            updateSpouseSalaryState();
+            updateBusinessShareState();
+            calculateTax();
+        }
+
+        function getSavedSets() {
+            try {
+                const arr = JSON.parse(localStorage.getItem(STORAGE_LIST_KEY) || '[]');
+                return Array.isArray(arr) ? arr : [];
+            } catch (e) { return []; }
+        }
+
+        function setSavedSets(arr) {
+            localStorage.setItem(STORAGE_LIST_KEY, JSON.stringify(arr.slice(0, 50)));
+        }
+
+        function saveUserData(showStatus = true) {
+            const defaultName = '試算資料 ' + new Date().toLocaleString('zh-TW', {
+                year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'
+            });
+            const name = prompt('請輸入這組資料的名稱：', defaultName);
+            if (name === null) return;
+            const finalName = name.trim() || defaultName;
+            const saved = getSavedSets();
+            saved.unshift({ id: String(Date.now()), name: finalName, savedAt: new Date().toISOString(), fields: collectUserData() });
+            setSavedSets(saved);
+
+            // 同時保留最後一次資料，供相容舊版使用
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({version:4, savedAt:new Date().toISOString(), fields:collectUserData()}));
+            const s=document.getElementById('save-status');
+            if(s && showStatus){s.textContent=`已儲存「${finalName}」；目前共有 ${saved.length} 組資料`;setTimeout(()=>s.textContent='',3000);}
+        }
+
+        function openSavedData() {
+            const saved = getSavedSets();
+            if (!saved.length) {
+                alert('目前沒有已儲存的多組資料。請先按「💾 儲存目前資料」。');
+                return;
+            }
+
+            // 建立可點選的資料選擇視窗，而不是只開啟最後一組
+            let overlay = document.getElementById('saved-data-modal');
+            if (overlay) overlay.remove();
+            overlay = document.createElement('div');
+            overlay.id='saved-data-modal';
+            overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+            const box=document.createElement('div');
+            box.style.cssText='background:white;border-radius:14px;max-width:680px;width:100%;max-height:80vh;overflow:auto;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.25);';
+            const title=document.createElement('h3');
+            title.textContent='📂 選擇要開啟的已儲存資料';
+            title.style.cssText='font-size:20px;font-weight:700;margin:0 0 14px;';
+            box.appendChild(title);
+
+            saved.forEach((item, index)=>{
+                const row=document.createElement('div');
+                row.style.cssText='display:flex;align-items:center;gap:10px;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;margin:8px 0;';
+                const info=document.createElement('div'); info.style.cssText='flex:1;min-width:0;';
+                const name=document.createElement('div'); name.textContent=`${index+1}. ${item.name}`; name.style.fontWeight='600';
+                const time=document.createElement('div');
+                const d=new Date(item.savedAt); time.textContent=!isNaN(d)?d.toLocaleString('zh-TW'):''; time.style.cssText='font-size:12px;color:#6b7280;margin-top:3px;';
+                info.append(name,time); row.appendChild(info);
+                const open=document.createElement('button'); open.textContent='開啟'; open.type='button';
+                open.style.cssText='padding:7px 14px;border-radius:8px;border:1px solid #bae6fd;background:#f0f9ff;color:#0369a1;font-weight:600;cursor:pointer;';
+                open.onclick=()=>{applyUserData(item.fields); overlay.remove(); const s=document.getElementById('save-status'); if(s){s.textContent=`已開啟「${item.name}」`;setTimeout(()=>s.textContent='',2500);}};
+                row.appendChild(open);
+                const del=document.createElement('button'); del.textContent='刪除'; del.type='button';
+                del.style.cssText='padding:7px 12px;border-radius:8px;border:1px solid #fecaca;background:#fff1f2;color:#dc2626;cursor:pointer;';
+                del.onclick=()=>{if(confirm(`確定刪除「${item.name}」嗎？`)){const now=getSavedSets();now.splice(index,1);setSavedSets(now);openSavedData();}};
+                row.appendChild(del);
+                box.appendChild(row);
+            });
+
+            const footer=document.createElement('div'); footer.style.cssText='display:flex;justify-content:flex-end;margin-top:16px;';
+            const close=document.createElement('button'); close.textContent='關閉'; close.type='button';
+            close.style.cssText='padding:8px 18px;border-radius:8px;border:1px solid #d1d5db;background:white;cursor:pointer;';
+            close.onclick=()=>overlay.remove(); footer.appendChild(close); box.appendChild(footer);
+            overlay.appendChild(box); document.body.appendChild(overlay);
+        }
+
+
+        function resetResults() {
+            const defaults = {
+                'res-income-so':'-', 'res-income-co':'-',
+                'res-biz-tax-so':'無（併入個人綜合所得）', 'res-biz-tax-co':'-',
+                'res-dividend-so':'-', 'res-dividend-co':'-',
+                'res-deduction-so':'-', 'res-deduction-co':'-',
+                'res-rate-so':'0%', 'res-rate-co':'0%',
+                'res-pit-so':'0 元', 'res-pit-co':'0 元',
+                'res-dividend-method-so':'無股利', 'res-dividend-method-co':'無股利',
+                'res-dividend-compare-so':'尚未計算', 'res-dividend-compare-co':'尚未計算',
+                'res-total-so':'0 元', 'res-total-co':'0 元'
+            };
+            Object.entries(defaults).forEach(([id, value]) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
+            });
+        }
+
+        function resetCurrentData() {
+            ['salary-self','salary-spouse','dividend','revenue'].forEach(id=>{
+                const el=document.getElementById(id);
+                if(el) el.value='0';
+            });
+            document.querySelectorAll('#optional-deductions-fields input').forEach(el=>{
+                if(el.type==='checkbox' || el.type==='radio') el.checked=false;
+                else el.value='0';
+            });
+
+            const dep=document.getElementById('dependents'); if(dep) dep.value='0';
+            const margin=document.getElementById('margin'); if(margin) margin.value='0';
+            const marital=document.getElementById('marital'); if(marital) marital.value='single';
+            const businessType=document.getElementById('business-type'); if(businessType) businessType.value='sole';
+            const companyOwnership=document.getElementById('company-ownership'); if(companyOwnership) companyOwnership.value='100';
+
+            updateSpouseSalaryState();
+            updateBusinessShareState();
+            document.querySelectorAll('.money-input').forEach(formatInput);
+            resetResults();
+
+            const s=document.getElementById('save-status');
+            if(s){
+                s.textContent='目前輸入數字已歸零（已儲存資料不受影響）';
+                setTimeout(()=>s.textContent='',2500);
+            }
+        }
+
+        function clearUserData() {
+            if (!confirm('確定要刪除全部已儲存資料嗎？\n目前畫面的輸入數字及試算結果會保留。')) return;
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem(STORAGE_LIST_KEY);
+            const status=document.getElementById('save-status');
+            if(status){
+                status.textContent='已清除全部儲存資料（目前畫面資料保留）';
+                setTimeout(()=>status.textContent='',3000);
+            }
+        }
+
+        document.getElementById('save-data-btn').addEventListener('click', () => saveUserData(true));
+        document.getElementById('load-data-btn').addEventListener('click', openSavedData);
+        document.getElementById('reset-data-btn').addEventListener('click', resetCurrentData);
+        document.getElementById('clear-data-btn').addEventListener('click', clearUserData);
+        document.getElementById('dependents').addEventListener('input', updateDependentLimitedMax);
+        document.getElementById('dependents').addEventListener('change', updateDependentLimitedMax);
+        document.getElementById('print-btn').addEventListener('click', () => window.adaptiveSmartPrint?.());
+
+        // 注意：輸入資料不再自動覆蓋多組儲存；只有按「儲存目前資料」才建立新的一組。
+
+        document.getElementById('calc-btn').addEventListener('click', () => {
+            calculateTax();
+            const s = document.getElementById('save-status');
+            if (s) { s.textContent = '已完成計算'; setTimeout(() => s.textContent = '', 1800); }
+        });
+        document.getElementById('business-type').addEventListener('change', () => { updateBusinessShareState(); });
+                
+
+function renderCustomFields(){
+  const zones={
+    topmost:document.getElementById('custom-fields-topmost'),
+    fixed:document.getElementById('custom-fields-fixed'),
+    basic:document.getElementById('custom-fields-basic'),
+    tax:document.getElementById('custom-fields-tax')
+  };
+
+  Object.values(zones).forEach(zone=>{
+    if(zone) zone.innerHTML='';
+  });
+
+  const items=Array.isArray(TAX_CONFIG.customFields) ? TAX_CONFIG.customFields : [];
+
+  items
+    .filter(item=>item && item.enabled!==false && zones[item.area])
+    .forEach(item=>{
+      const block=document.createElement('div');
+      block.className='custom-layout-block';
+
+      block.style.backgroundColor=item.backgroundColor || '#ffffff';
+      block.style.color=item.textColor || '#0f172a';
+      block.style.textAlign=item.textAlign || 'left';
+
+      if(item.borderColor) block.style.borderColor=item.borderColor;
+      if(item.borderRadius!==undefined && item.borderRadius!==''){
+        block.style.borderRadius=`${Math.max(0,Number(item.borderRadius)||0)}px`;
+      }
+      if(item.padding!==undefined && item.padding!==''){
+        block.style.padding=`${Math.max(0,Number(item.padding)||0)}px`;
+      }
+
+      const textWrap=document.createElement('div');
+      textWrap.className='custom-layout-text';
+
+      if((item.label||'').trim()){
+        const label=document.createElement('div');
+        label.className='custom-layout-label';
+        label.textContent=item.label;
+        textWrap.appendChild(label);
+      }
+
+      if((item.value||'').trim()){
+        const value=document.createElement('div');
+        value.className='custom-layout-value';
+        value.textContent=item.value;
+        textWrap.appendChild(value);
+      }
+
+      const imageUrl=(item.imageUrl||'').trim();
+      const imagePosition=item.imagePosition || 'none';
+
+      function makeImage(){
+        if(!imageUrl) return null;
+        const img=document.createElement('img');
+        img.src=imageUrl;
+        img.alt=item.imageAlt || item.label || '自定義圖片';
+        img.className='custom-layout-image';
+        const w=String(item.imageWidth||'').trim();
+        if(w) img.style.width=/[%a-z]+$/i.test(w) ? w : `${w}px`;
+        return img;
+      }
+
+      const img=makeImage();
+
+      const bgImage=(item.backgroundImageUrl||'').trim();
+      if(bgImage){
+        block.style.backgroundImage=`url("${bgImage.replace(/"/g,'%22')}")`;
+        block.style.backgroundSize=item.backgroundSize || 'cover';
+        block.style.backgroundPosition=item.backgroundPosition || 'center';
+        block.style.backgroundRepeat='no-repeat';
+      }
+
+      if(img && imagePosition==='background'){
+        block.style.backgroundImage=`url("${imageUrl.replace(/"/g,'%22')}")`;
+        block.style.backgroundSize=item.backgroundSize || 'cover';
+        block.style.backgroundPosition=item.backgroundPosition || 'center';
+        block.style.backgroundRepeat='no-repeat';
+        block.appendChild(textWrap);
+      }else if(img && imagePosition==='top'){
+        block.classList.add('image-top');
+        block.append(img,textWrap);
+      }else if(img && imagePosition==='left'){
+        block.classList.add('image-left');
+        block.append(img,textWrap);
+      }else if(img && imagePosition==='right'){
+        block.classList.add('image-right');
+        block.append(textWrap,img);
+      }else{
+        block.appendChild(textWrap);
+      }
+
+      zones[item.area].appendChild(block);
+    });
+}
+
+/*
+  自定義版面「預設不參與計算」。
+  只有後台明確勾選 includeInCalculation=true 的項目才產生調整額。
+*/
+/*
+  新增計算欄位：與「版面設計」完全分開。
+  只有 customCalculationFields 會影響總稅負；
+  customFields 永遠只負責畫面版面。
+*/
+function getCustomCalculationAdjustments(){
+  const result={sole:0,company:0,rows:[]};
+  const items=Array.isArray(TAX_CONFIG.customCalculationFields)
+    ? TAX_CONFIG.customCalculationFields
+    : [];
+
+  items.forEach(item=>{
+    if(!item || item.enabled===false) return;
+
+    const amount=Math.max(0,Number(item.amount)||0);
+    const signed=(item.operation==='subtract' ? -1 : 1)*amount;
+    const target=item.target || 'both';
+
+    if(target==='sole' || target==='both') result.sole+=signed;
+    if(target==='company' || target==='both') result.company+=signed;
+
+    result.rows.push({
+      label:item.label || '新增計算欄位',
+      amount,
+      signed,
+      target
+    });
+  });
+
+  return result;
+}
+
+function renderCustomCalculationRows(calc){
+  document.querySelectorAll('.custom-calc-row').forEach(el=>el.remove());
+
+  const totalCell=document.getElementById('res-total-so');
+  const totalRow=totalCell ? totalCell.closest('tr') : null;
+  const tbody=totalRow ? totalRow.parentElement : null;
+  if(!tbody || !calc || !calc.rows?.length) return;
+
+  calc.rows.forEach(row=>{
+    const tr=document.createElement('tr');
+    tr.className='custom-calc-row';
+
+    const c1=document.createElement('td');
+    c1.className='p-3 text-base text-slate-600';
+    c1.textContent=row.label;
+
+    const c2=document.createElement('td');
+    c2.className='p-3 text-right font-mono';
+
+    const c3=document.createElement('td');
+    c3.className='p-3 text-right font-mono';
+
+    const txt=(row.signed<0?'－':'＋')+formatCurrency(row.amount)+' 元';
+    c2.textContent=(row.target==='sole'||row.target==='both') ? txt : '不適用';
+    c3.textContent=(row.target==='company'||row.target==='both') ? txt : '不適用';
+
+    tr.append(c1,c2,c3);
+    tbody.insertBefore(tr,totalRow);
+  });
+}
+
+function applyPageText(){
+  const t=document.getElementById('pageTitle');
+  const s=document.getElementById('pageSubtitle');
+  const pt=document.querySelector('#print-title-inline .print-title-main');
+  const ps=document.getElementById('print-title-subtitle');
+  const pn=document.getElementById('print-title-notice-text');
+  const pnBox=document.getElementById('print-title-notice');
+
+  const title=TAX_CONFIG.pageTitle || "115年度創業稅負決策試算";
+  const subtitle=TAX_CONFIG.pageSubtitle || "輸入您的所得與營業條件，快速比較商號與公司兩種組織型態的稅負差異。";
+  const notice=TAX_CONFIG.pageNotice || "";
+
+  if(t) t.textContent=title;
+  if(s) s.textContent=subtitle;
+  if(pt) pt.textContent=title;
+  if(ps) ps.textContent=subtitle;
+  if(pn) pn.textContent=notice;
+  if(pnBox) pnBox.style.display=notice ? '' : 'none';
+}
+
+window.onload = async () => {
+            await loadTaxConfig();
+    applyPageText();
+    renderCustomFields();
+            document.querySelectorAll('.money-input').forEach(formatInput);
+            updateSpouseSalaryState();
+            updateBusinessShareState();
+        };
+    </script>
+
+
+
+
+
+<script>
+(function(){
+  function getPrintSections(){
+    return {
+      basic: document.getElementById('print-basic-card'),
+      result: document.getElementById('print-result-card'),
+      title: document.getElementById('top-title-section')
+    };
+  }
+
+  function shouldUseCompactTwoPageMode(){
+    const optionalSection=document.getElementById('optional-deductions-section');
+    if(!optionalSection || optionalSection.classList.contains('hidden') || optionalSection.hidden){
+      return false;
+    }
+
+    const visibleOptionalControls=Array.from(
+      optionalSection.querySelectorAll('input,select')
+    ).filter(el=>{
+      const holder=el.closest('[hidden],.hidden');
+      return !holder;
+    }).length;
+
+    /*
+      基本資料本身在 A4 橫式左右版面可維持 1～2 頁。
+      額外扣除欄位大量啟用時才切入：
+      「基礎資料內部雙欄＋稅額試算比較表下一頁」。
+      此判斷不依瀏覽器的螢幕 scrollHeight，因此 Chrome / Edge 較一致。
+    */
+    return visibleOptionalControls >= 5;
+  }
+
+  function applyExtraTightIfNeeded(){
+    const basic=document.getElementById('print-basic-card');
+    if(!basic) return;
+
+    document.body.classList.remove('print-basic-extra-tight');
+
+    requestAnimationFrame(()=>{
+      // 雙欄後若基礎資料仍非常高，再進一步縮距
+      if((basic.scrollHeight || 0) > 1180){
+        document.body.classList.add('print-basic-extra-tight');
+      }
+    });
+  }
+
+  window.adaptiveSmartPrint=function(){
+    document.body.classList.remove(
+      'print-force-basic-two-columns',
+      'print-basic-extra-tight',
+      'print-fit-one-page',
+      'print-two-pages'
+    );
+
+    // 只有內容量明顯會把整份列印推到2頁以上時才切換雙欄模式。
+    if(shouldUseCompactTwoPageMode()){
+      document.body.classList.add('print-force-basic-two-columns');
+      applyExtraTightIfNeeded();
+    }
+
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        window.print();
+      });
+    });
+  };
+
+  window.addEventListener('afterprint',()=>{
+    document.body.classList.remove(
+      'print-force-basic-two-columns',
+      'print-basic-extra-tight',
+      'print-fit-one-page',
+      'print-two-pages'
+    );
+  });
+})();
+</script>
+
+<!-- Optimized build: 2026.09.15_v1；保留既有計算與 localStorage 相容性。 -->
+</body>
+</html>
+
+>

@@ -1,0 +1,315 @@
+{
+  "113": {
+    "schemaVersion": 1,
+    "savingsInvestmentDeduction": 270000,
+    "educationTuitionDeduction": 25000,
+    "preschoolFirstChildDeduction": 150000,
+    "preschoolAdditionalChildDeduction": 225000,
+    "houseRentDeduction": 180000,
+    "dividendCreditRate": 0.085,
+    "dividendCreditCap": 80000,
+    "dividendSeparateRate": 0.28,
+    "legalReserveRate": 0.1,
+    "businessTaxExemptThreshold": 120000,
+    "businessTaxTransitionThreshold": 200000,
+    "businessTaxTransitionRate": 0.5,
+    "businessTaxRate": 0.2,
+    "taxYear": 113,
+    "lastUpdated": "2024-11-28",
+    "sourceLabel": "財政部：公告113年度每人基本生活所需之費用金額",
+    "basicLivingExpense": 210000,
+    "exemption": 97000,
+    "seniorExemption": 145500,
+    "standardDeductionSingle": 131000,
+    "standardDeductionMarried": 262000,
+    "salarySpecialDeduction": 218000,
+    "disabilitySpecialDeduction": 218000,
+    "longTermCareDeduction": 120000,
+    "brackets": [
+      {
+        "limit": 590000,
+        "rate": 0.05,
+        "diff": 0
+      },
+      {
+        "limit": 1330000,
+        "rate": 0.12,
+        "diff": 41300
+      },
+      {
+        "limit": 2660000,
+        "rate": 0.2,
+        "diff": 147700
+      },
+      {
+        "limit": 4980000,
+        "rate": 0.3,
+        "diff": 413700
+      },
+      {
+        "limit": null,
+        "rate": 0.4,
+        "diff": 911700
+      }
+    ],
+    "pageTitle": "創業，我該設立商號還是公司呢?",
+    "pageSubtitle": "初創業，對於稅務的計算完全一無所知，來試算一下~商號還是公司的稅額吧!!",
+    "sourceUrl": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=0bfb4c93c338453b8d00a415d61e2bf2",
+    "deductionSettings": {
+      "basicLivingExpense": {
+        "mode": "compareOnly",
+        "locked": true
+      },
+      "exemption": {
+        "mode": "core",
+        "locked": true
+      },
+      "standardDeductionSingle": {
+        "mode": "core",
+        "locked": true
+      },
+      "standardDeductionMarried": {
+        "mode": "core",
+        "locked": true
+      },
+      "seniorExemption": {
+        "enabled": false
+      },
+      "salarySpecialDeduction": {
+        "enabled": false
+      },
+      "disabilitySpecialDeduction": {
+        "enabled": false
+      },
+      "savingsInvestmentDeduction": {
+        "enabled": false
+      },
+      "educationTuitionDeduction": {
+        "enabled": false
+      },
+      "preschoolFirstChildDeduction": {
+        "enabled": false
+      },
+      "preschoolAdditionalChildDeduction": {
+        "enabled": false
+      },
+      "longTermCareDeduction": {
+        "enabled": false
+      },
+      "houseRentDeduction": {
+        "enabled": false
+      }
+    },
+    "customFields": [],
+    "customCalculationFields": []
+  },
+  "114": {
+    "schemaVersion": 1,
+    "savingsInvestmentDeduction": 270000,
+    "educationTuitionDeduction": 25000,
+    "preschoolFirstChildDeduction": 150000,
+    "preschoolAdditionalChildDeduction": 225000,
+    "houseRentDeduction": 180000,
+    "dividendCreditRate": 0.085,
+    "dividendCreditCap": 80000,
+    "dividendSeparateRate": 0.28,
+    "legalReserveRate": 0.1,
+    "businessTaxExemptThreshold": 120000,
+    "businessTaxTransitionThreshold": 200000,
+    "businessTaxTransitionRate": 0.5,
+    "businessTaxRate": 0.2,
+    "taxYear": 114,
+    "lastUpdated": "2025-11-27",
+    "sourceLabel": "財政部：114年度綜合所得稅報稅省荷包利民措施",
+    "basicLivingExpense": 213000,
+    "exemption": 97000,
+    "seniorExemption": 145500,
+    "standardDeductionSingle": 131000,
+    "standardDeductionMarried": 262000,
+    "salarySpecialDeduction": 218000,
+    "disabilitySpecialDeduction": 218000,
+    "longTermCareDeduction": 180000,
+    "brackets": [
+      {
+        "limit": 590000,
+        "rate": 0.05,
+        "diff": 0
+      },
+      {
+        "limit": 1330000,
+        "rate": 0.12,
+        "diff": 41300
+      },
+      {
+        "limit": 2660000,
+        "rate": 0.2,
+        "diff": 147700
+      },
+      {
+        "limit": 4980000,
+        "rate": 0.3,
+        "diff": 413700
+      },
+      {
+        "limit": null,
+        "rate": 0.4,
+        "diff": 911700
+      }
+    ],
+    "pageTitle": "創業，我該設立商號還是公司呢?",
+    "pageSubtitle": "初創業，對於稅務的計算完全一無所知，來試算一下~商號還是公司的稅額吧!!",
+    "sourceUrl": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=550775ba71cf40de8ce75016aff40828",
+    "deductionSettings": {
+      "basicLivingExpense": {
+        "mode": "compareOnly",
+        "locked": true
+      },
+      "exemption": {
+        "mode": "core",
+        "locked": true
+      },
+      "standardDeductionSingle": {
+        "mode": "core",
+        "locked": true
+      },
+      "standardDeductionMarried": {
+        "mode": "core",
+        "locked": true
+      },
+      "seniorExemption": {
+        "enabled": false
+      },
+      "salarySpecialDeduction": {
+        "enabled": false
+      },
+      "disabilitySpecialDeduction": {
+        "enabled": false
+      },
+      "savingsInvestmentDeduction": {
+        "enabled": false
+      },
+      "educationTuitionDeduction": {
+        "enabled": false
+      },
+      "preschoolFirstChildDeduction": {
+        "enabled": false
+      },
+      "preschoolAdditionalChildDeduction": {
+        "enabled": false
+      },
+      "longTermCareDeduction": {
+        "enabled": false
+      },
+      "houseRentDeduction": {
+        "enabled": false
+      }
+    },
+    "customFields": [],
+    "customCalculationFields": []
+  },
+  "115": {
+    "schemaVersion": 1,
+    "savingsInvestmentDeduction": 270000,
+    "educationTuitionDeduction": 25000,
+    "preschoolFirstChildDeduction": 150000,
+    "preschoolAdditionalChildDeduction": 225000,
+    "houseRentDeduction": 180000,
+    "dividendCreditRate": 0.085,
+    "dividendCreditCap": 80000,
+    "dividendSeparateRate": 0.28,
+    "legalReserveRate": 0.1,
+    "businessTaxExemptThreshold": 120000,
+    "businessTaxTransitionThreshold": 200000,
+    "businessTaxTransitionRate": 0.5,
+    "businessTaxRate": 0.2,
+    "taxYear": 115,
+    "lastUpdated": "2026-09-05",
+    "sourceLabel": "財政部：財政部持續推動綜合所得稅減稅惠民措施，有感減輕民眾負擔",
+    "basicLivingExpense": 213000,
+    "exemption": 101000,
+    "seniorExemption": 151500,
+    "standardDeductionSingle": 136000,
+    "standardDeductionMarried": 272000,
+    "salarySpecialDeduction": 227000,
+    "disabilitySpecialDeduction": 227000,
+    "longTermCareDeduction": 180000,
+    "brackets": [
+      {
+        "limit": 610000,
+        "rate": 0.05,
+        "diff": 0
+      },
+      {
+        "limit": 1380000,
+        "rate": 0.12,
+        "diff": 42700
+      },
+      {
+        "limit": 2770000,
+        "rate": 0.2,
+        "diff": 153100
+      },
+      {
+        "limit": 5190000,
+        "rate": 0.3,
+        "diff": 430100
+      },
+      {
+        "limit": null,
+        "rate": 0.4,
+        "diff": 949100
+      }
+    ],
+    "pageTitle": "創業，我該設立商號還是公司呢?",
+    "pageSubtitle": "初創業，對於稅務的計算完全一無所知，來試算一下~商號還是公司的稅額吧!!",
+    "sourceUrl": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=1374a3142db545578c5d7dde82e2c1e6",
+    "deductionSettings": {
+      "basicLivingExpense": {
+        "mode": "compareOnly",
+        "locked": true
+      },
+      "exemption": {
+        "mode": "core",
+        "locked": true
+      },
+      "standardDeductionSingle": {
+        "mode": "core",
+        "locked": true
+      },
+      "standardDeductionMarried": {
+        "mode": "core",
+        "locked": true
+      },
+      "seniorExemption": {
+        "enabled": false
+      },
+      "salarySpecialDeduction": {
+        "enabled": false
+      },
+      "disabilitySpecialDeduction": {
+        "enabled": false
+      },
+      "savingsInvestmentDeduction": {
+        "enabled": false
+      },
+      "educationTuitionDeduction": {
+        "enabled": false
+      },
+      "preschoolFirstChildDeduction": {
+        "enabled": false
+      },
+      "preschoolAdditionalChildDeduction": {
+        "enabled": false
+      },
+      "longTermCareDeduction": {
+        "enabled": false
+      },
+      "houseRentDeduction": {
+        "enabled": false
+      }
+    },
+    "customFields": [],
+    "customCalculationFields": [],
+    "sourcePublishDate": "2026-02-03"
+  }
+}
