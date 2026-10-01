@@ -1,0 +1,243 @@
+/* 2026-09-22 v2｜輸入收集、情境比較與結果呈現 */
+'use strict';
+
+function updateSpouseSalaryState() {
+    const marital = document.getElementById('marital');
+    const spouseSalary = document.getElementById('salary-spouse');
+    const hint = document.getElementById('spouse-salary-hint');
+    if (!marital || !spouseSalary) return;
+
+    const married = marital.value === 'married';
+    spouseSalary.disabled = !married;
+
+    if (!married) {
+        spouseSalary.value = '0';
+        if (hint) hint.innerText = '單身時不計入配偶薪資所得；選擇「已婚」後即可輸入。';
+    } else if (hint) {
+        hint.innerText = '已婚：可輸入配偶薪資所得，系統會納入全戶綜所稅計算。';
+    }
+}
+
+function updateBusinessShareState() {
+    const type = document.getElementById('business-type');
+    const hint = document.getElementById('ownership-hint');
+    if (!type) return;
+    if (hint) {
+        hint.innerText = type.value === 'sole'
+            ? '獨資商號固定按 100% 歸課；本欄僅作為公司持股比例。'
+            : '合夥：本欄為合夥盈餘分配比例；公司比較時同時作為本人持股比例。';
+    }
+}
+
+function collectCalculationInputs() {
+    const companyOwnership = Math.min(100, Math.max(0,
+        parseFloat(document.getElementById('company-ownership')?.value) || 0
+    )) / 100;
+    const businessType = document.getElementById('business-type')?.value || 'sole';
+
+    return {
+        revenue: parseMoney(document.getElementById('revenue')?.value || 0),
+        margin: (parseFloat(document.getElementById('margin')?.value) || 0) / 100,
+        businessType,
+        companyOwnership,
+        businessShare: businessType === 'sole' ? 1 : companyOwnership,
+        isMarried: document.getElementById('marital')?.value === 'married',
+        dependents: Math.max(0, parseInt(document.getElementById('dependents')?.value) || 0),
+        salarySelf: parseMoney(document.getElementById('salary-self')?.value || 0),
+        salarySpouse: parseMoney(document.getElementById('salary-spouse')?.value || 0),
+        householdDividend: parseMoney(document.getElementById('dividend')?.value || 0)
+    };
+}
+
+function buildTaxComparison(input) {
+    const netIncome = input.revenue * input.margin;
+    const householdMembers = 1 + (input.isMarried ? 1 : 0) + input.dependents;
+    const basicLivingTotalCompare = BASIC_LIVING_EXPENSE_COMPARE * householdMembers;
+
+    // 商號情境
+    const soOwnerIncome = netIncome * input.businessShare;
+    const soPIT = calculatePITFromInputs(
+        input.isMarried, input.dependents,
+        input.salarySelf, input.salarySpouse,
+        input.householdDividend
+    );
+    const soFullBase = soPIT.salaryIncome + soOwnerIncome;
+    const soOpt = calculateDividendOptimization(
+        soFullBase, input.householdDividend, soPIT.deductions
+    );
+    const soPit = soOpt.bestTax;
+
+    // 公司情境
+    const coBizTax = calculateBusinessIncomeTax(netIncome);
+    const retainedEarnings = Math.max(0, netIncome - coBizTax);
+    const legalReserve = retainedEarnings * TAX_CONFIG.legalReserveRate;
+    const distributableProfit = retainedEarnings - legalReserve;
+    const ownerDividend = distributableProfit * input.companyOwnership;
+    const coFullDividend = input.householdDividend + ownerDividend;
+    const coPIT = calculatePITFromInputs(
+        input.isMarried, input.dependents,
+        input.salarySelf, input.salarySpouse,
+        coFullDividend
+    );
+    const coOpt = calculateDividendOptimization(
+        coPIT.salaryIncome, coFullDividend, coPIT.deductions
+    );
+    const coPit = coOpt.bestTax;
+    const allocatedCompanyTax = coBizTax * input.companyOwnership;
+
+    const customCalc = getCustomCalculationAdjustments();
+    const soTotal = Math.max(0, soPit + customCalc.sole);
+    const coTotal = Math.max(0, allocatedCompanyTax + coPit + customCalc.company);
+
+    return {
+        input,
+        netIncome,
+        householdMembers,
+        basicLivingTotalCompare,
+        so: {
+            ownerIncome: soOwnerIncome,
+            pitContext: soPIT,
+            optimization: soOpt,
+            pit: soPit,
+            total: soTotal,
+            dividendMethod: input.householdDividend > 0 ? soOpt.method : '無股利'
+        },
+        co: {
+            businessTax: coBizTax,
+            retainedEarnings,
+            legalReserve,
+            distributableProfit,
+            ownerDividend,
+            fullDividend: coFullDividend,
+            pitContext: coPIT,
+            optimization: coOpt,
+            pit: coPit,
+            allocatedCompanyTax,
+            total: coTotal,
+            dividendMethod: coFullDividend > 0 ? coOpt.method : '無股利'
+        },
+        customCalc
+    };
+}
+
+function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+}
+
+function setHtml(id, html) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+}
+
+function formatOwnership(pct) {
+    return (pct * 100).toFixed(2).replace(/\.00$/, '') + '%';
+}
+
+function dividendCompareText(amount, opt) {
+    if (amount <= 0) return '無股利，無需比較';
+    return '合併計稅 ' + formatCurrency(opt.mergedTax) + ' 元' +
+        '／分開計稅 ' + formatCurrency(opt.separateTax) + ' 元' +
+        '（股利28% ' + formatCurrency(opt.separateDividendTax) + ' 元' +
+        (opt.baseTax > 0 ? '＋其他所得稅 ' + formatCurrency(opt.baseTax) + ' 元' : '') + '）' +
+        '，差額 ' + formatCurrency(opt.saving) + ' 元';
+}
+
+function renderSummaryCards(result) {
+    const diff = Math.abs(result.so.total - result.co.total);
+    let lowerText = '兩者試算相同';
+    if (result.so.total < result.co.total) lowerText = '商號試算稅負較低';
+    if (result.co.total < result.so.total) lowerText = '公司試算稅負較低';
+
+    setText('summary-so-total', formatCurrency(result.so.total) + ' 元');
+    setText('summary-co-total', formatCurrency(result.co.total) + ' 元');
+    setText('summary-tax-diff', formatCurrency(diff) + ' 元');
+    setText('summary-lower', lowerText);
+    setText('summary-so-pit', '綜所稅 ' + formatCurrency(result.so.pit) + ' 元');
+    setText('summary-co-pit', '綜所稅 ' + formatCurrency(result.co.pit) + ' 元');
+    setText('summary-co-business-tax', '公司營所稅 ' + formatCurrency(result.co.businessTax) + ' 元；本人經濟歸屬 ' + formatCurrency(result.co.allocatedCompanyTax) + ' 元');
+    setText('summary-so-dividend', '股利方案：' + result.so.dividendMethod);
+    setText('summary-co-dividend', '股利方案：' + result.co.dividendMethod);
+}
+
+function renderTaxComparison(result) {
+    const {input, netIncome, householdMembers, basicLivingTotalCompare, so, co, customCalc} = result;
+
+    renderSummaryCards(result);
+
+    setText('res-income-so',
+        formatCurrency(so.ownerIncome) +
+        '（核定所得 ' + formatCurrency(netIncome) +
+        ' × 分配比例 ' + formatOwnership(input.businessShare) + '）'
+    );
+    setText('res-income-co', formatCurrency(netIncome));
+    setText('res-biz-tax-so', '無（併入個人綜合所得）');
+    setHtml('res-biz-tax-co',
+        formatCurrency(co.businessTax) + ' 元' +
+        '<span class="result-detail">公司依法負擔之全年營所稅；另按本人持股 ' +
+        formatOwnership(input.companyOwnership) + ' 計算經濟歸屬 ' +
+        formatCurrency(co.allocatedCompanyTax) + ' 元</span>'
+    );
+
+    setText('res-dividend-so',
+        '商號本人營利所得 ' + formatCurrency(so.ownerIncome) +
+        '（已直接併入綜所稅，不屬公司股利）'
+    );
+    setHtml('res-dividend-co',
+        formatCurrency(co.fullDividend) +
+        '<span class="result-detail">本人股利 ' + formatCurrency(co.ownerDividend) +
+        '（稅後盈餘 ' + formatCurrency(co.retainedEarnings) +
+        '－法定公積 ' + formatCurrency(co.legalReserve) +
+        '；可分配 ' + formatCurrency(co.distributableProfit) +
+        ' × 持股 ' + formatOwnership(input.companyOwnership) + '）</span>'
+    );
+
+    const optionalItems = so.pitContext.deductions.optional.items;
+    const deductionDetail = optionalItems.length
+        ? '<span class="result-detail">基本免稅額＋標準扣除額 ' +
+          formatCurrency(so.pitContext.deductions.exemption + so.pitContext.deductions.standard) +
+          ' 元；另加 ' + optionalItems.map(x => x[0] + ' ' + formatCurrency(x[1]) + ' 元').join('、') +
+          '</span>'
+        : '<span class="result-detail">免稅額＋標準扣除額</span>';
+
+    setHtml('res-deduction-so', formatCurrency(so.pitContext.deductions.total) + ' 元' + deductionDetail);
+    setHtml('res-deduction-co', formatCurrency(co.pitContext.deductions.total) + ' 元' + deductionDetail);
+
+    setText('res-basic-living-so',
+        formatCurrency(basicLivingTotalCompare) + ' 元（' + householdMembers + '人 × ' + formatCurrency(BASIC_LIVING_EXPENSE_COMPARE) + '）'
+    );
+    setText('res-basic-living-co',
+        formatCurrency(basicLivingTotalCompare) + ' 元（' + householdMembers + '人 × ' + formatCurrency(BASIC_LIVING_EXPENSE_COMPARE) + '）'
+    );
+
+    setText('res-rate-so',
+        input.householdDividend > 0 ? getRate(so.optimization.mergedTaxable) : getRate(so.optimization.baseTaxable)
+    );
+    setText('res-rate-co',
+        co.fullDividend > 0 ? getRate(co.optimization.mergedTaxable) : getRate(co.optimization.baseTaxable)
+    );
+
+    setText('res-pit-so', formatCurrency(so.pit) + '（' + so.optimization.method + '）');
+    setText('res-pit-co', formatCurrency(co.pit) + '（' + co.optimization.method + '）');
+    setText('res-dividend-method-so', so.dividendMethod);
+    setText('res-dividend-method-co', co.dividendMethod);
+    setText('res-dividend-compare-so', dividendCompareText(input.householdDividend, so.optimization));
+    setText('res-dividend-compare-co', dividendCompareText(co.fullDividend, co.optimization));
+
+    renderCustomCalculationRows(customCalc);
+    setText('res-total-so', formatCurrency(so.total) + ' 元');
+    setHtml('res-total-co',
+        formatCurrency(co.total) + ' 元' +
+        '<span class="tax-total-detail">本人經濟歸屬公司稅負 ' + formatCurrency(co.allocatedCompanyTax) +
+        ' 元（公司營所稅 ' + formatCurrency(co.businessTax) + ' × 持股 ' +
+        formatOwnership(input.companyOwnership) + '）<br>' +
+        '＋本人依法負擔綜所稅 ' + formatCurrency(co.pit) + ' 元</span>'
+    );
+}
+
+function calculateTax() {
+    if (!validateDependentLimitedDeductions(true)) return null;
+    const result = buildTaxComparison(collectCalculationInputs());
+    renderTaxComparison(result);
+    return result;
+}
