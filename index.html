@@ -1686,11 +1686,40 @@ body > .page-root {
   #calculator-grid > #print-basic-card { grid-column:1!important; }
   #calculator-grid > #print-result-card { grid-column:2!important; }
 }
+#print-scenario-results { display:none; }
 @media print {
   main#layout-section-stack { display:flex!important; flex-direction:column!important; }
   #calculator-grid { grid-template-columns:minmax(0,var(--layout-left-column,37%)) minmax(0,1fr)!important; }
   #calculator-grid > #print-basic-card { grid-column:1!important; }
   #calculator-grid > #print-result-card { grid-column:2!important; }
+  #tax-detail-table { overflow:visible!important; }
+  #tax-detail-screen-table { display:none!important; }
+  #print-scenario-results {
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    align-items:start;
+    gap:2mm!important;
+    width:100%;
+  }
+  #print-detail-table-title { grid-column:1 / -1; margin:0 0 1mm!important; font-size:8pt!important; }
+  .print-scenario-column {
+    min-width:0;
+    border:0.25mm solid #cbd5e1;
+    border-radius:1mm;
+    padding:1mm;
+    break-inside:avoid;
+    page-break-inside:avoid;
+  }
+  .print-scenario-heading { margin:0 0 1mm; padding:0 0 0.75mm; border-bottom:0.25mm solid #cbd5e1; font-size:7.5pt; font-weight:700; }
+  .print-scenario-table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:6.3pt; line-height:1.05; }
+  .print-scenario-table th,
+  .print-scenario-table td { padding:0.65mm 0.7mm; vertical-align:top; border-bottom:0.15mm solid #e2e8f0; overflow-wrap:anywhere; word-break:break-word; }
+  .print-scenario-table th { width:39%; text-align:left; font-weight:600; color:#475569; }
+  .print-scenario-table td { width:61%; text-align:right; font-family:ui-monospace,monospace; }
+  .print-scenario-table .scenario-total-row th,
+  .print-scenario-table .scenario-total-row td { border-top:0.4mm solid #94a3b8; border-bottom:0; font-weight:700; color:#047857; }
+  .print-scenario-table .result-detail,
+  .print-scenario-table .tax-total-detail { margin-top:0.4mm; font-size:5.5pt!important; line-height:1.02!important; }
   body.print-fit-one-page main#layout-section-stack { zoom:var(--print-fit-scale,1); width:var(--print-fit-width,100%)!important; }
   #result-summary-card { padding:1.5mm!important; margin-bottom:1.5mm!important; }
   #result-summary-card h4 { margin:0 0 1mm!important; font-size:8pt!important; }
@@ -1856,7 +1885,7 @@ body > .page-root {
                     </div>
                     <div id="custom-fields-tax" class="custom-fields-zone"></div>
                     <div id="tax-detail-table" data-layout-key="detailTable" class="relative w-full overflow-auto">
-                        <table class="w-full caption-top text-sm">
+                        <table id="tax-detail-screen-table" class="w-full caption-top text-sm">
                             <caption id="detail-table-title" class="pb-2 text-left font-semibold"></caption>
                             <thead>
                                 <tr class="border-b transition-colors">
@@ -1918,7 +1947,17 @@ body > .page-root {
                                 </tr>
                             </tbody>
                         </table>
-
+                        <div id="print-scenario-results" aria-label="列印詳細計算">
+                            <h4 id="print-detail-table-title">詳細計算</h4>
+                            <section class="print-scenario-column" aria-labelledby="print-sole-result-heading">
+                                <h5 id="print-sole-result-heading" class="print-scenario-heading">商號</h5>
+                                <table class="print-scenario-table"><tbody data-print-scenario="so"></tbody></table>
+                            </section>
+                            <section class="print-scenario-column" aria-labelledby="print-company-result-heading">
+                                <h5 id="print-company-result-heading" class="print-scenario-heading">公司</h5>
+                                <table class="print-scenario-table"><tbody data-print-scenario="co"></tbody></table>
+                            </section>
+                        </div>
                     </div>
                     <div id="basic-living-note" data-layout-key="livingNote" class="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-slate-700">
                         <div id="basic-living-note-title" class="font-semibold">基本生活費差額比較說明</div>
@@ -2934,6 +2973,7 @@ document.getElementById('res-rate-so').innerText =
                     el.innerText = '0';
                 }
             });
+            syncPrintScenarioResults();
         }
 
         // 千分位：金額輸入欄位即時格式化；計算時再轉回數值。
@@ -3086,6 +3126,7 @@ document.getElementById('res-rate-so').innerText =
                 const el = document.getElementById(id);
                 if (el) el.textContent = value;
             });
+            syncPrintScenarioResults();
         }
 
         function resetCurrentData() {
@@ -3348,11 +3389,39 @@ function connectResultSummary(){
     });
 }
 
+function syncPrintScenarioResults(){
+    const sourceTable=document.getElementById('tax-detail-screen-table');
+    const titleSource=document.getElementById('detail-table-title');
+    const printTitle=document.getElementById('print-detail-table-title');
+    if(!sourceTable) return;
+    if(titleSource&&printTitle) printTitle.textContent=titleSource.textContent;
+    ['so','co'].forEach((scenario,index)=>{
+        const target=document.querySelector('[data-print-scenario="'+scenario+'"]');
+        if(!target) return;
+        target.replaceChildren();
+        sourceTable.querySelectorAll('tbody tr').forEach(sourceRow=>{
+            const label=sourceRow.cells[0];
+            const value=sourceRow.cells[index+1];
+            if(!label||!value) return;
+            const row=document.createElement('tr');
+            if(sourceRow.querySelector('#res-total-so, #res-total-co')) row.className='scenario-total-row';
+            const heading=document.createElement('th');
+            heading.scope='row';
+            heading.innerHTML=label.innerHTML;
+            const cell=document.createElement('td');
+            cell.innerHTML=value.innerHTML;
+            row.append(heading,cell);
+            target.appendChild(row);
+        });
+    });
+}
+
 window.onload = async () => {
             await loadTaxConfig();
     applyPageText();
     renderCustomFields();
     connectResultSummary();
+    syncPrintScenarioResults();
             document.querySelectorAll('.money-input').forEach(formatInput);
             updateSpouseSalaryState();
             updateBusinessShareState();
@@ -3419,7 +3488,8 @@ window.onload = async () => {
     const pageHeight=document.body.scrollHeight||0;
     const printScale=pageHeight<2200?0.80:pageHeight<3000?0.74:0.68;
     document.documentElement.style.setProperty('--print-fit-scale',String(printScale));
-    document.documentElement.style.setProperty('--print-fit-width',(100/printScale)+'%');
+    // 以 A4 橫式可列印寬度（297mm - 左右各 5mm）計算縮放前寬度，避免依螢幕視窗寬度造成右欄超出紙張。
+    document.documentElement.style.setProperty('--print-fit-width',(287/printScale)+'mm');
 
     // 只有內容量明顯會把整份列印推到2頁以上時才切換雙欄模式。
     if(shouldUseCompactTwoPageMode() && pageHeight>3600){
@@ -3451,5 +3521,3 @@ window.onload = async () => {
 
 </body>
 </html>
-
->
