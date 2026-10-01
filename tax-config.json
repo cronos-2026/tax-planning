@@ -114,7 +114,7 @@
       "resultSummary": { "web": true, "print": true, "title": "結果摘要" },
       "detailTable": { "web": true, "print": true, "title": "詳細計算" },
       "livingNote": { "web": true, "print": true, "title": "基本生活費差額比較說明" },
-      "version": { "web": true, "print": false, "title": "後台版面設定強化" }
+      "version": { "web": true, "print": false, "title": "" }
     }
   },
   "customFields": [],
