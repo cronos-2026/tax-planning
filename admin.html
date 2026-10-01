@@ -1,4 +1,4 @@
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>稅務試算後台管理｜TAX FINAL 2026.09.v07-23</title><style>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>稅務試算後台管理｜TAX 2026.09.22_v3</title><style>
 :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#0f172a;background:#f8fafc}*{box-sizing:border-box}body{margin:0}.wrap{max-width:1180px;margin:auto;padding:28px 18px}.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px;margin-bottom:18px;box-shadow:0 2px 8px #0f172a0a}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}.field label{display:block;font-weight:700;font-size:13px;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:10px 11px;background:#fff}.btn{border:0;border-radius:9px;padding:10px 15px;font-weight:700;cursor:pointer}.primary{background:#0f172a;color:#fff}.secondary{background:#e2e8f0}.success{background:#059669;color:#fff}.danger{background:#fee2e2;color:#b91c1c}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.muted{color:#64748b;font-size:13px}[hidden]{display:none!important}.hidden{display:none!important}.table{width:100%;border-collapse:collapse}.table th,.table td{border-bottom:1px solid #e2e8f0;padding:8px;text-align:left;font-size:13px}.status{padding:10px 12px;border-radius:9px;background:#f1f5f9;margin-top:12px;white-space:pre-wrap}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px}h1,h2{margin:0 0 14px}code{background:#f1f5f9;padding:2px 5px;border-radius:5px}.login{max-width:620px;margin:8vh auto}.note{background:#fffbeb;border:1px solid #fde68a;padding:11px;border-radius:9px;font-size:13px}
 .login-card{max-width:520px;margin:10vh auto}.login-card h1{font-size:30px}.login-error{margin-top:12px;color:#b91c1c;font-weight:700;font-size:13px}.login-actions{margin-top:16px}.logout{background:#475569;color:#fff} input:disabled{background:#f1f5f9;color:#475569;font-weight:700;cursor:not-allowed}
 
@@ -250,7 +250,7 @@
     <div class="top">
       <div>
         <h1>稅務參數後台管理</h1>
-        <div class="muted">正式前台參數檔：<code>tax-config.json</code>　｜　網站版本：<strong id="versionLabel">2026.09.v07-23</strong>　｜　GitHub 同步優化版</div>
+        <div class="muted">正式前台參數檔：<code>tax-config.json</code>　｜　網站版本：<strong id="versionLabel">2026.09.22_v3</strong>　｜　GitHub 同步優化版</div>
       </div>
       <button class="btn logout" id="logoutBtn">登出</button>
     </div>
@@ -268,7 +268,7 @@
       <div class="header-editor-grid">
         <div class="field">
           <label>主標題</label>
-          <input data-key="pageTitle" type="text" placeholder="例：創業，我該設立商號還是公司呢?">
+          <input data-key="pageTitle" type="text" placeholder="例：115年度創業組織稅負比較工具">
         </div>
 
         <div class="field">
@@ -315,6 +315,24 @@
     </div>
 
 <div class="card"><h2>年度參數讀取與更新</h2>
+      <div class="mof-auto-loader" style="margin-bottom:14px">
+        <div class="mof-auto-head">
+          <div style="flex:1 1 560px">
+            <strong style="font-size:15px">自動年度資料監控（GitHub Actions）</strong>
+            <div class="muted" style="margin-top:5px;line-height:1.6">
+              每週自動檢查財政部官方 RSS：①目前年度尚未公告的基本生活費；②下一年度綜合所得稅核心參數。
+              自動程序只更新候選檔，不會直接修改 <code>tax-config.json</code>。找到資料後仍須在此頁人工比對與勾選套用。
+            </div>
+          </div>
+          <button class="btn secondary" id="reloadAnnualCandidateBtn" type="button">讀取最新監控結果</button>
+        </div>
+        <div id="annualCandidateStatus" class="status" hidden></div>
+        <div id="annualCandidateList" style="display:grid;gap:10px;margin-top:10px"></div>
+        <div class="note" style="margin-top:10px">
+          <strong>安全機制：</strong>候選檔只提供「偵測與比對」；即使 GitHub Actions 抓到新數字，也不會自動成為正式試算參數。
+        </div>
+      </div>
+
       <div class="grid">
         <div class="field">
           <label>所得年度（民國）</label>
@@ -326,9 +344,9 @@
         <div class="field"><label>參數更新日期</label><input data-key="lastUpdated" type="date"></div>
         <div class="field">
           <label>本年度參數參考來源</label>
-          <div id="sourceLabelDisplay" class="muted" style="margin-bottom:6px;line-height:1.5">財政部：財政部持續推動綜合所得稅減稅惠民措施，有感減輕民眾負擔</div>
+          <div id="sourceLabelDisplay" class="muted" style="margin-bottom:6px;line-height:1.5">財政部：公告115年度綜合所得稅及所得基本稅額相關免稅額、扣除額、課稅級距及計算退職所得定額免稅之金額</div>
           <div class="row" style="margin-top:8px">
-            <a id="sourceUrlLink" class="btn secondary" href="https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=1374a3142db545578c5d7dde82e2c1e6" target="_blank" rel="noopener noreferrer" style="text-decoration: none; opacity: 1; pointer-events: auto;">開啟財政部參考來源</a>
+            <a id="sourceUrlLink" class="btn secondary" href="https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=34b463dc8f1b49f29d440d92a6fd5139" target="_blank" rel="noopener noreferrer" style="text-decoration: none; opacity: 1; pointer-events: auto;">開啟財政部參考來源</a>
           </div>
           <div class="muted" style="margin-top:6px">參考來源會依目前載入的年度參數自動切換。若從外部網址讀入新年度 JSON，也會一併讀取該 JSON 內的 sourceLabel / sourceUrl。</div>
         </div>
@@ -852,7 +870,7 @@ async function recordSuccessfulAdminLogin(account){
     browserPlatform:device.browserPlatform || '',
     language:device.language || '',
     userAgent:device.userAgent || '',
-    siteVersion:'2026.09.v07-23'
+    siteVersion:'2026.09.22_v3'
   };
 
   CURRENT_LOGIN_AUDIT_ID=entry.id;
@@ -2071,22 +2089,160 @@ function applySelectedMofParameters(){
     return;
   }
 
+  const selectedKeys=selected.map(cb=>cb.dataset.key);
   selected.forEach(cb=>{
     const key=cb.dataset.key;
     if(MOF_FOUND.found[key]===undefined) return;
     cfg[key]=structuredClone(MOF_FOUND.found[key]);
   });
 
+  const previousTaxYear=Number(cfg.taxYear||0);
   cfg.taxYear=MOF_FOUND.year;
   cfg.sourceLabel='財政部：'+MOF_FOUND.title;
   cfg.sourceUrl=MOF_FOUND.url;
+  cfg.sourcePublishDate=MOF_FOUND.pubDate||cfg.sourcePublishDate||'';
   if(MOF_FOUND.pubDate) cfg.lastUpdated=MOF_FOUND.pubDate;
+
+  cfg.dataQuality=cfg.dataQuality||{};
+  if(selectedKeys.includes('basicLivingExpense')){
+    cfg.dataQuality.basicLivingExpense={
+      status:'official',
+      taxYear:MOF_FOUND.year,
+      value:Number(cfg.basicLivingExpense||0),
+      sourceLabel:'財政部：'+MOF_FOUND.title,
+      sourceUrl:MOF_FOUND.url,
+      sourcePublishDate:MOF_FOUND.pubDate||''
+    };
+  }
+
+  const coreKeys=['exemption','seniorExemption','standardDeductionSingle','standardDeductionMarried','salarySpecialDeduction','disabilitySpecialDeduction','brackets'];
+  const officialHasAllCore=coreKeys.every(k=>MOF_FOUND.found[k]!==undefined);
+  const currentMatchesAllCore=officialHasAllCore && coreKeys.every(k=>sameParamValue(cfg[k],MOF_FOUND.found[k],k==='brackets'?'brackets':'money'));
+  if(currentMatchesAllCore){
+    cfg.dataQuality.coreIncomeTax={
+      status:'official',taxYear:MOF_FOUND.year,
+      sourceLabel:'財政部：'+MOF_FOUND.title,sourceUrl:MOF_FOUND.url,sourcePublishDate:MOF_FOUND.pubDate||''
+    };
+  }else if(previousTaxYear!==MOF_FOUND.year){
+    cfg.dataQuality.coreIncomeTax={status:'partial',taxYear:MOF_FOUND.year,sourceLabel:'財政部：'+MOF_FOUND.title,sourceUrl:MOF_FOUND.url,sourcePublishDate:MOF_FOUND.pubDate||'',note:'新年度核心參數尚未完成全部人工確認'};
+  }
+
+  if(previousTaxYear!==MOF_FOUND.year && (!cfg.dataQuality.basicLivingExpense || Number(cfg.dataQuality.basicLivingExpense.taxYear)!==MOF_FOUND.year)){
+    const prior=cfg.dataQuality.basicLivingExpense||{};
+    cfg.dataQuality.basicLivingExpense={...prior,status:'provisional',taxYear:MOF_FOUND.year,valueSourceYear:Number(prior.taxYear||prior.valueSourceYear||previousTaxYear||MOF_FOUND.year-1),value:Number(cfg.basicLivingExpense||0),note:`${MOF_FOUND.year}年度基本生活費尚未完成官方確認；目前沿用最近已知值作比較。`};
+  }
 
   render();
   updateSourceLink(cfg);
   renderMofCompare();
   showMofSearchStatus('已套用勾選項目到後台目前資料；尚未同步 GitHub，請再次檢查後再發布。','success');
   status('已人工確認套用財政部年度參數；尚未發布。');
+}
+
+
+let ANNUAL_CANDIDATE_DATA=null;
+
+function showAnnualCandidateStatus(message,kind='info'){
+  const el=document.getElementById('annualCandidateStatus');
+  if(!el) return;
+  el.hidden=false;
+  el.textContent=message;
+  el.style.background=kind==='success'?'#ecfdf5':kind==='error'?'#fef2f2':kind==='warn'?'#fffbeb':'#f1f5f9';
+  el.style.color=kind==='success'?'#065f46':kind==='error'?'#991b1b':kind==='warn'?'#92400e':'#334155';
+}
+
+function annualCandidateStatusText(status){
+  return ({
+    not_announced:'尚未公告／尚未偵測到',
+    candidate_found:'已找到完整候選資料',
+    candidate_found_incomplete:'已找到部分候選資料',
+    source_found_unparsed:'找到官方來源但未辨識出數字',
+    source_found_fetch_error:'找到來源但讀取失敗'
+  })[status] || status || '未知';
+}
+
+function renderAnnualCandidate(){
+  const list=document.getElementById('annualCandidateList');
+  if(!list) return;
+  list.innerHTML='';
+  const checks=Array.isArray(ANNUAL_CANDIDATE_DATA?.checks)?ANNUAL_CANDIDATE_DATA.checks:[];
+  if(!checks.length){
+    list.innerHTML='<div class="muted">目前沒有監控結果。</div>';
+    return;
+  }
+  checks.forEach((c,idx)=>{
+    const values=c.values||{};
+    const valueKeys=Object.keys(values);
+    const card=document.createElement('div');
+    card.style.cssText='border:1px solid #dbe4df;border-radius:12px;padding:12px;background:#fff';
+    const valueLines=valueKeys.map(k=>{
+      const meta=MOF_PARAM_META.find(x=>x[0]===k);
+      const label=meta?.[1]||k;
+      const type=meta?.[2]||'money';
+      return `<li><strong>${esc(label)}：</strong><span style="white-space:pre-line">${esc(compareValueText(values[k],type))}</span></li>`;
+    }).join('');
+    const missing=(c.missingFields||[]).map(k=>MOF_PARAM_META.find(x=>x[0]===k)?.[1]||k).join('、');
+    const url=c.sourceUrl?`<a href="${esc(c.sourceUrl)}" target="_blank" rel="noopener noreferrer">開啟官方來源</a>`:'';
+    card.innerHTML=`
+      <div style="display:flex;gap:10px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap">
+        <div>
+          <div style="font-weight:800">${esc(c.title||`${c.targetYear}年度資料`)}</div>
+          <div class="muted" style="margin-top:4px">狀態：${esc(annualCandidateStatusText(c.status))}｜目標年度：${esc(String(c.targetYear||''))}</div>
+        </div>
+        ${valueKeys.length?`<button class="btn success" type="button" data-candidate-index="${idx}">送入人工比對</button>`:''}
+      </div>
+      <div class="muted" style="margin-top:8px;line-height:1.6">${esc(c.message||'')}</div>
+      ${valueLines?`<ul style="margin:8px 0 0 20px;line-height:1.7">${valueLines}</ul>`:''}
+      ${missing?`<div class="muted" style="margin-top:7px">尚缺：${esc(missing)}</div>`:''}
+      ${url?`<div style="margin-top:7px">${url}</div>`:''}
+    `;
+    list.appendChild(card);
+  });
+  list.querySelectorAll('[data-candidate-index]').forEach(btn=>btn.addEventListener('click',()=>loadCandidateIntoMofCompare(Number(btn.dataset.candidateIndex))));
+}
+
+async function loadAnnualCandidate(){
+  try{
+    showAnnualCandidateStatus('正在讀取 data/annual-candidate.json…');
+    const r=await fetch('./data/annual-candidate.json?ts='+Date.now(),{cache:'no-store'});
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    ANNUAL_CANDIDATE_DATA=await r.json();
+    renderAnnualCandidate();
+    const generated=ANNUAL_CANDIDATE_DATA.generatedAt||'未標示';
+    const err=ANNUAL_CANDIDATE_DATA.monitorError||'';
+    showAnnualCandidateStatus(err?`已讀取上次候選資料；監控器最近一次錯誤：${err}`:`已讀取最新監控結果（${generated}）。`,err?'warn':'success');
+  }catch(e){
+    showAnnualCandidateStatus('監控結果讀取失敗：'+e.message,'error');
+  }
+}
+
+function loadCandidateIntoMofCompare(index){
+  const c=ANNUAL_CANDIDATE_DATA?.checks?.[index];
+  if(!c || !Object.keys(c.values||{}).length) return;
+  const year=Number(c.targetYear);
+  const yInput=document.getElementById('taxYearInput');
+  if(yInput) yInput.value=year;
+  const notes={...(c.notes||{})};
+  Object.keys(c.values||{}).forEach(k=>{ if(!notes[k]) notes[k]='GitHub Actions 從財政部官方來源自動擷取，仍需人工確認'; });
+  MOF_FOUND={
+    year,
+    url:c.sourceUrl||'',
+    title:c.title||`財政部 ${year} 年度公告`,
+    pubDate:c.sourcePublishDate||'',
+    found:structuredClone(c.values||{}),
+    notes
+  };
+  document.getElementById('mofResultYear').textContent=`${year}年度所得／${year+1}年5月申報`;
+  document.getElementById('mofResultTitle').textContent=MOF_FOUND.title;
+  document.getElementById('mofResultDate').textContent=MOF_FOUND.pubDate||'候選檔未標示日期';
+  const urlEl=document.getElementById('mofResultUrl');
+  urlEl.href=MOF_FOUND.url||'#';
+  urlEl.textContent=MOF_FOUND.url||'候選檔未提供網址';
+  renderMofCompare();
+  const result=document.getElementById('mofSearchResult');
+  if(result) result.hidden=false;
+  showMofSearchStatus('已將自動監控候選值送入人工比對區。請逐項核對官方來源後再勾選套用。','success');
+  document.getElementById('mofSearchResult')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 function showAnnualPresetUrlStatus(message, kind='info'){
@@ -2401,6 +2557,8 @@ document.getElementById('importFile').onchange=async e=>{
   }
 };
 showLogin();
+
+loadAnnualCandidate();
 </script>
 <script>
 (function(){
@@ -2458,6 +2616,7 @@ document.getElementById('clearAnnualPresetUrlBtn')?.addEventListener('click',()=
 });
 
 
+document.getElementById('reloadAnnualCandidateBtn')?.addEventListener('click',loadAnnualCandidate);
 document.getElementById('autoSearchMofBtn')?.addEventListener('click',searchAndParseMofAnnualParameters);
 document.getElementById('checkAllMofCompareBtn')?.addEventListener('click',()=>setAllMofChecks(true));
 document.getElementById('uncheckAllMofCompareBtn')?.addEventListener('click',()=>setAllMofChecks(false));
