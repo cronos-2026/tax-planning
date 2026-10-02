@@ -1,6 +1,8 @@
 /* 2026-09-22 v3｜年度參數、資料品質與設定載入 */
 'use strict';
 
+const TEMP_CONFIG_LOCAL_KEY='tax_temp_config_override_v1';
+
 // ===== GitHub 參數化版本：正式參數由 tax-config.json 載入 =====
 const DEFAULT_TAX_CONFIG = {
     pageTitle: "115年度創業稅負決策試算",
@@ -8,7 +10,7 @@ const DEFAULT_TAX_CONFIG = {
     pageNotice: "本頁為試算工具；扶養、長照、學前子女等資格仍應依實際申報條件判斷。若資格不符，試算結果可能與實際申報不同。",
     showHeaderSection: true,
     taxYear: 115,
-    siteVersion: "2026.10.01_v8",
+    siteVersion: "2026.10.02_v9",
     basicLivingExpense: 213000,
     exemption: 101000,
     standardDeductionSingle: 136000,
@@ -41,7 +43,7 @@ const DEFAULT_TAX_CONFIG = {
         leftColumnPercent: 37,
         basicTitle: '一、輸入試算條件',
         resultTitle: '二、比較試算結果',
-        versionNoteText: '2026.10.01_v8：強化後台版面管理，可調整左右欄寬、區塊顯示／列印、結果區順序與標題；稅務計算邏輯不變。',
+        versionNoteText: '2026.10.02_v9：強化後台版面管理，可調整左右欄寬、區塊顯示／列印、結果區順序與標題；稅務計算邏輯不變。',
         sections: {
             inputCard:{webVisible:true,printVisible:true},
             resultCard:{webVisible:true,printVisible:true},
@@ -180,7 +182,7 @@ function applyLayoutSettings(){
           .forEach(key=>{if(map[key] && map[key].parentElement===resultCard) resultCard.appendChild(map[key]);});
     }
     const vv=document.getElementById('version-notes-version');
-    if(vv) vv.textContent=TAX_CONFIG.siteVersion || '2026.10.01_v8';
+    if(vv) vv.textContent=TAX_CONFIG.siteVersion || '2026.10.02_v9';
     const vt=document.getElementById('version-notes-text');
     if(vt) vt.textContent=ls.versionNoteText || defaults.versionNoteText;
 }
@@ -190,7 +192,7 @@ function applyTaxConfig(raw) {
     TAX_115 = TAX_CONFIG;
     BASIC_LIVING_EXPENSE_COMPARE = Number(TAX_CONFIG.basicLivingExpense || 0);
     const badge = document.querySelector('header .rounded-md.bg-emerald-100');
-    if (badge) badge.textContent = TAX_CONFIG.siteVersion || '2026.10.01_v8';
+    if (badge) badge.textContent = TAX_CONFIG.siteVersion || '2026.10.02_v9';
     const y = Number(TAX_CONFIG.taxYear || 115);
     const adYear = y + 1911;
     document.title = `${TAX_CONFIG.pageTitle || '115年度創業稅負決策試算'}｜${y}年所得最佳化`;
@@ -208,13 +210,25 @@ function applyTaxConfig(raw) {
     applyLayoutSettings();
 }
 
+function getBrowserTemporaryTaxConfig() {
+    try {
+        const raw=localStorage.getItem(TEMP_CONFIG_LOCAL_KEY);
+        return raw ? JSON.parse(raw) : null;
+    } catch (err) {
+        console.warn('目前瀏覽器暫時設定讀取失敗，改用正式參數：', err);
+        return null;
+    }
+}
+
 async function loadTaxConfig() {
     try {
         const res = await fetch('./tax-config.json?ts=' + Date.now(), {cache:'no-store'});
         if (!res.ok) throw new Error('HTTP ' + res.status);
-        applyTaxConfig(await res.json());
+        const official=await res.json();
+        const temporary=getBrowserTemporaryTaxConfig();
+        applyTaxConfig(temporary || official);
     } catch (err) {
-        console.warn('tax-config.json 載入失敗，使用內建預設參數：', err);
-        applyTaxConfig(DEFAULT_TAX_CONFIG);
+        console.warn('tax-config.json 載入失敗，使用目前瀏覽器暫時設定或內建預設參數：', err);
+        applyTaxConfig(getBrowserTemporaryTaxConfig() || DEFAULT_TAX_CONFIG);
     }
 }

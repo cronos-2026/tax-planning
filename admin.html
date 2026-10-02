@@ -250,7 +250,7 @@
     <div class="top">
       <div>
         <h1>稅務參數後台管理</h1>
-        <div class="muted">正式前台參數檔：<code>tax-config.json</code>　｜　網站版本：<strong id="versionLabel">2026.10.01_v8</strong>　｜　GitHub 同步優化版</div>
+        <div class="muted">正式前台參數檔：<code>tax-config.json</code>　｜　網站版本：<strong id="versionLabel">2026.10.02_v9</strong>　｜　GitHub 同步優化版</div>
       </div>
       <button class="btn logout" id="logoutBtn">登出</button>
     </div>
@@ -579,8 +579,8 @@
         後台：<strong>https://cronos-2026.github.io/tax/admin.html</strong>
       </div>
       <p class="muted" style="line-height:1.7">
-        此版本已固定同步到 <strong>cronos-2026/tax</strong> 的 <code>tax-config.json</code>，避免誤選 Repository。<br>
-        修改後可先測試 Token，再按「同步更新前台」。GitHub Pages 完成部署後，前台重新整理即可讀取新參數。
+        <strong>暫時調整：</strong>按「暫時套用到目前瀏覽器」後，只會在<strong>當下開啟此網頁的電腦／瀏覽器</strong>顯示；哪一台電腦、哪個瀏覽器開啟後台並套用，就只影響該裝置／瀏覽器。不同電腦、不同瀏覽器、無痕視窗不會共用此暫時設定。<br>
+        <strong>永久調整：</strong>仍須輸入 GitHub Token，並按「同步更新前台」寫入 <code>tax-config.json</code>。GitHub Pages 部署完成後，所有使用者重新整理前台才會讀取新的正式參數。
       </p>
       <div id="githubFixedTargetFields" class="grid" style="display:none!important" aria-hidden="true">
         <div class="field"><label>GitHub Owner</label><input id="ghOwner" type="text" value="cronos-2026" readonly></div>
@@ -597,8 +597,10 @@
         </div>
       </div>
       <div class="row" style="margin-top:14px">
+        <button class="btn secondary" id="applyTempBtn" type="button">暫時套用到目前瀏覽器</button>
+        <button class="btn secondary" id="clearTempBtn" type="button">清除目前瀏覽器暫時設定</button>
         <button class="btn secondary" id="testGithubBtn">測試 GitHub Token</button>
-        <button class="btn success" id="syncGithubBtn">同步更新前台</button>
+        <button class="btn success" id="syncGithubBtn">永久同步更新前台</button>
         <button class="btn secondary" id="saveLocalBtn">下載 tax-config.json 備份</button>
       </div>
       <div id="status" class="status">尚未同步。</div>
@@ -617,6 +619,7 @@ const LOGIN_DEVICE_ID_KEY='tax_admin_device_id_v1';
 let CURRENT_LOGIN_AUDIT_ID='';
 let CURRENT_ADMIN_ACCOUNT='';
 const DESIGNER_SESSION_KEY='tax_admin_designer_session_v1';
+const TEMP_CONFIG_LOCAL_KEY='tax_temp_config_override_v1';
 
 function getJsonLocal(key,fallback=[]){
   try{
@@ -873,7 +876,7 @@ async function recordSuccessfulAdminLogin(account){
     browserPlatform:device.browserPlatform || '',
     language:device.language || '',
     userAgent:device.userAgent || '',
-    siteVersion:'2026.10.01_v8'
+    siteVersion:'2026.10.02_v9'
   };
 
   CURRENT_LOGIN_AUDIT_ID=entry.id;
@@ -1083,7 +1086,7 @@ function fieldHtml(k,n){
   }
   return `<div class="field"><label>${n}</label><input data-key="${k}" type="number" step="any">${note}</div>`;
 }
-function currentSiteVersion(){return '2026.10.01_v8'}
+function currentSiteVersion(){return '2026.10.02_v9'}
 function stampVersion(){cfg.siteVersion=currentSiteVersion();cfg.lastUpdated=new Date().toISOString().slice(0,10);const el=document.getElementById('versionLabel');if(el)el.textContent=cfg.siteVersion}
 function updateSourceLink(sourceCfg=null){
   const label=document.getElementById('sourceLabelDisplay');
@@ -1222,7 +1225,7 @@ const DEFAULT_LAYOUT_SETTINGS_ADMIN={
   leftColumnPercent:37,
   basicTitle:'一、輸入試算條件',
   resultTitle:'二、比較試算結果',
-  versionNoteText:'2026.10.01_v8：強化後台版面管理，可調整左右欄寬、區塊顯示／列印、結果區順序與標題；稅務計算邏輯不變。',
+  versionNoteText:'2026.10.02_v9：強化後台版面管理，可調整左右欄寬、區塊顯示／列印、結果區順序與標題；稅務計算邏輯不變。',
   sections:{
     inputCard:{webVisible:true,printVisible:true}, resultCard:{webVisible:true,printVisible:true},
     summary:{webVisible:true,printVisible:true,order:1}, details:{webVisible:true,printVisible:true,order:2},
@@ -1597,7 +1600,30 @@ function renderDeductionSettings(){
 }
 
 function esc(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-async function loadConfig(){cfg=await fetch('./tax-config.json?ts='+Date.now()).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()});render();status('已載入正式參數。')}
+function getTemporaryConfig(){
+  try{
+    const raw=localStorage.getItem(TEMP_CONFIG_LOCAL_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }catch{
+    return null;
+  }
+}
+function applyTemporaryConfigToBrowser(){
+  stampVersion();
+  localStorage.setItem(TEMP_CONFIG_LOCAL_KEY,JSON.stringify(cfg));
+  status('暫時設定已套用：只會在當下開啟此網頁的電腦／瀏覽器顯示。其他電腦、其他瀏覽器與無痕視窗不受影響。');
+}
+function clearTemporaryConfigFromBrowser(){
+  localStorage.removeItem(TEMP_CONFIG_LOCAL_KEY);
+  status('已清除此電腦／瀏覽器的暫時設定。重新整理前台後會回到 GitHub 上的正式參數。');
+}
+async function loadConfig(){
+  const official=await fetch('./tax-config.json?ts='+Date.now()).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()});
+  const temp=getTemporaryConfig();
+  cfg=temp ? temp : official;
+  render();
+  status(temp ? '已載入目前瀏覽器的暫時設定。若要回到正式參數，請按「清除目前瀏覽器暫時設定」。' : '已載入正式參數。');
+}
 function status(t){document.getElementById('status').textContent=t}
 function download(){stampVersion();const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(cfg,null,2)],{type:'application/json'}));a.download='tax-config.json';a.click();URL.revokeObjectURL(a.href)}
 
@@ -2473,10 +2499,10 @@ async function loadAnnualPresetFromUrl(){
     updateSourceLink(cfg);
 
     showAnnualPresetUrlStatus(
-      `已成功從網址讀取 ${selectedYear} 年度參數。請先檢查下方各項金額與稅率，確認無誤後再同步更新前台。`,
+      `已成功從網址讀取 ${selectedYear} 年度參數。請先檢查下方各項金額與稅率，確認無誤後，可選擇暫時套用到目前瀏覽器，或使用 GitHub Token 永久同步更新前台。`,
       'success'
     );
-    status(`已從外部網址讀取 ${selectedYear} 年度參數；尚未寫入 GitHub。`);
+    status(`已從外部網址讀取 ${selectedYear} 年度參數；尚未寫入 GitHub；若只要目前瀏覽器測試，可按「暫時套用到目前瀏覽器」。`);
   }catch(e){
     showAnnualPresetUrlStatus('讀取失敗：'+e.message,'error');
 
@@ -2621,6 +2647,8 @@ async function syncToGithub(){
 }
 
 document.getElementById('reloadBtn').onclick=()=>loadConfig().catch(e=>status('讀取失敗：'+e.message));
+document.getElementById('applyTempBtn').onclick=applyTemporaryConfigToBrowser;
+document.getElementById('clearTempBtn').onclick=clearTemporaryConfigFromBrowser;
 document.getElementById('presetBtn').onclick=applyPreset;
 document.getElementById('saveLocalBtn').onclick=download;
 document.getElementById('testGithubBtn').onclick=testGithubConnection;
