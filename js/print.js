@@ -1,4 +1,4 @@
-/* 2026-10-01 v5｜A4/PDF 橫式一頁優先，自動縮放並維持左資訊／右計算 */
+/* A4/PDF 橫式一頁優先，自動縮放並維持左資訊／右計算 */
 'use strict';
 
 (function(){
@@ -44,12 +44,12 @@
 
   function choosePrintProfile(complexity){
     if(complexity.score >= 16){
-      return { density: 'tight', zoom: 0.72 };
+      return { density: 'tight', zoom: 0.68 };
     }
     if(complexity.score >= 7){
-      return { density: 'compact', zoom: 0.78 };
+      return { density: 'compact', zoom: 0.74 };
     }
-    return { density: 'normal', zoom: 0.84 };
+    return { density: 'normal', zoom: 0.80 };
   }
 
   function cleanupPrintLayout(){

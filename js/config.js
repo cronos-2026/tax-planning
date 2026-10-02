@@ -8,7 +8,7 @@ const DEFAULT_TAX_CONFIG = {
     pageNotice: "本頁為試算工具；扶養、長照、學前子女等資格仍應依實際申報條件判斷。若資格不符，試算結果可能與實際申報不同。",
     showHeaderSection: true,
     taxYear: 115,
-    siteVersion: "2026.09.22_v3",
+    siteVersion: "2026.10.01_v8",
     basicLivingExpense: 213000,
     exemption: 101000,
     standardDeductionSingle: 136000,
@@ -37,6 +37,21 @@ const DEFAULT_TAX_CONFIG = {
         { limit: null, rate: 0.40, diff: 949100 }
     ],
     customParameters: [],
+    layoutSettings: {
+        leftColumnPercent: 37,
+        basicTitle: '一、輸入試算條件',
+        resultTitle: '二、比較試算結果',
+        versionNoteText: '2026.10.01_v8：強化後台版面管理，可調整左右欄寬、區塊顯示／列印、結果區順序與標題；稅務計算邏輯不變。',
+        sections: {
+            inputCard:{webVisible:true,printVisible:true},
+            resultCard:{webVisible:true,printVisible:true},
+            summary:{webVisible:true,printVisible:true,order:1},
+            details:{webVisible:true,printVisible:true,order:2},
+            basicLiving:{webVisible:true,printVisible:true,order:3},
+            taxNotes:{webVisible:true,printVisible:true},
+            versionNotes:{webVisible:true,printVisible:false}
+        }
+    },
     dataQuality: {
         coreIncomeTax: {status: "official", taxYear: 115},
         basicLivingExpense: {
@@ -56,6 +71,12 @@ function normalizeTaxConfig(raw) {
         limit: b.limit === null || b.limit === '' ? Infinity : Number(b.limit),
         rate: Number(b.rate), diff: Number(b.diff || 0)
     }));
+    const rawLayout=raw?.layoutSettings || {};
+    const defaultLayout=DEFAULT_TAX_CONFIG.layoutSettings;
+    cfg.layoutSettings={...defaultLayout,...rawLayout,sections:{...defaultLayout.sections,...(rawLayout.sections||{})}};
+    Object.keys(defaultLayout.sections).forEach(k=>{
+        cfg.layoutSettings.sections[k]={...defaultLayout.sections[k],...(rawLayout.sections?.[k]||{})};
+    });
     return cfg;
 }
 
@@ -120,12 +141,56 @@ function applyDataQualityStatus(){
     box.hidden=false;
 }
 
+function applyLayoutSettings(){
+    const defaults=DEFAULT_TAX_CONFIG.layoutSettings;
+    const ls=TAX_CONFIG.layoutSettings || defaults;
+    const sections={...defaults.sections,...(ls.sections||{})};
+    const left=Math.min(45,Math.max(30,Number(ls.leftColumnPercent)||37));
+    const right=100-left;
+    const grid=document.getElementById('main-layout-grid');
+    if(grid){
+        grid.style.setProperty('--layout-left-col',`${left}fr`);
+        grid.style.setProperty('--layout-right-col',`${right}fr`);
+    }
+    const basicTitle=document.getElementById('basic-data-title');
+    if(basicTitle) basicTitle.textContent=ls.basicTitle || defaults.basicTitle;
+    const resultTitle=document.getElementById('tax-result-title');
+    if(resultTitle) resultTitle.textContent=ls.resultTitle || defaults.resultTitle;
+
+    const map={
+        inputCard:document.getElementById('print-basic-card'),
+        resultCard:document.getElementById('print-result-card'),
+        summary:document.getElementById('result-overview'),
+        details:document.getElementById('result-details'),
+        basicLiving:document.getElementById('basic-living-explanation'),
+        taxNotes:document.getElementById('tax-notes-block'),
+        versionNotes:document.getElementById('version-notes-block')
+    };
+    Object.entries(map).forEach(([key,el])=>{
+        if(!el) return;
+        const st=sections[key] || {};
+        el.dataset.layoutWebVisible=st.webVisible===false?'false':'true';
+        el.dataset.layoutPrintVisible=st.printVisible===false?'false':'true';
+    });
+
+    const resultCard=map.resultCard;
+    if(resultCard){
+        ['summary','details','basicLiving']
+          .sort((a,b)=>(Number(sections[a]?.order)||99)-(Number(sections[b]?.order)||99))
+          .forEach(key=>{if(map[key] && map[key].parentElement===resultCard) resultCard.appendChild(map[key]);});
+    }
+    const vv=document.getElementById('version-notes-version');
+    if(vv) vv.textContent=TAX_CONFIG.siteVersion || '2026.10.01_v8';
+    const vt=document.getElementById('version-notes-text');
+    if(vt) vt.textContent=ls.versionNoteText || defaults.versionNoteText;
+}
+
 function applyTaxConfig(raw) {
     TAX_CONFIG = normalizeTaxConfig(raw);
     TAX_115 = TAX_CONFIG;
     BASIC_LIVING_EXPENSE_COMPARE = Number(TAX_CONFIG.basicLivingExpense || 0);
     const badge = document.querySelector('header .rounded-md.bg-emerald-100');
-    if (badge) badge.textContent = TAX_CONFIG.siteVersion || '2026.09.22_v3';
+    if (badge) badge.textContent = TAX_CONFIG.siteVersion || '2026.10.01_v8';
     const y = Number(TAX_CONFIG.taxYear || 115);
     const adYear = y + 1911;
     document.title = `${TAX_CONFIG.pageTitle || '115年度創業稅負決策試算'}｜${y}年所得最佳化`;
@@ -140,6 +205,7 @@ function applyTaxConfig(raw) {
     updatePersonalTaxStandardNote();
     applyDynamicTaxNotes();
     applyDataQualityStatus();
+    applyLayoutSettings();
 }
 
 async function loadTaxConfig() {
