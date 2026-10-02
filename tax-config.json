@@ -101,7 +101,7 @@
   },
   "pageNotice": "本工具供稅負情境試算使用；實際申報仍應依當年度法規、申報身分、所得性質及可適用扣除額確認。",
   "showHeaderSection": true,
-  "siteVersion": "2026.10.02_v9",
+  "siteVersion": "2026.10.02_v10",
   "customFields": [],
   "customCalculationFields": [],
   "sourcePublishDate": "2025-11-27",
@@ -134,7 +134,7 @@
     "leftColumnPercent": 37,
     "basicTitle": "一、輸入試算條件",
     "resultTitle": "二、比較試算結果",
-    "versionNoteText": "2026.10.02_v9：強化後台版面管理，可調整左右欄寬、區塊顯示／列印、結果區順序與標題；稅務計算邏輯不變。",
+    "versionNoteText": "2026.10.02_v10：修正 GitHub Pages 前後台網址與 Repository 路徑為 tax-planning；計算與列印規則不變。",
     "sections": {
       "inputCard": {
         "webVisible": true,

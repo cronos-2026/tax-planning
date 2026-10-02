@@ -39,3 +39,11 @@
 - 自訂版面區塊新增上移／下移。
 - 新年度參數套用時保留版面設定與自訂區塊。
 - 稅務計算公式、年度監控與舊 localStorage 儲存格式不變。
+
+
+## 2026.10.02_v10｜GitHub 路徑修正
+- 前台：https://cronos-2026.github.io/tax-planning/
+- 後台：https://cronos-2026.github.io/tax-planning/admin
+- 後台 GitHub Repository 改為 `cronos-2026/tax-planning`。
+- 年度檢查程式的識別網址同步改為 `tax-planning`。
+- 稅務計算與列印規則不變。

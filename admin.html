@@ -250,7 +250,7 @@
     <div class="top">
       <div>
         <h1>稅務參數後台管理</h1>
-        <div class="muted">正式前台參數檔：<code>tax-config.json</code>　｜　網站版本：<strong id="versionLabel">2026.10.02_v9</strong>　｜　GitHub 同步優化版</div>
+        <div class="muted">正式前台參數檔：<code>tax-config.json</code>　｜　網站版本：<strong id="versionLabel">2026.10.02_v10</strong>　｜　GitHub 同步優化版</div>
       </div>
       <button class="btn logout" id="logoutBtn">登出</button>
     </div>
@@ -575,8 +575,8 @@
 
 <div class="card"><h2>GitHub 同步更新前台</h2>
       <div class="status" style="margin:10px 0 14px;line-height:1.9">
-        前台：<strong>https://cronos-2026.github.io/tax/</strong><br>
-        後台：<strong>https://cronos-2026.github.io/tax/admin.html</strong>
+        前台：<strong>https://cronos-2026.github.io/tax-planning/</strong><br>
+        後台：<strong>https://cronos-2026.github.io/tax-planning/admin</strong>
       </div>
       <p class="muted" style="line-height:1.7">
         <strong>暫時調整：</strong>按「暫時套用到目前瀏覽器」後，只會在<strong>當下開啟此網頁的電腦／瀏覽器</strong>顯示；哪一台電腦、哪個瀏覽器開啟後台並套用，就只影響該裝置／瀏覽器。不同電腦、不同瀏覽器、無痕視窗不會共用此暫時設定。<br>
@@ -584,7 +584,7 @@
       </p>
       <div id="githubFixedTargetFields" class="grid" style="display:none!important" aria-hidden="true">
         <div class="field"><label>GitHub Owner</label><input id="ghOwner" type="text" value="cronos-2026" readonly></div>
-        <div class="field"><label>Repository</label><input id="ghRepo" type="text" value="tax" readonly></div>
+        <div class="field"><label>Repository</label><input id="ghRepo" type="text" value="tax-planning" readonly></div>
         <div class="field"><label>Branch</label><input id="ghBranch" type="text" value="main" readonly></div>
         <div class="field"><label>前台參數檔路徑</label><input id="ghPath" type="text" value="tax-config.json" readonly></div>
         <div class="field"><label>登入記錄檔路徑</label><input id="ghAuditPath" type="text" value="admin-login-log.json" readonly></div>
@@ -593,7 +593,7 @@
         <label>GitHub Fine-grained Token</label>
         <input id="ghToken" type="password" autocomplete="off" placeholder="貼上 GitHub Token（只保留在目前瀏覽器頁面，不寫入 tax-config.json）">
         <div class="muted" style="margin-top:6px;line-height:1.6">
-          Token 必須授權 <strong>cronos-2026/tax</strong>，Repository permissions → <strong>Contents：Read and write</strong>。
+          Token 必須授權 <strong>cronos-2026/tax-planning</strong>，Repository permissions → <strong>Contents：Read and write</strong>。
         </div>
       </div>
       <div class="row" style="margin-top:14px">
@@ -876,7 +876,7 @@ async function recordSuccessfulAdminLogin(account){
     browserPlatform:device.browserPlatform || '',
     language:device.language || '',
     userAgent:device.userAgent || '',
-    siteVersion:'2026.10.02_v9'
+    siteVersion:'2026.10.02_v10'
   };
 
   CURRENT_LOGIN_AUDIT_ID=entry.id;
@@ -1086,7 +1086,7 @@ function fieldHtml(k,n){
   }
   return `<div class="field"><label>${n}</label><input data-key="${k}" type="number" step="any">${note}</div>`;
 }
-function currentSiteVersion(){return '2026.10.02_v9'}
+function currentSiteVersion(){return '2026.10.02_v10'}
 function stampVersion(){cfg.siteVersion=currentSiteVersion();cfg.lastUpdated=new Date().toISOString().slice(0,10);const el=document.getElementById('versionLabel');if(el)el.textContent=cfg.siteVersion}
 function updateSourceLink(sourceCfg=null){
   const label=document.getElementById('sourceLabelDisplay');
@@ -1225,7 +1225,7 @@ const DEFAULT_LAYOUT_SETTINGS_ADMIN={
   leftColumnPercent:37,
   basicTitle:'一、輸入試算條件',
   resultTitle:'二、比較試算結果',
-  versionNoteText:'2026.10.02_v9：強化後台版面管理，可調整左右欄寬、區塊顯示／列印、結果區順序與標題；稅務計算邏輯不變。',
+  versionNoteText:'2026.10.02_v10：修正 GitHub Pages 前後台網址與 Repository 路徑為 tax-planning；計算與列印規則不變。',
   sections:{
     inputCard:{webVisible:true,printVisible:true}, resultCard:{webVisible:true,printVisible:true},
     summary:{webVisible:true,printVisible:true,order:1}, details:{webVisible:true,printVisible:true,order:2},
@@ -2575,13 +2575,13 @@ async function githubRequest(url, options={}){
 function friendlyGithubError(message){
   const m=String(message||'');
   if(m.includes('Resource not accessible by personal access token')){
-    return 'Token 沒有取得 cronos-2026/tax 的權限。請到 GitHub Fine-grained token，將 Repository access 設為 Only select repositories → cronos-2026/tax，Contents 設為 Read and write。';
+    return 'Token 沒有取得 cronos-2026/tax-planning 的權限。請到 GitHub Fine-grained token，將 Repository access 設為 Only select repositories → cronos-2026/tax-planning，Contents 設為 Read and write。';
   }
   if(m.includes('Bad credentials')){
     return 'Token 無效、已撤銷或貼錯。請重新建立／複製 Fine-grained Token。';
   }
   if(m.includes('Not Found')){
-    return '找不到 cronos-2026/tax 或 tax-config.json。請確認 Repository 與檔案仍存在。';
+    return '找不到 cronos-2026/tax-planning 或 tax-config.json。請確認 Repository 與檔案仍存在。';
   }
   return m;
 }
@@ -2597,7 +2597,7 @@ async function testGithubConnection(){
     const api=`https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${path.split('/').map(encodeURIComponent).join('/')}?ref=${encodeURIComponent(branch)}`;
     const current=await githubRequest(api,{method:'GET'});
     if(!current || !current.sha) throw new Error('無法讀取 tax-config.json');
-    status('Token 測試成功：已可讀取 cronos-2026/tax/tax-config.json。現在可以按「同步更新前台」。');
+    status('Token 測試成功：已可讀取 cronos-2026/tax-planning-planning/tax-config.json。現在可以按「同步更新前台」。');
     syncPendingLoginAuditToGithub(true).catch(()=>{});
   }catch(e){
     status('Token 測試失敗：'+friendlyGithubError(e.message));
