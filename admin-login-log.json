@@ -1,19 +1,5 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-06T11:28:13.077Z",
-  "logs": [
-    {
-      "id": "c4af835a-d448-4ff6-a2a4-3fc97c16f38c",
-      "loginAt": "2026-10-06T11:27:11.738Z",
-      "loginAtLocal": "2026/10/6 19:27:11",
-      "account": "admins",
-      "publicIp": "1.171.212.206",
-      "computerName": "Windows-Edge-DEV-498B12D6D5F6",
-      "deviceId": "DEV-498B12D6D5F6",
-      "browserPlatform": "Edge / Windows",
-      "language": "zh-TW",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
-      "siteVersion": "2026.10.06_v18"
-    }
-  ]
+  "updatedAt": null,
+  "logs": []
 }

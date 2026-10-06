@@ -437,7 +437,7 @@
     </div>
 
     <div class="card"><h2>免稅額／一般與特別扣除額</h2>
-      <div id="deductionGrid" class="grid"><div class="field"><label>每人基本生活費</label><input data-key="basicLivingExpense" type="number" step="any"></div><div class="field"><label>一般免稅額</label><input data-key="exemption" type="number" step="any"></div><div class="field"><label>70歲以上免稅額</label><input data-key="seniorExemption" type="number" step="any"></div><div class="field"><label>標準扣除額－單身</label><input data-key="standardDeductionSingle" type="number" step="any"></div><div class="field"><label>標準扣除額－夫妻</label><input data-key="standardDeductionMarried" type="number" step="any"></div><div class="field"><label>薪資所得特別扣除額</label><input data-key="salarySpecialDeduction" type="number" step="any"></div><div class="field"><label>身心障礙特別扣除額</label><input data-key="disabilitySpecialDeduction" type="number" step="any"></div><div class="field"><label>儲蓄投資特別扣除額上限</label><input data-key="savingsInvestmentDeduction" type="number" step="any"></div><div class="field"><label>教育學費特別扣除額</label><input data-key="educationTuitionDeduction" type="number" step="any"></div><div class="field preschool-admin-group" style="grid-column:span 1">
+      <div id="deductionGrid" class="grid"><div class="field"><label>每人基本生活費</label><input data-key="basicLivingExpense" type="number" step="any"></div><div class="field"><label>一般免稅額</label><input data-key="exemption" type="number" step="any"></div><div class="field"><label>70歲以上免稅額</label><input data-key="seniorExemption" type="number" step="any"></div><div class="field"><label>未成年子女免稅額（含加計）</label><input data-key="minorChildExemption" type="number" step="any"></div><div class="field"><label>標準扣除額－單身</label><input data-key="standardDeductionSingle" type="number" step="any"></div><div class="field"><label>標準扣除額－夫妻</label><input data-key="standardDeductionMarried" type="number" step="any"></div><div class="field"><label>薪資所得特別扣除額</label><input data-key="salarySpecialDeduction" type="number" step="any"></div><div class="field"><label>身心障礙特別扣除額</label><input data-key="disabilitySpecialDeduction" type="number" step="any"></div><div class="field"><label>儲蓄投資特別扣除額上限</label><input data-key="savingsInvestmentDeduction" type="number" step="any"></div><div class="field"><label>教育學費特別扣除額</label><input data-key="educationTuitionDeduction" type="number" step="any"></div><div class="field preschool-admin-group" style="grid-column:span 1">
   <label style="font-weight:800;margin-bottom:8px;display:block">幼兒學前特別扣除</label><div class="muted" style="margin-bottom:10px;line-height:1.5">前台僅輸入「符合資格子女總人數」；1人使用第1名金額，超過1人的部分才使用第2名以上每人金額。</div>
   <div style="display:flex;flex-direction:column;gap:10px">
     <div>
@@ -1073,7 +1073,7 @@ function enterAdmin(){
 document.getElementById('loginBtn').onclick=enterAdmin;
 document.getElementById('loginPassword').addEventListener('keydown',e=>{if(e.key==='Enter')enterAdmin()});
 document.getElementById('logoutBtn').onclick=showLogin;
-const FIELDS={deductions:[['basicLivingExpense','每人基本生活費'],['exemption','一般免稅額'],['seniorExemption','70歲以上免稅額'],['standardDeductionSingle','標準扣除額－單身'],['standardDeductionMarried','標準扣除額－夫妻'],['salarySpecialDeduction','薪資所得特別扣除額'],['disabilitySpecialDeduction','身心障礙特別扣除額'],['savingsInvestmentDeduction','儲蓄投資特別扣除額上限'],['educationTuitionDeduction','教育學費特別扣除額'],['preschoolFirstChildDeduction','幼兒學前－第1名子女'],['preschoolAdditionalChildDeduction','幼兒學前－第2名以上每人'],['longTermCareDeduction','長期照顧特別扣除額'],['houseRentDeduction','房屋租金支出特別扣除額']],other:[['dividendCreditRate','股利抵減率'],['dividendCreditCap','股利抵減上限'],['dividendSeparateRate','股利分開計稅率'],['legalReserveRate','法定盈餘公積提列率'],['businessTaxExemptThreshold','營所稅免徵門檻'],['businessTaxTransitionThreshold','營所稅過渡門檻'],['businessTaxTransitionRate','營所稅過渡區間計算係數'],['businessTaxRate','營所稅率']]};
+const FIELDS={deductions:[['basicLivingExpense','每人基本生活費'],['exemption','一般免稅額'],['seniorExemption','70歲以上免稅額'],['minorChildExemption','未成年子女免稅額（含加計）'],['standardDeductionSingle','標準扣除額－單身'],['standardDeductionMarried','標準扣除額－夫妻'],['salarySpecialDeduction','薪資所得特別扣除額'],['disabilitySpecialDeduction','身心障礙特別扣除額'],['savingsInvestmentDeduction','儲蓄投資特別扣除額上限'],['educationTuitionDeduction','教育學費特別扣除額'],['preschoolFirstChildDeduction','幼兒學前－第1名子女'],['preschoolAdditionalChildDeduction','幼兒學前－第2名以上每人'],['longTermCareDeduction','長期照顧特別扣除額'],['houseRentDeduction','房屋租金支出特別扣除額']],other:[['dividendCreditRate','股利抵減率'],['dividendCreditCap','股利抵減上限'],['dividendSeparateRate','股利分開計稅率'],['legalReserveRate','法定盈餘公積提列率'],['businessTaxExemptThreshold','營所稅免徵門檻'],['businessTaxTransitionThreshold','營所稅過渡門檻'],['businessTaxTransitionRate','營所稅過渡區間計算係數'],['businessTaxRate','營所稅率']]};
 let cfg={};
 let annualPresetsCache=null;
 function fieldHtml(k,n){
@@ -1083,6 +1083,10 @@ function fieldHtml(k,n){
     const high=Number(cfg.businessTaxTransitionThreshold||0).toLocaleString('en-US');
     const pct=(Number(cfg.businessTaxTransitionRate||0)*100).toLocaleString('zh-TW',{maximumFractionDigits:2});
     note=`<div class="muted" style="margin-top:6px;line-height:1.5">適用 ${low}～${high} 元：超過 ${low} 元部分 × ${pct}%</div>`;
+  }
+  if(k==='minorChildExemption'){
+    const base=Number(cfg.exemption||0), amt=Number(cfg.minorChildExemption||0);
+    note=`<div class="muted" style="margin-top:6px;line-height:1.5">${amt>0 ? '加計 '+Math.max(0,amt-base).toLocaleString('en-US')+' 元／人（= 此金額 − 一般免稅額）' : '未填或 0：改依「一般免稅額 × 加計比例」計算（115 年度起 50%）'}</div>`;
   }
   return `<div class="field"><label>${n}</label><input data-key="${k}" type="number" step="any">${note}</div>`;
 }
@@ -1229,7 +1233,7 @@ const DEFAULT_LAYOUT_SETTINGS_ADMIN={
   leftColumnPercent:37,
   basicTitle:'一、輸入試算條件',
   resultTitle:'二、比較試算結果',
-  versionNoteText:'2026.10.06_v18：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示；移除前台頂部功能標籤；列印／PDF 改為實際量測內容高度，自動放大到填滿一頁；「70歲以上」與「未成年子女」可在後台分別設定是否納入計算、是否於前台顯示；「未成年子女人數」欄位移入「已啟用免稅額／特別扣除額」區塊並刪除「其中：」字樣；列印／PDF 時隱藏「立即計算比較」按鈕。',
+  versionNoteText:'2026.10.06_v18：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示；移除前台頂部功能標籤；列印／PDF 改為實際量測內容高度，自動放大到填滿一頁；「70歲以上」與「未成年子女」可在後台分別設定是否納入計算、是否於前台顯示；「未成年子女人數」欄位移入「已啟用免稅額／特別扣除額」區塊並刪除「其中：」字樣；列印／PDF 時隱藏「立即計算比較」按鈕；後台新增「未成年子女免稅額（含加計）」金額欄位。',
   sections:{
     inputCard:{webVisible:true,printVisible:true}, resultCard:{webVisible:true,printVisible:true},
     summary:{webVisible:true,printVisible:true,order:1}, details:{webVisible:true,printVisible:true,order:2},
@@ -1591,7 +1595,12 @@ function renderDeductionSettings(){
     let valueText=`${Number(cfg[key]||0).toLocaleString('en-US')} ${m.unit}`;
     if(key==='minorChildExemption'){
       const rate=cfg.minorChildExemptionBonusRate!=null ? Number(cfg.minorChildExemptionBonusRate) : (Number(cfg.taxYear)>=115 ? 0.5 : 0);
-      valueText=rate>0 ? `${Math.round(Number(cfg.exemption||0)*rate).toLocaleString('en-US')} 元／人（免稅額 × ${Math.round(rate*100)}%）` : '本年度不適用';
+      const mAmt=Number(cfg.minorChildExemption||0), mBase=Number(cfg.exemption||0);
+      if(mAmt>0){
+        valueText=`${Math.max(0,mAmt-mBase).toLocaleString('en-US')} 元／人（未成年子女免稅額 ${mAmt.toLocaleString('en-US')} − 一般免稅額 ${mBase.toLocaleString('en-US')}）`;
+      }else{
+        valueText=rate>0 ? `${Math.round(mBase*rate).toLocaleString('en-US')} 元／人（免稅額 × ${Math.round(rate*100)}%）` : '本年度不適用';
+      }
     }
     const visibleHtml=m.visibleLabel ? `
         <label style=\"display:flex;align-items:center;gap:8px;font-weight:700;margin-top:8px\">

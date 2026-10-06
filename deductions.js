@@ -55,8 +55,23 @@ function minorExemptionBonusRate(){
   return Number(TAX_CONFIG.taxYear) >= 115 ? 0.5 : 0;
 }
 // 前台是否顯示「未成年子女人數」：需納入計算、後台未隱藏，且該年度有加計規則。
+// 每位未成年子女「加計」的免稅額：
+//   後台填了「未成年子女免稅額（含加計）」金額（>0）→ 加計 = 該金額 − 一般免稅額；
+//   未填或為 0 → 沿用「一般免稅額 × 加計比例」（115 年度起 50%，之前 0）。
+function minorExemptionBonusPerPerson(){
+  const base=Number(TAX_CONFIG.exemption)||0;
+  const amt=Number(TAX_CONFIG.minorChildExemption);
+  if(Number.isFinite(amt) && amt>0) return Math.max(0, Math.round(amt-base));
+  return Math.round(base*minorExemptionBonusRate());
+}
+function minorExemptionBonusPercentText(){
+  const base=Number(TAX_CONFIG.exemption)||0;
+  if(base<=0) return '';
+  const pct=minorExemptionBonusPerPerson()/base*100;
+  return (Math.round(pct*10)/10)+'%';
+}
 function minorChildFieldShown(){
-  return minorExemptionEnabled() && deductionVisible('minorChildExemption') && minorExemptionBonusRate() > 0;
+  return minorExemptionEnabled() && deductionVisible('minorChildExemption') && minorExemptionBonusPerPerson() > 0;
 }
 function applyMinorChildFieldVisibility(){
   const field = document.getElementById('minor-children-field');

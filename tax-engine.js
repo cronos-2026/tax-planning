@@ -14,8 +14,7 @@ function calculateProgressiveTax(taxableIncome) {
 
             // 115 年度起：受扶養未成年子女免稅額加計 50%（101,000 → 151,500）。
             const minorCount = Math.min(Math.max(0, Math.floor(minorChildren) || 0), dep);
-            const bonusRate = minorExemptionBonusRate();
-            const minorBonus = minorCount * Math.round(Number(TAX_115.exemption) * bonusRate);
+            const minorBonus = minorCount * minorExemptionBonusPerPerson();
             const exemption = people * TAX_115.exemption + minorBonus;
 
             const standard = isMarried

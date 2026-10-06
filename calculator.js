@@ -197,7 +197,7 @@ function renderTaxComparison(result) {
     const extraItems = d0.optional.items.map(x => x[0] + ' ' + formatCurrency(x[1]) + ' 元');
     if (d0.livingDiff > 0) extraItems.push('基本生活費差額 ' + formatCurrency(d0.livingDiff) + ' 元');
     const exemptionNote = d0.minorBonus > 0
-        ? '（含未成年子女 ' + d0.minorCount + ' 人加計 50%：' + formatCurrency(d0.minorBonus) + ' 元）' : '';
+        ? '（含未成年子女 ' + d0.minorCount + ' 人加計 ' + (minorExemptionBonusPercentText() || '50%') + '：' + formatCurrency(d0.minorBonus) + ' 元）' : '';
     const deductionDetail = extraItems.length
         ? '<span class="result-detail">免稅額' + exemptionNote + '＋標準扣除額 ' +
           formatCurrency(d0.exemption + d0.standard) + ' 元；另加 ' + extraItems.join('、') + '</span>'
