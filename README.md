@@ -1,4 +1,4 @@
-# 創業組織稅負比較工具（2026.10.06_v18）
+# 創業組織稅負比較工具（2026.10.06_v19）
 
 比較「獨資／合夥商號」與「公司」兩種組織型態的全年稅負（綜所稅、營所稅、股利課稅）。
 
@@ -31,4 +31,6 @@
 - 結果僅供概算，不構成稅務意見。
 
 ## 安全原則
-自動抓取的年度資料只寫入候選檔，須管理員在後台核對後，才會同步到正式 `tax-config.json`。後台同步需 Fine-grained Token（僅授權 `cronos-2026/tax-planning` 的 Contents 讀寫），Token 不會寫入檔案。
+自動抓取的年度資料只寫入候選檔，須管理員在後台核對後，才會同步到正式 `tax-config.json`。管理員登入與 GitHub 寫入由 Google Apps Script Web App 處理；GitHub Fine-grained Token 僅存於 GAS Script Properties，限定 `cronos-2026/tax-planning` 的 Contents 讀寫，絕不傳到前端。
+
+主要管理員與次要管理員都可使用後台作業；次要管理員不能新增管理員。帳號設定僅由主要管理員在 GAS Script Properties 管理。部署指引請見 [`GAS-DEPLOY.md`](GAS-DEPLOY.md)。`Cronos` 來源標記不提供原始碼保密或安全保護。
