@@ -6,4 +6,4 @@
 - Added `Cronos` source markers to the public HTML and JavaScript files.
 - Kept the existing GitHub Pages front-end and `/admin` URL.
 
-Deployment notes: configure Script Properties in the intended Google account, deploy the GAS Web App, then set its `/exec` URL in the admin page. Keep the deployed front-end URL unchanged.
+The GAS deployment is recorded in the v20 release notes. The admin page now uses the deployed `/exec` endpoint by default; keep the existing GitHub Pages front-end and `/admin` URL unchanged.
