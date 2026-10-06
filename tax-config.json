@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taxYear": 115,
-  "lastUpdated": "2026-09-05",
-  "sourceLabel": "財政部：公告115年度綜合所得稅及所得基本稅額相關免稅額、扣除額及課稅級距",
+  "lastUpdated": "2026-10-02",
+  "sourceLabel": "財政部：公告115年度綜合所得稅及所得基本稅額相關免稅額、扣除額、課稅級距及計算退職所得定額免稅之金額",
   "basicLivingExpense": 213000,
   "exemption": 101000,
   "seniorExemption": 151500,
@@ -51,12 +51,12 @@
       "diff": 949100
     }
   ],
-  "pageTitle": "創業節稅試算",
-  "pageSubtitle": "準備創業但還不確定要設行號還是開公司？輸入預估營業額，立即看兩種組織型態的稅金差多少。",
+  "pageTitle": "115年度創業組織稅負比較工具",
+  "pageSubtitle": "依營業所得、家庭所得與持有比例，試算商號與公司在不同課稅路徑下的稅負差異。",
   "sourceUrl": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=34b463dc8f1b49f29d440d92a6fd5139",
   "deductionSettings": {
     "basicLivingExpense": {
-      "mode": "compareOnly",
+      "mode": "deduct",
       "locked": true
     },
     "exemption": {
@@ -72,7 +72,8 @@
       "locked": true
     },
     "seniorExemption": {
-      "enabled": false
+      "enabled": false,
+      "visible": true
     },
     "salarySpecialDeduction": {
       "enabled": false
@@ -99,11 +100,78 @@
       "enabled": false
     },
     "minorChildExemption": {
-      "enabled": false
+      "enabled": true,
+      "visible": true
     }
   },
-  "pageNotice": "本頁為試算工具；扶養、長照、學前子女等資格仍應依實際申報條件判斷。若資格不符，試算結果可能與實際申報不同。",
+  "pageNotice": "本工具供稅負情境試算使用；實際申報仍應依當年度法規、申報身分、所得性質及可適用扣除額確認。",
   "showHeaderSection": true,
   "siteVersion": "2026.10.02_v16",
-  "minorChildExemptionRate": 0.5
+  "customFields": [],
+  "customCalculationFields": [],
+  "sourcePublishDate": "2025-11-27",
+  "dataQuality": {
+    "coreIncomeTax": {
+      "status": "official",
+      "taxYear": 115,
+      "sourceLabel": "財政部：公告115年度綜合所得稅及所得基本稅額相關免稅額、扣除額、課稅級距及計算退職所得定額免稅之金額",
+      "sourceUrl": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=34b463dc8f1b49f29d440d92a6fd5139",
+      "sourcePublishDate": "2025-11-27"
+    },
+    "basicLivingExpense": {
+      "status": "provisional",
+      "taxYear": 115,
+      "valueSourceYear": 114,
+      "value": 213000,
+      "sourceLabel": "財政部：公告114年度每人基本生活所需之費用金額",
+      "sourceUrl": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=e14d053486394dc6b28c88aba2912f83",
+      "sourcePublishDate": "2025-11-27",
+      "note": "115年度每人基本生活所需費用尚待財政部公告；目前暫以114年度213,000元作比較顯示。此項在本工具目前僅作比較，不納入應納綜合所得稅計算。"
+    },
+    "autoMonitor": {
+      "enabled": true,
+      "candidatePath": "data/annual-candidate.json",
+      "workflow": "check-tax-annual.yml",
+      "policy": "detect-compare-confirm"
+    }
+  },
+  "layoutSettings": {
+    "leftColumnPercent": 37,
+    "basicTitle": "一、輸入試算條件",
+    "resultTitle": "二、比較試算結果",
+    "versionNoteText": "2026.10.02_v16：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示；移除前台頂部功能標籤；列印／PDF 改為實際量測內容高度，自動放大到填滿一頁；「70歲以上」與「未成年子女」可在後台分別設定是否納入計算、是否於前台顯示。",
+    "sections": {
+      "inputCard": {
+        "webVisible": true,
+        "printVisible": true
+      },
+      "resultCard": {
+        "webVisible": true,
+        "printVisible": true
+      },
+      "summary": {
+        "webVisible": true,
+        "printVisible": true,
+        "order": 1
+      },
+      "details": {
+        "webVisible": true,
+        "printVisible": true,
+        "order": 2
+      },
+      "basicLiving": {
+        "webVisible": true,
+        "printVisible": true,
+        "order": 3
+      },
+      "taxNotes": {
+        "webVisible": true,
+        "printVisible": true
+      },
+      "versionNotes": {
+        "webVisible": true,
+        "printVisible": false
+      }
+    }
+  }
 }

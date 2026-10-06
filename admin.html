@@ -250,7 +250,7 @@
     <div class="top">
       <div>
         <h1>稅務參數後台管理</h1>
-        <div class="muted">正式前台參數檔：<code>tax-config.json</code>　｜　網站版本：<strong id="versionLabel">2026.09.22_v3</strong>　｜　GitHub 同步優化版</div>
+        <div class="muted">正式前台參數檔：<code>tax-config.json</code>　｜　網站版本：<strong id="versionLabel">2026.10.02_v16</strong>　｜　GitHub 同步優化版</div>
       </div>
       <button class="btn logout" id="logoutBtn">登出</button>
     </div>
@@ -294,8 +294,11 @@
     <div class="card">
       <h2>版面設計</h2>
       <div class="muted" style="margin-bottom:12px;line-height:1.6">
-        此區只負責版面設計，與長照、身心障礙、教育學費、幼兒學前等稅務欄位完全分開，也與下方「新增計算欄位」完全分開。這裡的設定永遠不參與計算。列印方式仍使用既有預定規則，不因版面設計而改變。
+        此區只負責版面設計，永遠不參與稅額計算。可調整左右欄比例、區塊標題、網頁／列印 PDF 顯示，以及右側結果區塊順序。
       </div>
+      <div id="layoutSettingsPanel" style="border:1px solid #dbe3ea;border-radius:12px;padding:14px;margin-bottom:16px;background:#f8fafc"></div>
+      <h3 style="margin:0 0 10px;font-size:16px">自訂版面區塊</h3>
+      <div class="muted" style="margin-bottom:10px">下列自訂區塊可放在標題上方、標題下方、左側資訊或右側計算區；可使用上下按鈕調整自訂區塊順序。</div>
       <div id="customFieldsList"></div>
       <div class="row" style="margin-top:12px">
         <button class="btn secondary" id="addCustomFieldBtn" type="button">＋ 新增版面區塊</button>
@@ -464,7 +467,7 @@
     <div class="card"><h2>前台計算項目啟用設定</h2>
       <p class="muted" style="line-height:1.7">
         此區不是新增自訂名稱。請從上方既有的免稅額／扣除額項目選擇是否啟用。
-        <strong>勾選「啟用」後，前台會自動新增對應欄位，並同步納入綜合所得稅計算。</strong>
+        <strong>勾選「啟用」後，前台會自動新增對應欄位，並同步納入綜合所得稅計算。</strong>「70歲以上」與「未成年子女」另有「前台顯示」選項：取消勾選只會隱藏前台欄位，不影響計算。
       </p>
       <div class="mt-3 flex flex-wrap gap-2">
         <button id="enable-all-deductions-btn" type="button"
@@ -572,16 +575,16 @@
 
 <div class="card"><h2>GitHub 同步更新前台</h2>
       <div class="status" style="margin:10px 0 14px;line-height:1.9">
-        前台：<strong>https://cronos-2026.github.io/tax/</strong><br>
-        後台：<strong>https://cronos-2026.github.io/tax/admin.html</strong>
+        前台：<strong>https://cronos-2026.github.io/tax-planning/</strong><br>
+        後台：<strong>https://cronos-2026.github.io/tax-planning/admin</strong>
       </div>
       <p class="muted" style="line-height:1.7">
-        此版本已固定同步到 <strong>cronos-2026/tax</strong> 的 <code>tax-config.json</code>，避免誤選 Repository。<br>
-        修改後可先測試 Token，再按「同步更新前台」。GitHub Pages 完成部署後，前台重新整理即可讀取新參數。
+        <strong>暫時調整：</strong>按「暫時套用到目前瀏覽器」後，只會在<strong>當下開啟此網頁的電腦／瀏覽器</strong>顯示；哪一台電腦、哪個瀏覽器開啟後台並套用，就只影響該裝置／瀏覽器。不同電腦、不同瀏覽器、無痕視窗不會共用此暫時設定。<br>
+        <strong>永久調整：</strong>仍須輸入 GitHub Token，並按「同步更新前台」寫入 <code>tax-config.json</code>。GitHub Pages 部署完成後，所有使用者重新整理前台才會讀取新的正式參數。
       </p>
       <div id="githubFixedTargetFields" class="grid" style="display:none!important" aria-hidden="true">
         <div class="field"><label>GitHub Owner</label><input id="ghOwner" type="text" value="cronos-2026" readonly></div>
-        <div class="field"><label>Repository</label><input id="ghRepo" type="text" value="tax" readonly></div>
+        <div class="field"><label>Repository</label><input id="ghRepo" type="text" value="tax-planning" readonly></div>
         <div class="field"><label>Branch</label><input id="ghBranch" type="text" value="main" readonly></div>
         <div class="field"><label>前台參數檔路徑</label><input id="ghPath" type="text" value="tax-config.json" readonly></div>
         <div class="field"><label>登入記錄檔路徑</label><input id="ghAuditPath" type="text" value="admin-login-log.json" readonly></div>
@@ -590,12 +593,14 @@
         <label>GitHub Fine-grained Token</label>
         <input id="ghToken" type="password" autocomplete="off" placeholder="貼上 GitHub Token（只保留在目前瀏覽器頁面，不寫入 tax-config.json）">
         <div class="muted" style="margin-top:6px;line-height:1.6">
-          Token 必須授權 <strong>cronos-2026/tax</strong>，Repository permissions → <strong>Contents：Read and write</strong>。
+          Token 必須授權 <strong>cronos-2026/tax-planning</strong>，Repository permissions → <strong>Contents：Read and write</strong>。
         </div>
       </div>
       <div class="row" style="margin-top:14px">
+        <button class="btn secondary" id="applyTempBtn" type="button">暫時套用到目前瀏覽器</button>
+        <button class="btn secondary" id="clearTempBtn" type="button">清除目前瀏覽器暫時設定</button>
         <button class="btn secondary" id="testGithubBtn">測試 GitHub Token</button>
-        <button class="btn success" id="syncGithubBtn">同步更新前台</button>
+        <button class="btn success" id="syncGithubBtn">永久同步更新前台</button>
         <button class="btn secondary" id="saveLocalBtn">下載 tax-config.json 備份</button>
       </div>
       <div id="status" class="status">尚未同步。</div>
@@ -614,6 +619,7 @@ const LOGIN_DEVICE_ID_KEY='tax_admin_device_id_v1';
 let CURRENT_LOGIN_AUDIT_ID='';
 let CURRENT_ADMIN_ACCOUNT='';
 const DESIGNER_SESSION_KEY='tax_admin_designer_session_v1';
+const TEMP_CONFIG_LOCAL_KEY='tax_temp_config_override_v1';
 
 function getJsonLocal(key,fallback=[]){
   try{
@@ -1067,7 +1073,7 @@ function enterAdmin(){
 document.getElementById('loginBtn').onclick=enterAdmin;
 document.getElementById('loginPassword').addEventListener('keydown',e=>{if(e.key==='Enter')enterAdmin()});
 document.getElementById('logoutBtn').onclick=showLogin;
-const FIELDS={deductions:[['basicLivingExpense','每人基本生活費'],['exemption','一般免稅額'],['seniorExemption','70歲以上免稅額'],['minorChildExemption','未成年子女免稅額加計率'],['standardDeductionSingle','標準扣除額－單身'],['standardDeductionMarried','標準扣除額－夫妻'],['salarySpecialDeduction','薪資所得特別扣除額'],['disabilitySpecialDeduction','身心障礙特別扣除額'],['savingsInvestmentDeduction','儲蓄投資特別扣除額上限'],['educationTuitionDeduction','教育學費特別扣除額'],['preschoolFirstChildDeduction','幼兒學前－第1名子女'],['preschoolAdditionalChildDeduction','幼兒學前－第2名以上每人'],['longTermCareDeduction','長期照顧特別扣除額'],['houseRentDeduction','房屋租金支出特別扣除額']],other:[['dividendCreditRate','股利抵減率'],['dividendCreditCap','股利抵減上限'],['dividendSeparateRate','股利分開計稅率'],['legalReserveRate','法定盈餘公積提列率'],['businessTaxExemptThreshold','營所稅免徵門檻'],['businessTaxTransitionThreshold','營所稅過渡門檻'],['businessTaxTransitionRate','營所稅過渡區間計算係數'],['businessTaxRate','營所稅率']]};
+const FIELDS={deductions:[['basicLivingExpense','每人基本生活費'],['exemption','一般免稅額'],['seniorExemption','70歲以上免稅額'],['standardDeductionSingle','標準扣除額－單身'],['standardDeductionMarried','標準扣除額－夫妻'],['salarySpecialDeduction','薪資所得特別扣除額'],['disabilitySpecialDeduction','身心障礙特別扣除額'],['savingsInvestmentDeduction','儲蓄投資特別扣除額上限'],['educationTuitionDeduction','教育學費特別扣除額'],['preschoolFirstChildDeduction','幼兒學前－第1名子女'],['preschoolAdditionalChildDeduction','幼兒學前－第2名以上每人'],['longTermCareDeduction','長期照顧特別扣除額'],['houseRentDeduction','房屋租金支出特別扣除額']],other:[['dividendCreditRate','股利抵減率'],['dividendCreditCap','股利抵減上限'],['dividendSeparateRate','股利分開計稅率'],['legalReserveRate','法定盈餘公積提列率'],['businessTaxExemptThreshold','營所稅免徵門檻'],['businessTaxTransitionThreshold','營所稅過渡門檻'],['businessTaxTransitionRate','營所稅過渡區間計算係數'],['businessTaxRate','營所稅率']]};
 let cfg={};
 let annualPresetsCache=null;
 function fieldHtml(k,n){
@@ -1080,7 +1086,7 @@ function fieldHtml(k,n){
   }
   return `<div class="field"><label>${n}</label><input data-key="${k}" type="number" step="any">${note}</div>`;
 }
-function currentSiteVersion(){const d=new Date();return `v${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}`}
+function currentSiteVersion(){return '2026.10.02_v16'}
 function stampVersion(){cfg.siteVersion=currentSiteVersion();cfg.lastUpdated=new Date().toISOString().slice(0,10);const el=document.getElementById('versionLabel');if(el)el.textContent=cfg.siteVersion}
 function updateSourceLink(sourceCfg=null){
   const label=document.getElementById('sourceLabelDisplay');
@@ -1156,6 +1162,7 @@ function render(){
   renderBrackets();
   syncPreschoolDeductionEnable();
   renderDeductionSettings();
+  renderLayoutSettingsAdmin();
   renderCustomFieldsAdmin();
 }
 function renderBrackets(){
@@ -1183,8 +1190,8 @@ function renderBrackets(){
 }
 
 const OPTIONAL_DEDUCTION_META = {
-  seniorExemption:{label:'70歲以上免稅額', unit:'元／人', note:'前台新增「70歲以上受扶養親屬人數」，以一般免稅額與高齡免稅額差額計算。'},
-  minorChildExemption:{label:'未成年子女免稅額加計50%', unit:'一般免稅額 × 50%', note:'前台可選擇是否顯示「未成年子女人數」；啟用後納入免稅額加計計算。'},
+  seniorExemption:{label:'70歲以上免稅額', unit:'元／人', note:'前台新增「70歲以上受扶養直系尊親屬人數」，以一般免稅額與高齡免稅額差額計算。', visibleLabel:'前台顯示「70歲以上受扶養直系尊親屬人數」'},
+  minorChildExemption:{label:'未成年子女免稅額加計 50%', unit:'元／人（加計）', note:'前台新增「其中：未成年子女人數」；受扶養未成年子女每人免稅額加計 50%（115 年度起）。', visibleLabel:'前台顯示「未成年子女人數」', defaultEnabled:true},
   salarySpecialDeduction:{label:'薪資所得特別扣除額', unit:'元／人上限', note:'前台顯示自動計算欄；依本人及配偶薪資分別計算，每人以上方設定值為上限。'},
   disabilitySpecialDeduction:{label:'身心障礙特別扣除額', unit:'元／人', note:'前台新增符合資格人數欄位。'},
   savingsInvestmentDeduction:{label:'儲蓄投資特別扣除額上限', unit:'元／戶上限', note:'前台新增實際可扣除金額欄位，最高以上方設定值為限。'},
@@ -1196,12 +1203,14 @@ const OPTIONAL_DEDUCTION_META = {
 };
 function ensureDeductionSettings(){
   cfg.deductionSettings = cfg.deductionSettings || {};
-  if(cfg.minorChildExemptionRate == null) cfg.minorChildExemptionRate=0.5;
-  Object.keys(OPTIONAL_DEDUCTION_META).forEach(k=>{
+  Object.entries(OPTIONAL_DEDUCTION_META).forEach(([k,m])=>{
+    const defEnabled=!!m.defaultEnabled;
     if(!cfg.deductionSettings[k] || typeof cfg.deductionSettings[k] !== 'object'){
-      cfg.deductionSettings[k]={enabled:false};
+      cfg.deductionSettings[k]={enabled:defEnabled};
     }
-    if(cfg.deductionSettings[k].enabled == null) cfg.deductionSettings[k].enabled=false;
+    if(cfg.deductionSettings[k].enabled == null) cfg.deductionSettings[k].enabled=defEnabled;
+    // 具有「前台顯示／隱藏」控制的項目：預設顯示
+    if(m.visibleLabel && cfg.deductionSettings[k].visible == null) cfg.deductionSettings[k].visible=true;
   });
 }
 
@@ -1215,6 +1224,71 @@ function syncPreschoolDeductionEnable(){
   more.enabled=enabled;
 }
 
+
+const DEFAULT_LAYOUT_SETTINGS_ADMIN={
+  leftColumnPercent:37,
+  basicTitle:'一、輸入試算條件',
+  resultTitle:'二、比較試算結果',
+  versionNoteText:'2026.10.02_v16：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示；移除前台頂部功能標籤；列印／PDF 改為實際量測內容高度，自動放大到填滿一頁；「70歲以上」與「未成年子女」可在後台分別設定是否納入計算、是否於前台顯示。',
+  sections:{
+    inputCard:{webVisible:true,printVisible:true}, resultCard:{webVisible:true,printVisible:true},
+    summary:{webVisible:true,printVisible:true,order:1}, details:{webVisible:true,printVisible:true,order:2},
+    basicLiving:{webVisible:true,printVisible:true,order:3}, taxNotes:{webVisible:true,printVisible:true},
+    versionNotes:{webVisible:true,printVisible:false}
+  }
+};
+function ensureLayoutSettings(){
+  const raw=cfg.layoutSettings||{};
+  cfg.layoutSettings={...DEFAULT_LAYOUT_SETTINGS_ADMIN,...raw,sections:{...DEFAULT_LAYOUT_SETTINGS_ADMIN.sections,...(raw.sections||{})}};
+  Object.keys(DEFAULT_LAYOUT_SETTINGS_ADMIN.sections).forEach(k=>{
+    cfg.layoutSettings.sections[k]={...DEFAULT_LAYOUT_SETTINGS_ADMIN.sections[k],...(raw.sections?.[k]||{})};
+  });
+}
+function renderLayoutSettingsAdmin(){
+  ensureLayoutSettings();
+  const box=document.getElementById('layoutSettingsPanel'); if(!box) return;
+  const ls=cfg.layoutSettings;
+  const labels={inputCard:'左側資訊區',resultCard:'右側計算區',summary:'試算摘要卡',details:'詳細計算表',basicLiving:'基本生活費說明',taxNotes:'下方稅務說明',versionNotes:'版本說明'};
+  box.innerHTML='';
+
+  const title=document.createElement('div');
+  title.innerHTML='<strong>主要版面設定</strong><div class="muted" style="margin-top:4px">維持「左資訊／右計算」架構；右欄會自動補足 100%。列印與另存 PDF 仍採 A4 橫式一頁優先。</div>';
+  box.appendChild(title);
+
+  const grid=document.createElement('div'); grid.className='grid'; grid.style.marginTop='12px';
+  const left=document.createElement('div'); left.className='field'; left.innerHTML='<label>左側資訊欄寬度（30～45%）</label>';
+  const leftInput=document.createElement('input'); leftInput.type='number'; leftInput.min='30'; leftInput.max='45'; leftInput.step='1'; leftInput.value=ls.leftColumnPercent||37;
+  const leftHint=document.createElement('div'); leftHint.className='muted'; leftHint.style.marginTop='5px';
+  const syncLeft=()=>{const v=Math.min(45,Math.max(30,Number(leftInput.value)||37));ls.leftColumnPercent=v;leftHint.textContent=`左 ${v}%／右 ${100-v}%`;};
+  leftInput.oninput=syncLeft; syncLeft(); left.append(leftInput,leftHint); grid.appendChild(left);
+
+  [['basicTitle','左側區塊標題'],['resultTitle','右側區塊標題']].forEach(([key,label])=>{
+    const f=document.createElement('div');f.className='field';const l=document.createElement('label');l.textContent=label;
+    const i=document.createElement('input');i.type='text';i.value=ls[key]||DEFAULT_LAYOUT_SETTINGS_ADMIN[key];i.oninput=()=>{ls[key]=i.value;};f.append(l,i);grid.appendChild(f);
+  });
+  box.appendChild(grid);
+
+  const vfield=document.createElement('div');vfield.className='field';vfield.style.marginTop='10px';
+  const vl=document.createElement('label');vl.textContent='版本說明文字';
+  const vt=document.createElement('textarea');vt.rows=2;vt.value=ls.versionNoteText||'';vt.oninput=()=>{ls.versionNoteText=vt.value;};vfield.append(vl,vt);box.appendChild(vfield);
+
+  const table=document.createElement('table');table.style.marginTop='14px';
+  table.innerHTML='<thead><tr><th>主要區塊</th><th>網頁顯示</th><th>列印/PDF</th><th>右側順序</th></tr></thead><tbody></tbody>';
+  const tbody=table.querySelector('tbody');
+  Object.keys(labels).forEach(key=>{
+    const st=ls.sections[key]; const tr=document.createElement('tr');
+    const name=document.createElement('td');name.innerHTML=`<strong>${labels[key]}</strong>`;
+    const web=document.createElement('td');const wc=document.createElement('input');wc.type='checkbox';wc.checked=st.webVisible!==false;wc.onchange=()=>{st.webVisible=wc.checked;};web.appendChild(wc);
+    const pr=document.createElement('td');const pc=document.createElement('input');pc.type='checkbox';pc.checked=st.printVisible!==false;pc.onchange=()=>{st.printVisible=pc.checked;};pr.appendChild(pc);
+    const ord=document.createElement('td');
+    if(['summary','details','basicLiving'].includes(key)){
+      const sel=document.createElement('select');[[1,'第1'],[2,'第2'],[3,'第3']].forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;o.selected=Number(st.order||99)===v;sel.appendChild(o)});sel.onchange=()=>{st.order=Number(sel.value);};ord.appendChild(sel);
+    }else{ord.textContent='—';ord.className='muted';}
+    tr.append(name,web,pr,ord);tbody.appendChild(tr);
+  });
+  box.appendChild(table);
+  const note=document.createElement('div');note.className='note';note.style.marginTop='10px';note.innerHTML='<strong>注意：</strong>隱藏只影響呈現，不會停止或更動任何稅務計算。若同時把左／右主區塊隱藏，仍可再從後台勾選恢復。';box.appendChild(note);
+}
 
 function ensureCustomFields(){
   if(!Array.isArray(cfg.customFields)) cfg.customFields=[];
@@ -1264,6 +1338,8 @@ function renderCustomFieldsAdmin(){
     enabled.onchange=()=>{item.enabled=enabled.checked;};
     enabledLabel.append(enabled,document.createTextNode('顯示'));
 
+    const up=document.createElement('button'); up.type='button'; up.className='btn secondary'; up.textContent='↑'; up.disabled=index===0; up.onclick=()=>{[cfg.customFields[index-1],cfg.customFields[index]]=[cfg.customFields[index],cfg.customFields[index-1]];renderCustomFieldsAdmin();};
+    const down=document.createElement('button'); down.type='button'; down.className='btn secondary'; down.textContent='↓'; down.disabled=index===cfg.customFields.length-1; down.onclick=()=>{[cfg.customFields[index+1],cfg.customFields[index]]=[cfg.customFields[index],cfg.customFields[index+1]];renderCustomFieldsAdmin();};
     const del=document.createElement('button');
     del.type='button';
     del.className='btn danger';
@@ -1273,7 +1349,7 @@ function renderCustomFieldsAdmin(){
       renderCustomFieldsAdmin();
     };
 
-    head.append(title,enabledLabel,del);
+    head.append(title,enabledLabel,up,down,del);
 
     const grid=document.createElement('div');
     grid.className='custom-block-admin-grid';
@@ -1512,23 +1588,61 @@ function renderDeductionSettings(){
   Object.entries(OPTIONAL_DEDUCTION_META).forEach(([key,m])=>{
     const tr=document.createElement('tr');
     const st=cfg.deductionSettings[key];
+    let valueText=`${Number(cfg[key]||0).toLocaleString('en-US')} ${m.unit}`;
+    if(key==='minorChildExemption'){
+      const rate=cfg.minorChildExemptionBonusRate!=null ? Number(cfg.minorChildExemptionBonusRate) : (Number(cfg.taxYear)>=115 ? 0.5 : 0);
+      valueText=rate>0 ? `${Math.round(Number(cfg.exemption||0)*rate).toLocaleString('en-US')} 元／人（免稅額 × ${Math.round(rate*100)}%）` : '本年度不適用';
+    }
+    const visibleHtml=m.visibleLabel ? `
+        <label style=\"display:flex;align-items:center;gap:8px;font-weight:700;margin-top:8px\">
+          <input type=\"checkbox\" class=\"deduction-visible\" ${st.visible!==false?'checked':''}> ${m.visibleLabel}
+        </label>
+        <div class=\"muted\" style=\"font-size:12px;margin-top:2px\">取消勾選＝前台隱藏。隱藏只影響前台顯示，不影響計算。</div>` : '';
     tr.innerHTML=`
       <td><strong>${m.label}</strong></td>
-      <td>${Number(cfg[key]||0).toLocaleString('en-US')} ${m.unit}</td>
-      <td><label style="display:flex;align-items:center;gap:8px;font-weight:700">
-        <input type="checkbox" class="deduction-enable" ${st.enabled?'checked':''}> 啟用
-      </label></td>
-      <td class="muted">${m.note}</td>`;
+      <td>${valueText}</td>
+      <td><label style=\"display:flex;align-items:center;gap:8px;font-weight:700\">
+        <input type=\"checkbox\" class=\"deduction-enable\" ${st.enabled?'checked':''}> ${m.visibleLabel?'啟用（納入計算）':'啟用'}
+      </label>${visibleHtml}</td>
+      <td class=\"muted\">${m.note}</td>`;
     tr.querySelector('.deduction-enable').onchange=e=>{
       st.enabled=e.target.checked;
-      status(`${m.label}：${st.enabled?'已啟用，前台顯示「未成年子女人數」並加入計算':'已停用，前台隱藏「未成年子女人數」且不加入計算'}`);
+      status(`${m.label}：${st.enabled?(m.visibleLabel?'已啟用並納入計算':'已啟用，前台將新增欄位並加入計算'):(m.visibleLabel?'已停用，前台不顯示也不計算':'已停用，前台不顯示也不計算')}`);
+    };
+    const vis=tr.querySelector('.deduction-visible');
+    if(vis) vis.onchange=e=>{
+      st.visible=e.target.checked;
+      status(`${m.label}：前台${st.visible?'顯示':'隱藏'}欄位（僅影響前台顯示，不影響計算）`);
     };
     body.appendChild(tr);
   });
 }
 
 function esc(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-async function loadConfig(){cfg=await fetch('./tax-config.json?ts='+Date.now()).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()});render();status('已載入正式參數。')}
+function getTemporaryConfig(){
+  try{
+    const raw=localStorage.getItem(TEMP_CONFIG_LOCAL_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }catch{
+    return null;
+  }
+}
+function applyTemporaryConfigToBrowser(){
+  stampVersion();
+  localStorage.setItem(TEMP_CONFIG_LOCAL_KEY,JSON.stringify(cfg));
+  status('暫時設定已套用：只會在當下開啟此網頁的電腦／瀏覽器顯示。其他電腦、其他瀏覽器與無痕視窗不受影響。');
+}
+function clearTemporaryConfigFromBrowser(){
+  localStorage.removeItem(TEMP_CONFIG_LOCAL_KEY);
+  status('已清除此電腦／瀏覽器的暫時設定。重新整理前台後會回到 GitHub 上的正式參數。');
+}
+async function loadConfig(){
+  const official=await fetch('./tax-config.json?ts='+Date.now()).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()});
+  const temp=getTemporaryConfig();
+  cfg=temp ? temp : official;
+  render();
+  status(temp ? '已載入目前瀏覽器的暫時設定。若要回到正式參數，請按「清除目前瀏覽器暫時設定」。' : '已載入正式參數。');
+}
 function status(t){document.getElementById('status').textContent=t}
 function download(){stampVersion();const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(cfg,null,2)],{type:'application/json'}));a.download='tax-config.json';a.click();URL.revokeObjectURL(a.href)}
 
@@ -2330,12 +2444,14 @@ function mergeExternalAnnualPreset(preset, selectedYear){
   const keepVersion=cfg.siteVersion||currentSiteVersion();
   const keepCustomFields=structuredClone(cfg.customFields||[]);
   const keepCustomCalculationFields=structuredClone(cfg.customCalculationFields||[]);
+  const keepLayoutSettings=structuredClone(cfg.layoutSettings||DEFAULT_LAYOUT_SETTINGS_ADMIN);
 
   cfg=structuredClone(preset);
   cfg.taxYear=Number(selectedYear);
   cfg.siteVersion=keepVersion;
   cfg.customFields=keepCustomFields;
   cfg.customCalculationFields=keepCustomCalculationFields;
+  cfg.layoutSettings=keepLayoutSettings;
 
   // 若外部資料沒有前台顯示設定，沿用目前既有設定
   if(!cfg.deductionSettings){
@@ -2402,10 +2518,10 @@ async function loadAnnualPresetFromUrl(){
     updateSourceLink(cfg);
 
     showAnnualPresetUrlStatus(
-      `已成功從網址讀取 ${selectedYear} 年度參數。請先檢查下方各項金額與稅率，確認無誤後再同步更新前台。`,
+      `已成功從網址讀取 ${selectedYear} 年度參數。請先檢查下方各項金額與稅率，確認無誤後，可選擇暫時套用到目前瀏覽器，或使用 GitHub Token 永久同步更新前台。`,
       'success'
     );
-    status(`已從外部網址讀取 ${selectedYear} 年度參數；尚未寫入 GitHub。`);
+    status(`已從外部網址讀取 ${selectedYear} 年度參數；尚未寫入 GitHub；若只要目前瀏覽器測試，可按「暫時套用到目前瀏覽器」。`);
   }catch(e){
     showAnnualPresetUrlStatus('讀取失敗：'+e.message,'error');
 
@@ -2432,9 +2548,15 @@ async function applyPreset(){
     annualPresetsCache=all;
     if(!all[y]) throw new Error(`尚未建立 ${y} 年度參數。請先在 annual-presets.json 新增 ${y} 年度資料。`);
     const keepVersion=cfg.siteVersion||currentSiteVersion();
+    const keepLayoutSettings=structuredClone(cfg.layoutSettings||DEFAULT_LAYOUT_SETTINGS_ADMIN);
+    const keepCustomFields=structuredClone(cfg.customFields||[]);
+    const keepCustomCalculationFields=structuredClone(cfg.customCalculationFields||[]);
     cfg=structuredClone(all[y]);
     cfg.taxYear=Number(y);
     cfg.siteVersion=keepVersion;
+    cfg.layoutSettings=keepLayoutSettings;
+    cfg.customFields=keepCustomFields;
+    cfg.customCalculationFields=keepCustomCalculationFields;
     render();
     status(`已讀取 ${y} 年度參數。檢查無誤後可下載更新後的 tax-config.json。`);
   }catch(e){status('讀取失敗：'+e.message)}
@@ -2472,13 +2594,13 @@ async function githubRequest(url, options={}){
 function friendlyGithubError(message){
   const m=String(message||'');
   if(m.includes('Resource not accessible by personal access token')){
-    return 'Token 沒有取得 cronos-2026/tax 的權限。請到 GitHub Fine-grained token，將 Repository access 設為 Only select repositories → cronos-2026/tax，Contents 設為 Read and write。';
+    return 'Token 沒有取得 cronos-2026/tax-planning 的權限。請到 GitHub Fine-grained token，將 Repository access 設為 Only select repositories → cronos-2026/tax-planning，Contents 設為 Read and write。';
   }
   if(m.includes('Bad credentials')){
     return 'Token 無效、已撤銷或貼錯。請重新建立／複製 Fine-grained Token。';
   }
   if(m.includes('Not Found')){
-    return '找不到 cronos-2026/tax 或 tax-config.json。請確認 Repository 與檔案仍存在。';
+    return '找不到 cronos-2026/tax-planning 或 tax-config.json。請確認 Repository 與檔案仍存在。';
   }
   return m;
 }
@@ -2494,7 +2616,7 @@ async function testGithubConnection(){
     const api=`https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${path.split('/').map(encodeURIComponent).join('/')}?ref=${encodeURIComponent(branch)}`;
     const current=await githubRequest(api,{method:'GET'});
     if(!current || !current.sha) throw new Error('無法讀取 tax-config.json');
-    status('Token 測試成功：已可讀取 cronos-2026/tax/tax-config.json。現在可以按「同步更新前台」。');
+    status('Token 測試成功：已可讀取 cronos-2026/tax-planning 的 tax-config.json。現在可以按「同步更新前台」。');
     syncPendingLoginAuditToGithub(true).catch(()=>{});
   }catch(e){
     status('Token 測試失敗：'+friendlyGithubError(e.message));
@@ -2544,6 +2666,8 @@ async function syncToGithub(){
 }
 
 document.getElementById('reloadBtn').onclick=()=>loadConfig().catch(e=>status('讀取失敗：'+e.message));
+document.getElementById('applyTempBtn').onclick=applyTemporaryConfigToBrowser;
+document.getElementById('clearTempBtn').onclick=clearTemporaryConfigFromBrowser;
 document.getElementById('presetBtn').onclick=applyPreset;
 document.getElementById('saveLocalBtn').onclick=download;
 document.getElementById('testGithubBtn').onclick=testGithubConnection;

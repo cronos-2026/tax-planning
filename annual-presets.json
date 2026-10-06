@@ -73,7 +73,8 @@
         "locked": true
       },
       "seniorExemption": {
-        "enabled": false
+        "enabled": false,
+        "visible": true
       },
       "salarySpecialDeduction": {
         "enabled": false
@@ -98,6 +99,10 @@
       },
       "houseRentDeduction": {
         "enabled": false
+      },
+      "minorChildExemption": {
+        "enabled": true,
+        "visible": true
       }
     },
     "customFields": [],
@@ -188,7 +193,8 @@
         "locked": true
       },
       "seniorExemption": {
-        "enabled": false
+        "enabled": false,
+        "visible": true
       },
       "salarySpecialDeduction": {
         "enabled": false
@@ -213,6 +219,10 @@
       },
       "houseRentDeduction": {
         "enabled": false
+      },
+      "minorChildExemption": {
+        "enabled": true,
+        "visible": true
       }
     },
     "customFields": [],
@@ -303,7 +313,8 @@
         "locked": true
       },
       "seniorExemption": {
-        "enabled": false
+        "enabled": false,
+        "visible": true
       },
       "salarySpecialDeduction": {
         "enabled": false
@@ -328,6 +339,10 @@
       },
       "houseRentDeduction": {
         "enabled": false
+      },
+      "minorChildExemption": {
+        "enabled": true,
+        "visible": true
       }
     },
     "customFields": [],
