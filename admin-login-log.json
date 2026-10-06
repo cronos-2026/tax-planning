@@ -1,45 +1,5 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-06T01:24:47.556Z",
-  "logs": [
-    {
-      "id": "b574935c-c56f-4b33-a25e-8b3d22b26749",
-      "loginAt": "2026-10-02T01:30:41.942Z",
-      "loginAtLocal": "2026/10/2 09:30:41",
-      "account": "admins",
-      "publicIp": "118.160.0.239",
-      "computerName": "Windows-Edge-DEV-B4BE727CC049",
-      "deviceId": "DEV-B4BE727CC049",
-      "browserPlatform": "Edge / Windows",
-      "language": "zh-TW",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
-      "siteVersion": "2026.10.02_v10"
-    },
-    {
-      "id": "bc29a5b4-301b-46cf-af1a-5aca6f2e6e6c",
-      "loginAt": "2026-10-02T01:31:01.211Z",
-      "loginAtLocal": "2026/10/2 09:31:01",
-      "account": "admin",
-      "publicIp": "118.160.0.239",
-      "computerName": "Windows-Edge-DEV-B4BE727CC049",
-      "deviceId": "DEV-B4BE727CC049",
-      "browserPlatform": "Edge / Windows",
-      "language": "zh-TW",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
-      "siteVersion": "2026.10.02_v10"
-    },
-    {
-      "id": "69d54af5-9a38-40a1-801c-b6a70f20f313",
-      "loginAt": "2026-10-06T01:24:13.412Z",
-      "loginAtLocal": "2026/10/6 09:24:13",
-      "account": "admins",
-      "publicIp": "114.24.64.253",
-      "computerName": "Windows-Edge-DEV-B4BE727CC049",
-      "deviceId": "DEV-B4BE727CC049",
-      "browserPlatform": "Edge / Windows",
-      "language": "zh-TW",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
-      "siteVersion": "2026.10.02_v10"
-    }
-  ]
+  "updatedAt": null,
+  "logs": []
 }
