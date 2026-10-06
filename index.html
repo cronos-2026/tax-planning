@@ -973,6 +973,14 @@
 </div>
 <p class="text-xs text-slate-500">基本生活費計算人數固定先含本人 1 人；已婚再自動加配偶 1 人，另加本欄扶養人數。</p>
 </div>
+<div class="flex flex-col gap-2.5">
+<label class="text-lg font-semibold text-slate-700" for="minor-children">其中：未成年子女人數</label>
+<div class="relative">
+<input class="flex h-10 w-full rounded-md border-2 border-slate-300 bg-white px-3 py-1.5 text-base shadow-sm focus:outline-none focus:border-slate-500" id="minor-children" min="0" type="number" value="0"/>
+<span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm text-slate-500">人</span>
+</div>
+<p class="text-xs text-slate-500">受扶養且未滿 18 歲的子女（含幼兒學前子女），自 115 年度起每人免稅額加計 50%。須先計入上方「扶養人數」，不得超過扶養人數。</p>
+</div>
 <!-- 115 年度個人所得資料 -->
 <div class="border-t border-slate-100 pt-5">
 <h4 class="text-base font-semibold text-slate-700 mb-4" id="personal-income-year-title">個人所得資料</h4>
@@ -1014,7 +1022,7 @@
 </div>
 </div>
 <div class="flex flex-col gap-2.5">
-<label class="text-lg font-semibold text-slate-700" for="margin">預估書審率 (淨利率)</label>
+<label class="text-lg font-semibold text-slate-700" for="margin">預估書審率（淨利率）</label>
 <div class="relative">
 <input class="flex h-10 w-full rounded-md border-2 border-slate-300 bg-white px-3 py-1.5 text-base shadow-sm focus:outline-none focus:border-slate-500 pr-8" id="margin" max="100" min="1" type="number" value="6"/>
 <span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm text-slate-500">%</span>
@@ -1057,7 +1065,7 @@
 <span class="text-sm text-slate-500 self-center" id="save-status"></span>
 </div>
 </div>
-<p class="text-sm text-slate-500 text-center" id="print-footer-note">以 115 年度 (2026) 稅率、免稅額及扣除額基礎計算</p>
+<p class="text-sm text-slate-500 text-center" id="print-footer-note">以 115 年度（2026）稅率、免稅額及扣除額基礎計算</p>
 </div>
 </div>
 <!-- 試算結果表格區 -->
@@ -1109,11 +1117,11 @@
 </tr>
 <tr>
 <td class="p-3 text-base text-slate-600">營利事業所得稅</td>
-<td class="p-3 text-right font-mono text-slate-500" id="res-biz-tax-so">無 (併入個人綜合所得)</td>
+<td class="p-3 text-right font-mono text-slate-500" id="res-biz-tax-so">無（併入個人綜合所得）</td>
 <td class="p-3 text-right font-mono" id="res-biz-tax-co">-</td>
 </tr>
 <tr>
-<td class="p-3 text-base text-slate-600">稅後盈餘 / 股利分配</td>
+<td class="p-3 text-base text-slate-600">稅後盈餘／股利分配</td>
 <td class="p-3 text-right font-mono" id="res-dividend-so">不適用</td>
 <td class="p-3 text-right font-mono" id="res-dividend-co">-</td>
 </tr>
@@ -1157,8 +1165,8 @@
 </div></details>
 <div class="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-slate-700" id="basic-living-explanation">
 <div class="font-semibold">基本生活費差額比較說明</div>
-<div class="mt-1">本列僅作比較，不納入本版綜合所得稅應納稅額計算。本版應納稅額僅減除免稅額＋標準扣除額。</div>
-<div class="mt-1">比較人數：本人固定 1 人＋配偶（已婚時 1 人）＋扶養人數。表格顯示基本生活費總額；基本生活費差額另依基本生活費總額與免稅額、標準扣除額等規定項目比較。</div>
+<div class="mt-1">基本生活費差額＝基本生活費總額－（免稅額＋標準扣除額＋薪資、身心障礙、教育學費、幼兒學前、長照特別扣除額）；差額大於 0 時，自所得總額減除，已納入本版應納稅額計算。</div>
+<div class="mt-1">比較人數：本人固定 1 人＋配偶（已婚時 1 人）＋扶養人數。表格顯示基本生活費總額與已減除的差額。</div>
 <div class="mt-1 text-amber-800" id="basic-living-year-note"></div>
 </div>
 </div>
@@ -1170,21 +1178,21 @@
 <p class="mt-1"><strong>公司稅負說明：</strong>公司營利事業所得稅依法仍由公司負擔；本工具另以「公司營所稅 × 本人持股比例」計算本人經濟歸屬公司稅負，僅供不同組織型態之經濟效果比較，並非股東個人法定應納稅額。</p>
 <p class="mt-1" id="tax-note-reserve"></p>
 <p class="mt-1" id="tax-note-basis"></p>
-<p class="mt-1">（免責聲明）本計算表為簡易試算；基本生活費僅作比較顯示，且未涵蓋所有特別扣除額、最低稅負及個別申報特殊情形；實際申報仍應以財政部及國稅局當年度規定為準。</p>
+<p class="mt-1">（免責聲明）本計算表為簡易試算；未涵蓋列舉扣除、最低稅負（基本稅額）、二代健保補充保險費、營業稅及個別申報特殊情形；實際申報仍應以財政部及國稅局當年度規定為準。</p>
 </div>
 </section>
 </main>
 
 <div id="version-notes-block">
   <details>
-    <summary>版本說明｜<span id="version-notes-version">2026.10.02_v10</span></summary>
-    <div id="version-notes-text" style="margin-top:6px">2026.10.02_v10：修正 GitHub Pages 前後台網址與 Repository 路徑為 tax-planning；計算與列印規則不變。</div>
+    <summary>版本說明｜<span id="version-notes-version">2026.10.02_v11</span></summary>
+    <div id="version-notes-text" style="margin-top:6px">2026.10.02_v11：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理，並修正說明文字；列印規則不變。</div>
   </details>
 </div>
 <!-- Footer -->
 <footer class="border-t border-slate-200 bg-white py-8">
 <div class="mx-auto max-w-7xl px-5 text-center text-sm text-slate-400">
-            © 2026.10.02_v10
+            © 2026.10.02_v11
         </div>
 </footer>
 <!-- 計算邏輯 Script -->

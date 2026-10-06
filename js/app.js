@@ -34,6 +34,8 @@ function bindAppEvents(){
     document.getElementById('business-type')?.addEventListener('change', updateBusinessShareState);
     document.getElementById('dependents')?.addEventListener('input', updateDependentLimitedMax);
     document.getElementById('dependents')?.addEventListener('change', updateDependentLimitedMax);
+    document.getElementById('minor-children')?.addEventListener('input', updateDependentLimitedMax);
+    document.getElementById('minor-children')?.addEventListener('change', updateDependentLimitedMax);
 
     document.getElementById('save-data-btn')?.addEventListener('click', ()=>saveUserData(true));
     document.getElementById('load-data-btn')?.addEventListener('click', openSavedData);

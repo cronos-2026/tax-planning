@@ -8,14 +8,33 @@ function calculateProgressiveTax(taxableIncome) {
             return Math.max(0, taxable * b.rate - b.diff);
         }
 
-        function getHouseholdDeductions(isMarried, dependents, salarySelf=0, salarySpouse=0) {
-            const people = 1 + (isMarried ? 1 : 0) + Math.max(0, dependents);
-            const exemption = people * TAX_115.exemption;
+        function getHouseholdDeductions(isMarried, dependents, salarySelf=0, salarySpouse=0, minorChildren=0) {
+            const dep = Math.max(0, dependents);
+            const people = 1 + (isMarried ? 1 : 0) + dep;
+
+            // 115 年度起：受扶養未成年子女免稅額加計 50%（101,000 → 151,500）。
+            const minorCount = Math.min(Math.max(0, Math.floor(minorChildren) || 0), dep);
+            const bonusRate = Number(TAX_115.minorChildExemptionBonusRate ??
+                (Number(TAX_115.taxYear) >= 115 ? 0.5 : 0));
+            const minorBonus = minorCount * Math.round(Number(TAX_115.exemption) * bonusRate);
+            const exemption = people * TAX_115.exemption + minorBonus;
+
             const standard = isMarried
                 ? TAX_115.standardDeductionMarried
                 : TAX_115.standardDeductionSingle;
             const optional = calculateOptionalDeductions(isMarried, dependents, salarySelf, salarySpouse);
-            return { people, exemption, standard, optional, total: exemption + standard + optional.total };
+
+            // 基本生活費差額：全戶基本生活費總額，大於「免稅額＋標準扣除額＋薪資、身障、教育學費、
+            // 幼兒學前、長照特別扣除額」的部分，得自所得總額減除（儲蓄投資、房租不列入比較）。
+            const livingTotal = BASIC_LIVING_EXPENSE_COMPARE * people;
+            const livingCompared = exemption + standard + optional.livingComparable;
+            const livingDiff = Math.max(0, livingTotal - livingCompared);
+
+            return {
+                people, exemption, minorCount, minorBonus, standard, optional,
+                livingTotal, livingCompared, livingDiff,
+                total: exemption + standard + optional.total + livingDiff
+            };
         }
 
         function getRate(taxableIncome) {
@@ -25,7 +44,7 @@ function calculateProgressiveTax(taxableIncome) {
         }
 
         function getSalaryTaxableIncome(salary) {
-            // 依本版試算設定：不計算薪資所得特別扣除額，薪資全額列入所得。
+            // 薪資全額列入所得；薪資所得特別扣除額於扣除額階段依後台設定處理。
             return Math.max(0, Number(salary) || 0);
         }
 
@@ -46,7 +65,8 @@ function calculateProgressiveTax(taxableIncome) {
                 div * TAX_115.dividendCreditRate,
                 TAX_115.dividendCreditCap
             );
-            const mergedTax = Math.max(0, mergedGrossTax - dividendCredit);
+            // 可抵減稅額大於應納稅額時，超過部分得退稅，因此合併計稅稅額可為負數（代表退稅）。
+            const mergedTax = mergedGrossTax - dividendCredit;
 
             // 方案 B：股利分開按 28% 計稅
             // 其他所得仍照原本累進稅率計算，股利另計 28%。
@@ -69,8 +89,8 @@ function calculateProgressiveTax(taxableIncome) {
             };
         }
 
-        function calculatePITFromInputs(isMarried, dependents, salarySelf, salarySpouse, dividend) {
-            const deductions = getHouseholdDeductions(isMarried, dependents, salarySelf, salarySpouse);
+        function calculatePITFromInputs(isMarried, dependents, salarySelf, salarySpouse, dividend, minorChildren=0) {
+            const deductions = getHouseholdDeductions(isMarried, dependents, salarySelf, salarySpouse, minorChildren);
 
             const selfSalaryTaxable = getSalaryTaxableIncome(salarySelf);
             const spouseSalaryTaxable = isMarried ? getSalaryTaxableIncome(salarySpouse) : 0;

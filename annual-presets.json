@@ -57,7 +57,7 @@
     "sourceUrl": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=0bfb4c93c338453b8d00a415d61e2bf2",
     "deductionSettings": {
       "basicLivingExpense": {
-        "mode": "compareOnly",
+        "mode": "deduct",
         "locked": true
       },
       "exemption": {
@@ -172,7 +172,7 @@
     "sourceUrl": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=550775ba71cf40de8ce75016aff40828",
     "deductionSettings": {
       "basicLivingExpense": {
-        "mode": "compareOnly",
+        "mode": "deduct",
         "locked": true
       },
       "exemption": {
@@ -287,7 +287,7 @@
     "sourceUrl": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=34b463dc8f1b49f29d440d92a6fd5139",
     "deductionSettings": {
       "basicLivingExpense": {
-        "mode": "compareOnly",
+        "mode": "deduct",
         "locked": true
       },
       "exemption": {

@@ -32,6 +32,12 @@ function formatCurrency(num) {
     return Math.round(Math.max(0, num)).toLocaleString('en-US');
 }
 
+// 可顯示負數（退稅）的金額格式。
+function formatSigned(num) {
+    const n = Math.round(Number(num) || 0);
+    return (n < 0 ? '－' : '') + Math.abs(n).toLocaleString('en-US');
+}
+
 function formatInput(el) {
     const raw = parseMoney(el.value);
     el.value = raw ? raw.toLocaleString('en-US') : '0';
@@ -41,7 +47,7 @@ function bindMoneyInputs(root=document){
   root.querySelectorAll('.money-input').forEach(el=>{
     if(el.dataset.moneyBound==='1') return;
     el.dataset.moneyBound='1';
-    el.addEventListener('focus',()=>{el.value=String(parseMoney(el.value)||'');});
+    el.addEventListener('focus',()=>{el.value=String(parseMoney(el.value)||'');setTimeout(()=>{try{el.select();}catch(e){}},0);});
     el.addEventListener('blur',()=>formatInput(el));
     el.addEventListener('input',()=>{el.value=el.value.replace(/[^\d]/g,'');});
     el.addEventListener('paste',()=>setTimeout(()=>{el.value=el.value.replace(/[^\d]/g,'');formatInput(el)},0));

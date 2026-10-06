@@ -45,7 +45,8 @@ function collectCalculationInputs() {
         dependents: Math.max(0, parseInt(document.getElementById('dependents')?.value) || 0),
         salarySelf: parseMoney(document.getElementById('salary-self')?.value || 0),
         salarySpouse: parseMoney(document.getElementById('salary-spouse')?.value || 0),
-        householdDividend: parseMoney(document.getElementById('dividend')?.value || 0)
+        householdDividend: parseMoney(document.getElementById('dividend')?.value || 0),
+        minorChildren: getExclusiveDependentCounts().minor
     };
 }
 
@@ -59,7 +60,7 @@ function buildTaxComparison(input) {
     const soPIT = calculatePITFromInputs(
         input.isMarried, input.dependents,
         input.salarySelf, input.salarySpouse,
-        input.householdDividend
+        input.householdDividend, input.minorChildren
     );
     const soFullBase = soPIT.salaryIncome + soOwnerIncome;
     const soOpt = calculateDividendOptimization(
@@ -77,7 +78,7 @@ function buildTaxComparison(input) {
     const coPIT = calculatePITFromInputs(
         input.isMarried, input.dependents,
         input.salarySelf, input.salarySpouse,
-        coFullDividend
+        coFullDividend, input.minorChildren
     );
     const coOpt = calculateDividendOptimization(
         coPIT.salaryIncome, coFullDividend, coPIT.deductions
@@ -86,8 +87,8 @@ function buildTaxComparison(input) {
     const allocatedCompanyTax = coBizTax * input.companyOwnership;
 
     const customCalc = getCustomCalculationAdjustments();
-    const soTotal = Math.max(0, soPit + customCalc.sole);
-    const coTotal = Math.max(0, allocatedCompanyTax + coPit + customCalc.company);
+    const soTotal = soPit + customCalc.sole;
+    const coTotal = allocatedCompanyTax + coPit + customCalc.company;
 
     return {
         input,
@@ -136,7 +137,7 @@ function formatOwnership(pct) {
 
 function dividendCompareText(amount, opt) {
     if (amount <= 0) return '無股利，無需比較';
-    return '合併計稅 ' + formatCurrency(opt.mergedTax) + ' 元' +
+    return '合併計稅 ' + formatSigned(opt.mergedTax) + ' 元' +
         '／分開計稅 ' + formatCurrency(opt.separateTax) + ' 元' +
         '（股利28% ' + formatCurrency(opt.separateDividendTax) + ' 元' +
         (opt.baseTax > 0 ? '＋其他所得稅 ' + formatCurrency(opt.baseTax) + ' 元' : '') + '）' +
@@ -149,12 +150,12 @@ function renderSummaryCards(result) {
     if (result.so.total < result.co.total) lowerText = '商號試算稅負較低';
     if (result.co.total < result.so.total) lowerText = '公司試算稅負較低';
 
-    setText('summary-so-total', formatCurrency(result.so.total) + ' 元');
-    setText('summary-co-total', formatCurrency(result.co.total) + ' 元');
+    setText('summary-so-total', formatSigned(result.so.total) + ' 元');
+    setText('summary-co-total', formatSigned(result.co.total) + ' 元');
     setText('summary-tax-diff', formatCurrency(diff) + ' 元');
     setText('summary-lower', lowerText);
-    setText('summary-so-pit', '綜所稅 ' + formatCurrency(result.so.pit) + ' 元');
-    setText('summary-co-pit', '綜所稅 ' + formatCurrency(result.co.pit) + ' 元');
+    setText('summary-so-pit', '綜所稅 ' + formatSigned(result.so.pit) + ' 元');
+    setText('summary-co-pit', '綜所稅 ' + formatSigned(result.co.pit) + ' 元');
     setText('summary-co-business-tax', '公司營所稅 ' + formatCurrency(result.co.businessTax) + ' 元；本人經濟歸屬 ' + formatCurrency(result.co.allocatedCompanyTax) + ' 元');
     setText('summary-so-dividend', '股利方案：' + result.so.dividendMethod);
     setText('summary-co-dividend', '股利方案：' + result.co.dividendMethod);
@@ -192,23 +193,26 @@ function renderTaxComparison(result) {
         ' × 持股 ' + formatOwnership(input.companyOwnership) + '）</span>'
     );
 
-    const optionalItems = so.pitContext.deductions.optional.items;
-    const deductionDetail = optionalItems.length
-        ? '<span class="result-detail">基本免稅額＋標準扣除額 ' +
-          formatCurrency(so.pitContext.deductions.exemption + so.pitContext.deductions.standard) +
-          ' 元；另加 ' + optionalItems.map(x => x[0] + ' ' + formatCurrency(x[1]) + ' 元').join('、') +
-          '</span>'
-        : '<span class="result-detail">免稅額＋標準扣除額</span>';
+    const d0 = so.pitContext.deductions;
+    const extraItems = d0.optional.items.map(x => x[0] + ' ' + formatCurrency(x[1]) + ' 元');
+    if (d0.livingDiff > 0) extraItems.push('基本生活費差額 ' + formatCurrency(d0.livingDiff) + ' 元');
+    const exemptionNote = d0.minorBonus > 0
+        ? '（含未成年子女 ' + d0.minorCount + ' 人加計 50%：' + formatCurrency(d0.minorBonus) + ' 元）' : '';
+    const deductionDetail = extraItems.length
+        ? '<span class="result-detail">免稅額' + exemptionNote + '＋標準扣除額 ' +
+          formatCurrency(d0.exemption + d0.standard) + ' 元；另加 ' + extraItems.join('、') + '</span>'
+        : '<span class="result-detail">免稅額' + exemptionNote + '＋標準扣除額</span>';
 
     setHtml('res-deduction-so', formatCurrency(so.pitContext.deductions.total) + ' 元' + deductionDetail);
     setHtml('res-deduction-co', formatCurrency(co.pitContext.deductions.total) + ' 元' + deductionDetail);
 
-    setText('res-basic-living-so',
-        formatCurrency(basicLivingTotalCompare) + ' 元（' + householdMembers + '人 × ' + formatCurrency(BASIC_LIVING_EXPENSE_COMPARE) + '）'
-    );
-    setText('res-basic-living-co',
-        formatCurrency(basicLivingTotalCompare) + ' 元（' + householdMembers + '人 × ' + formatCurrency(BASIC_LIVING_EXPENSE_COMPARE) + '）'
-    );
+    const livingText = (d) => formatCurrency(basicLivingTotalCompare) + ' 元（' + householdMembers + '人 × ' +
+        formatCurrency(BASIC_LIVING_EXPENSE_COMPARE) + '）' +
+        '<span class="result-detail">' + (d.livingDiff > 0
+            ? '差額 ' + formatCurrency(d.livingDiff) + ' 元已自所得總額減除'
+            : '差額 0 元（免稅額與扣除額已高於基本生活費）') + '</span>';
+    setHtml('res-basic-living-so', livingText(so.pitContext.deductions));
+    setHtml('res-basic-living-co', livingText(co.pitContext.deductions));
 
     setText('res-rate-so',
         input.householdDividend > 0 ? getRate(so.optimization.mergedTaxable) : getRate(so.optimization.baseTaxable)
@@ -217,21 +221,21 @@ function renderTaxComparison(result) {
         co.fullDividend > 0 ? getRate(co.optimization.mergedTaxable) : getRate(co.optimization.baseTaxable)
     );
 
-    setText('res-pit-so', formatCurrency(so.pit) + '（' + so.optimization.method + '）');
-    setText('res-pit-co', formatCurrency(co.pit) + '（' + co.optimization.method + '）');
+    setText('res-pit-so', formatSigned(so.pit) + (so.pit < 0 ? ' 元（退稅）' : '') + '（' + so.optimization.method + '）');
+    setText('res-pit-co', formatSigned(co.pit) + (co.pit < 0 ? ' 元（退稅）' : '') + '（' + co.optimization.method + '）');
     setText('res-dividend-method-so', so.dividendMethod);
     setText('res-dividend-method-co', co.dividendMethod);
     setText('res-dividend-compare-so', dividendCompareText(input.householdDividend, so.optimization));
     setText('res-dividend-compare-co', dividendCompareText(co.fullDividend, co.optimization));
 
     renderCustomCalculationRows(customCalc);
-    setText('res-total-so', formatCurrency(so.total) + ' 元');
+    setText('res-total-so', formatSigned(so.total) + ' 元');
     setHtml('res-total-co',
-        formatCurrency(co.total) + ' 元' +
+        formatSigned(co.total) + ' 元' +
         '<span class="tax-total-detail">本人經濟歸屬公司稅負 ' + formatCurrency(co.allocatedCompanyTax) +
         ' 元（公司營所稅 ' + formatCurrency(co.businessTax) + ' × 持股 ' +
         formatOwnership(input.companyOwnership) + '）<br>' +
-        '＋本人依法負擔綜所稅 ' + formatCurrency(co.pit) + ' 元</span>'
+        '＋本人依法負擔綜所稅 ' + formatSigned(co.pit) + ' 元</span>'
     );
 }
 

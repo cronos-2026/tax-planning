@@ -10,9 +10,10 @@ const DEFAULT_TAX_CONFIG = {
     pageNotice: "本頁為試算工具；扶養、長照、學前子女等資格仍應依實際申報條件判斷。若資格不符，試算結果可能與實際申報不同。",
     showHeaderSection: true,
     taxYear: 115,
-    siteVersion: "2026.10.02_v10",
+    siteVersion: "2026.10.02_v11",
     basicLivingExpense: 213000,
     exemption: 101000,
+    seniorExemption: 151500,
     standardDeductionSingle: 136000,
     standardDeductionMarried: 272000,
     salarySpecialDeduction: 227000,
@@ -43,7 +44,7 @@ const DEFAULT_TAX_CONFIG = {
         leftColumnPercent: 37,
         basicTitle: '一、輸入試算條件',
         resultTitle: '二、比較試算結果',
-        versionNoteText: '2026.10.02_v10：修正 GitHub Pages 前後台網址與 Repository 路徑為 tax-planning；計算與列印規則不變。',
+        versionNoteText: '2026.10.02_v11：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理，並修正說明文字；列印規則不變。',
         sections: {
             inputCard:{webVisible:true,printVisible:true},
             resultCard:{webVisible:true,printVisible:true},
@@ -115,7 +116,7 @@ function applyDynamicTaxNotes(){
 
     if(basis) basis.textContent =
         `${y} 年度本工具採用基準：每人免稅額 ${fmtMoney(TAX_CONFIG.exemption)} 元、標準扣除額單身 ${fmtMoney(TAX_CONFIG.standardDeductionSingle)} 元／夫妻 ${fmtMoney(TAX_CONFIG.standardDeductionMarried)} 元。` +
-        `本版依試算目的不計算薪資所得特別扣除額；${y} 年度資料於 ${filingYear} 年 5 月申報 ${y} 年度所得時適用。`;
+        `薪資所得特別扣除額${deductionEnabled('salarySpecialDeduction')?'已啟用':'目前未啟用（薪資族稅額可能偏高）'}；未成年子女免稅額加計 50% 與基本生活費差額已納入計算；${y} 年度資料於 ${filingYear} 年 5 月申報 ${y} 年度所得時適用。`;
 }
 
 function applyDataQualityStatus(){
@@ -182,7 +183,7 @@ function applyLayoutSettings(){
           .forEach(key=>{if(map[key] && map[key].parentElement===resultCard) resultCard.appendChild(map[key]);});
     }
     const vv=document.getElementById('version-notes-version');
-    if(vv) vv.textContent=TAX_CONFIG.siteVersion || '2026.10.02_v10';
+    if(vv) vv.textContent=TAX_CONFIG.siteVersion || '2026.10.02_v11';
     const vt=document.getElementById('version-notes-text');
     if(vt) vt.textContent=ls.versionNoteText || defaults.versionNoteText;
 }
@@ -192,7 +193,7 @@ function applyTaxConfig(raw) {
     TAX_115 = TAX_CONFIG;
     BASIC_LIVING_EXPENSE_COMPARE = Number(TAX_CONFIG.basicLivingExpense || 0);
     const badge = document.querySelector('header .rounded-md.bg-emerald-100');
-    if (badge) badge.textContent = TAX_CONFIG.siteVersion || '2026.10.02_v10';
+    if (badge) badge.textContent = TAX_CONFIG.siteVersion || '2026.10.02_v11';
     const y = Number(TAX_CONFIG.taxYear || 115);
     const adYear = y + 1911;
     document.title = `${TAX_CONFIG.pageTitle || '115年度創業稅負決策試算'}｜${y}年所得最佳化`;

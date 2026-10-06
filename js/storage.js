@@ -22,6 +22,7 @@ const STORAGE_KEY = 'tax_calculator_115_user_inputs_v3';
             if (fields && fields.marital !== undefined) document.getElementById('marital').value = fields.marital;
             if (fields && fields['business-type'] !== undefined) document.getElementById('business-type').value = fields['business-type'];
             if (fields && fields.dependents !== undefined) document.getElementById('dependents').value = fields.dependents;
+            if (fields && fields['minor-children'] !== undefined) document.getElementById('minor-children').value = fields['minor-children'];
             updateSpouseSalaryState();
             updateBusinessShareState();
             updateDependentLimitedMax();
@@ -141,6 +142,7 @@ const STORAGE_KEY = 'tax_calculator_115_user_inputs_v3';
             });
 
             const dep=document.getElementById('dependents'); if(dep) dep.value='0';
+            const minorEl=document.getElementById('minor-children'); if(minorEl) minorEl.value='0';
             const margin=document.getElementById('margin'); if(margin) margin.value='0';
             const marital=document.getElementById('marital'); if(marital) marital.value='single';
             const businessType=document.getElementById('business-type'); if(businessType) businessType.value='sole';

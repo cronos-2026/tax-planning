@@ -56,7 +56,7 @@
   "sourceUrl": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=34b463dc8f1b49f29d440d92a6fd5139",
   "deductionSettings": {
     "basicLivingExpense": {
-      "mode": "compareOnly",
+      "mode": "deduct",
       "locked": true
     },
     "exemption": {
@@ -101,7 +101,7 @@
   },
   "pageNotice": "本工具供稅負情境試算使用；實際申報仍應依當年度法規、申報身分、所得性質及可適用扣除額確認。",
   "showHeaderSection": true,
-  "siteVersion": "2026.10.02_v10",
+  "siteVersion": "2026.10.02_v11",
   "customFields": [],
   "customCalculationFields": [],
   "sourcePublishDate": "2025-11-27",
@@ -134,7 +134,7 @@
     "leftColumnPercent": 37,
     "basicTitle": "一、輸入試算條件",
     "resultTitle": "二、比較試算結果",
-    "versionNoteText": "2026.10.02_v10：修正 GitHub Pages 前後台網址與 Repository 路徑為 tax-planning；計算與列印規則不變。",
+    "versionNoteText": "2026.10.02_v11：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理，並修正說明文字；列印規則不變。",
     "sections": {
       "inputCard": {
         "webVisible": true,

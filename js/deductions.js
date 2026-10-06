@@ -59,7 +59,7 @@ function renderOptionalDeductionFields(){
   if(active.length){
     const note=document.createElement('div');
     note.className='notice-important md:col-span-2 rounded-md px-3 py-2 text-sm';
-    note.innerHTML='<strong>注意：</strong> 人數條件分兩類：① 70歲以上受扶養直系尊親屬、教育學費子女、幼兒學前子女屬不同身分／年齡群，三類合計不得超過扶養人數；② 幼兒學前只輸入符合資格子女總人數，1人按第1名扣除額，超過1人的部分才按第2名以上扣除額計算；③ 身心障礙與長照可與其他資格重疊。教育學費另以實際學費金額計算。';
+    note.innerHTML='<strong>注意：</strong>人數條件分三類：① 70歲以上受扶養直系尊親屬、教育學費子女（大專以上）、未成年子女（含幼兒學前）屬不同身分群，三類合計不得超過扶養人數；② 幼兒學前只輸入符合資格子女總人數，1人按第1名扣除額，第2名起每人按較高金額計算；③ 身心障礙與長照可與其他資格重疊。教育學費另以實際學費金額計算。';
     box.appendChild(note);
   }
 
@@ -200,11 +200,14 @@ const DEPENDENT_LIMITED_DEDUCTIONS = [
 ];
 
 function getExclusiveDependentCounts(){
-  return {
-    senior: deductionEnabled('seniorExemption') ? Math.max(0,Math.floor(Number(document.getElementById('deduction-seniorExemption')?.value)||0)) : 0,
-    education: deductionEnabled('educationTuitionDeduction') ? Math.max(0,Math.floor(Number(document.getElementById('deduction-educationTuitionDeduction')?.value)||0)) : 0,
-    preschool: deductionEnabled('preschoolFirstChildDeduction') ? Math.max(0,Math.floor(Number(document.getElementById('deduction-preschoolFirstChildDeduction')?.value)||0)) : 0
-  };
+  const read=(key)=>deductionEnabled(key) ? Math.max(0,Math.floor(Number(document.getElementById('deduction-'+key)?.value)||0)) : 0;
+  const senior=read('seniorExemption');
+  const education=read('educationTuitionDeduction');
+  const preschool=read('preschoolFirstChildDeduction');
+  const minorInput=Math.max(0,Math.floor(Number(document.getElementById('minor-children')?.value)||0));
+  // 幼兒學前子女必為未成年子女；只填學前人數時，視為至少同數量的未成年子女。
+  const minor=Math.max(minorInput,preschool);
+  return { senior, education, preschool, minorInput, minor };
 }
 
 function updateEducationTuitionAmountMax(){
@@ -225,10 +228,18 @@ function updateDependentLimitedMax(){
   const counts=getExclusiveDependentCounts();
 
   const exclusiveMap={
-    seniorExemption: counts.education + counts.preschool,
-    educationTuitionDeduction: counts.senior + counts.preschool,
+    seniorExemption: counts.education + counts.minor,
+    educationTuitionDeduction: counts.senior + counts.minor,
     preschoolFirstChildDeduction: counts.senior + counts.education
   };
+
+  // 未成年子女人數：不得超過扶養人數扣除「70歲以上尊親屬」與「大專以上教育學費子女」。
+  const minorEl=document.getElementById('minor-children');
+  if(minorEl){
+    const minorAllowed=Math.max(0,dependents-counts.senior-counts.education);
+    minorEl.max=String(minorAllowed);
+    if(Math.max(0,Math.floor(Number(minorEl.value)||0))>minorAllowed) minorEl.value=String(minorAllowed);
+  }
 
   DEPENDENT_LIMITED_DEDUCTIONS.forEach(([key])=>{
     const el=document.getElementById('deduction-'+key);
@@ -288,13 +299,13 @@ function validateDependentLimitedDeductions(showMessage=true){
     }
   }
 
-  // 互斥群組：直系尊親屬／大專以上子女／6歲以下子女不會是同一扶養人。
+  // 互斥群組：直系尊親屬／大專以上子女／未成年子女（含6歲以下）不會是同一扶養人。
   const counts=getExclusiveDependentCounts();
-  const exclusiveTotal=counts.senior+counts.education+counts.preschool;
+  const exclusiveTotal=counts.senior+counts.education+counts.minor;
 
   if(exclusiveTotal>dependents){
     if(showMessage){
-      alert(`扶養資格人數設定不符：\n「70歲以上受扶養直系尊親屬＋教育學費子女＋幼兒學前子女」合計不得超過扶養人數。\n\n扶養人數：${dependents} 人\n70歲以上：${counts.senior} 人\n教育學費：${counts.education} 人\n幼兒學前：${counts.preschool} 人`);
+      alert(`扶養資格人數設定不符：\n「70歲以上受扶養直系尊親屬＋教育學費子女＋未成年子女」合計不得超過扶養人數。\n\n扶養人數：${dependents} 人\n70歲以上：${counts.senior} 人\n教育學費：${counts.education} 人\n未成年子女（含幼兒學前）：${counts.minor} 人`);
     }
     return false;
   }
@@ -320,13 +331,15 @@ function validateDependentLimitedDeductions(showMessage=true){
 function calculateOptionalDeductions(isMarried, dependents, salarySelf, salarySpouse){
   const items=[];
   let total=0;
+  // 計算基本生活費差額時須一併比較的特別扣除額（不含儲蓄投資、房屋租金）。
+  let livingComparable=0;
 
   if(deductionEnabled('seniorExemption')){
     const count=Math.min(Math.max(0,Math.floor(readDynamicInput('seniorExemption'))),Math.max(0,dependents));
     const extraPer=Math.max(0,Number(TAX_CONFIG.seniorExemption||0)-Number(TAX_CONFIG.exemption||0));
     const amount=count*extraPer;
     if(amount>0) items.push(['70歲以上免稅額差額',amount]);
-    total+=amount;
+    total+=amount; livingComparable+=amount;
   }
 
   if(deductionEnabled('salarySpecialDeduction')){
@@ -337,7 +350,7 @@ function calculateOptionalDeductions(isMarried, dependents, salarySelf, salarySp
     const auto=document.getElementById('deduction-salarySpecialDeduction');
     if(auto) auto.textContent=`自動扣除 ${formatCurrency(amount)} 元（本人 ${formatCurrency(selfAmt)}${isMarried?'＋配偶 '+formatCurrency(spouseAmt):''}）`;
     if(amount>0) items.push(['薪資所得特別扣除額',amount]);
-    total+=amount;
+    total+=amount; livingComparable+=amount;
   }
 
   // 身心障礙、長照：定額 × 符合資格人數
@@ -352,7 +365,7 @@ function calculateOptionalDeductions(isMarried, dependents, salarySelf, salarySp
     count=Math.min(count,Math.max(0,dependents));
     const amount=count*Math.max(0,Number(TAX_CONFIG[key]||0));
     if(amount>0) items.push([label,amount]);
-    total+=amount;
+    total+=amount; livingComparable+=amount;
   });
 
   // 幼兒學前：單一總人數欄位。
@@ -368,7 +381,7 @@ function calculateOptionalDeductions(isMarried, dependents, salarySelf, salarySp
         + Math.max(0,count-1)*Math.max(0,Number(TAX_CONFIG.preschoolAdditionalChildDeduction||0));
     }
     if(amount>0) items.push([`幼兒學前特別扣除（${count}人）`,amount]);
-    total+=amount;
+    total+=amount; livingComparable+=amount;
   }
 
   // 教育學費：每名子女有上限，但不足上限者採實際發生數。
@@ -378,7 +391,7 @@ function calculateOptionalDeductions(isMarried, dependents, salarySelf, salarySp
     const actual=Math.max(0,parseMoney(document.getElementById('deduction-educationTuitionAmount')?.value||0));
     const amount=Math.min(actual,maxAmount);
     if(amount>0) items.push(['教育學費特別扣除額',amount]);
-    total+=amount;
+    total+=amount; livingComparable+=amount;
   }
 
   const cappedMoneyRules=[
@@ -392,7 +405,7 @@ function calculateOptionalDeductions(isMarried, dependents, salarySelf, salarySp
     total+=amount;
   });
 
-  return {total,items};
+  return {total,items,livingComparable};
 }
 
 function updatePersonalTaxStandardNote(){
