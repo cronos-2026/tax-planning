@@ -250,7 +250,7 @@
     <div class="top">
       <div>
         <h1>稅務參數後台管理</h1>
-        <div class="muted">正式前台參數檔：<code>tax-config.json</code>　｜　網站版本：<strong id="versionLabel">2026.10.02_v11</strong>　｜　GitHub 同步優化版</div>
+        <div class="muted">正式前台參數檔：<code>tax-config.json</code>　｜　網站版本：<strong id="versionLabel">2026.10.02_v13</strong>　｜　GitHub 同步優化版</div>
       </div>
       <button class="btn logout" id="logoutBtn">登出</button>
     </div>
@@ -876,7 +876,7 @@ async function recordSuccessfulAdminLogin(account){
     browserPlatform:device.browserPlatform || '',
     language:device.language || '',
     userAgent:device.userAgent || '',
-    siteVersion:'2026.10.02_v11'
+    siteVersion:'2026.10.02_v13'
   };
 
   CURRENT_LOGIN_AUDIT_ID=entry.id;
@@ -1086,7 +1086,7 @@ function fieldHtml(k,n){
   }
   return `<div class="field"><label>${n}</label><input data-key="${k}" type="number" step="any">${note}</div>`;
 }
-function currentSiteVersion(){return '2026.10.02_v11'}
+function currentSiteVersion(){return '2026.10.02_v13'}
 function stampVersion(){cfg.siteVersion=currentSiteVersion();cfg.lastUpdated=new Date().toISOString().slice(0,10);const el=document.getElementById('versionLabel');if(el)el.textContent=cfg.siteVersion}
 function updateSourceLink(sourceCfg=null){
   const label=document.getElementById('sourceLabelDisplay');
@@ -1225,7 +1225,7 @@ const DEFAULT_LAYOUT_SETTINGS_ADMIN={
   leftColumnPercent:37,
   basicTitle:'一、輸入試算條件',
   resultTitle:'二、比較試算結果',
-  versionNoteText:'2026.10.02_v11：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理，並修正說明文字；列印規則不變。',
+  versionNoteText:'2026.10.02_v13：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示。',
   sections:{
     inputCard:{webVisible:true,printVisible:true}, resultCard:{webVisible:true,printVisible:true},
     summary:{webVisible:true,printVisible:true,order:1}, details:{webVisible:true,printVisible:true,order:2},

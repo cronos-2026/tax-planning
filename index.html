@@ -923,6 +923,31 @@
 #version-notes-block details{border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;padding:10px 14px;color:#475569;font-size:12px;line-height:1.65;}
 #version-notes-block summary{cursor:pointer;font-weight:700;color:#334155;}
 @media print{#version-notes-block{margin:1mm 0 0;padding:0;font-size:7pt}#version-notes-block details{padding:1mm;border-radius:2mm;}}
+
+/* v12：列印時縮小結果表內的補充說明，避免比表格本文大而撐亂版面 */
+@media print{
+  body.print-fit-one-page .result-detail,
+  body.print-fit-one-page .tax-total-detail{
+    display:block !important;
+    margin-top:.3mm !important;
+    font-size:5.4pt !important;
+    line-height:1.12 !important;
+    font-weight:400 !important;
+    overflow-wrap:anywhere !important;
+  }
+  body.print-fit-one-page #res-total-so,
+  body.print-fit-one-page #res-total-co{white-space:normal !important;}
+}
+
+/* v12：列印時統一動態扣除額區塊的字級與間距 */
+@media print{
+  body.print-fit-one-page #optional-deductions-fields .notice-important{font-size:5.4pt !important;line-height:1.15 !important;padding:.6mm 1mm !important;}
+  body.print-fit-one-page #optional-deductions-fields #deduction-salarySpecialDeduction{font-size:6pt !important;padding:.5mm 1mm !important;line-height:1.1 !important;}
+  body.print-fit-one-page .education-deduction-group,
+  body.print-fit-one-page .preschool-deduction-group{padding:.8mm 1mm !important;gap:.6mm !important;border-radius:2px !important;}
+  body.print-fit-one-page .education-deduction-group > .font-semibold,
+  body.print-fit-one-page .preschool-deduction-group > .font-semibold{font-size:6.4pt !important;line-height:1.1 !important;}
+}
 </style>
 </head>
 <body class="flex min-h-screen flex-col bg-white font-sans text-slate-900 selection:bg-emerald-100 selection:text-emerald-900">
@@ -1185,14 +1210,14 @@
 
 <div id="version-notes-block">
   <details>
-    <summary>版本說明｜<span id="version-notes-version">2026.10.02_v11</span></summary>
-    <div id="version-notes-text" style="margin-top:6px">2026.10.02_v11：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理，並修正說明文字；列印規則不變。</div>
+    <summary>版本說明｜<span id="version-notes-version">2026.10.02_v13</span></summary>
+    <div id="version-notes-text" style="margin-top:6px">2026.10.02_v13：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示。</div>
   </details>
 </div>
 <!-- Footer -->
 <footer class="border-t border-slate-200 bg-white py-8">
 <div class="mx-auto max-w-7xl px-5 text-center text-sm text-slate-400">
-            © 2026.10.02_v11
+            © 2026.10.02_v13
         </div>
 </footer>
 <!-- 計算邏輯 Script -->

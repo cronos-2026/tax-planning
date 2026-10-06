@@ -32,10 +32,12 @@ function formatCurrency(num) {
     return Math.round(Math.max(0, num)).toLocaleString('en-US');
 }
 
-// 可顯示負數（退稅）的金額格式。
-function formatSigned(num) {
+// 稅額顯示：應納稅額照常顯示；負數代表退稅，以「可退稅 ○○ 元」表示，不顯示負號。
+function formatTaxAmount(num) {
     const n = Math.round(Number(num) || 0);
-    return (n < 0 ? '－' : '') + Math.abs(n).toLocaleString('en-US');
+    return n < 0
+        ? '可退稅 ' + Math.abs(n).toLocaleString('en-US') + ' 元'
+        : n.toLocaleString('en-US') + ' 元';
 }
 
 function formatInput(el) {

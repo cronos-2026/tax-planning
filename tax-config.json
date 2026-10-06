@@ -101,7 +101,7 @@
   },
   "pageNotice": "本工具供稅負情境試算使用；實際申報仍應依當年度法規、申報身分、所得性質及可適用扣除額確認。",
   "showHeaderSection": true,
-  "siteVersion": "2026.10.02_v11",
+  "siteVersion": "2026.10.02_v13",
   "customFields": [],
   "customCalculationFields": [],
   "sourcePublishDate": "2025-11-27",
@@ -134,7 +134,7 @@
     "leftColumnPercent": 37,
     "basicTitle": "一、輸入試算條件",
     "resultTitle": "二、比較試算結果",
-    "versionNoteText": "2026.10.02_v11：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理，並修正說明文字；列印規則不變。",
+    "versionNoteText": "2026.10.02_v13：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示。",
     "sections": {
       "inputCard": {
         "webVisible": true,

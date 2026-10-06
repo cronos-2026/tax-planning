@@ -42,14 +42,15 @@
     };
   }
 
+  // 縮放比例依實測決定（A4 橫式、Chrome/Edge 實際輸出 PDF 逐級驗證仍為單頁，並保留約 0.1 的安全餘量）：
+  //   無額外輸入欄位 → 實測上限 1.40；3 個 → 1.25；6 個 → 1.00；8 個 → 0.95。
   function choosePrintProfile(complexity){
-    if(complexity.score >= 16){
-      return { density: 'tight', zoom: 0.68 };
-    }
-    if(complexity.score >= 7){
-      return { density: 'compact', zoom: 0.74 };
-    }
-    return { density: 'normal', zoom: 0.80 };
+    const s = complexity.score;
+    if(s >= 14) return { density: 'tight',   zoom: 0.68 };
+    if(s >= 7)  return { density: 'compact', zoom: 0.85 };
+    if(s >= 4)  return { density: 'compact', zoom: 0.95 };
+    if(s >= 2)  return { density: 'normal',  zoom: 1.15 };
+    return { density: 'normal', zoom: 1.25 };
   }
 
   function cleanupPrintLayout(){
