@@ -592,9 +592,9 @@
       </div>
       <div class="field" style="margin-top:14px">
         <label>Google Apps Script Web App URL</label>
-        <input id="gasApiUrl" type="url" autocomplete="off" placeholder="貼上部署後的 GAS /exec 網址">
+        <input id="gasApiUrl" type="url" autocomplete="off" readonly>
         <div class="muted" style="margin-top:6px;line-height:1.6">
-          僅填入 GAS Web App 網址。管理員登入密碼與 GitHub Token 由伺服器驗證及保管。
+          此網址已連到正式 GAS 部署。管理員登入密碼與 GitHub Token 由伺服器驗證及保管。
         </div>
       </div>
       <div class="row" style="margin-top:14px">
@@ -615,9 +615,8 @@ const GAS_API_URL_KEY='tax_gas_api_url_v1';
 const GAS_API_URL_DEFAULT='https://script.google.com/macros/s/AKfycbzE0gt0imZZ5eV8Lr_DfbqzmUIar2drmq0CgY4FWpkJPH4zBBLr1zFsM2M1ZSj2suy8/exec';
 const GAS_SESSION_KEY='tax_gas_session_v1';
 let GAS_SESSION='';
-const savedGasUrl=localStorage.getItem(GAS_API_URL_KEY)||GAS_API_URL_DEFAULT;
-document.getElementById('gasApiUrl').value=savedGasUrl;
-document.getElementById('gasApiUrl').addEventListener('change',e=>localStorage.setItem(GAS_API_URL_KEY,e.target.value.trim()));
+document.getElementById('gasApiUrl').value=GAS_API_URL_DEFAULT;
+localStorage.setItem(GAS_API_URL_KEY,GAS_API_URL_DEFAULT);
 
 function gasRequest(action,payload={}){
   const endpoint=document.getElementById('gasApiUrl').value.trim();
