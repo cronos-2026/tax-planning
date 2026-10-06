@@ -10,7 +10,7 @@ const DEFAULT_TAX_CONFIG = {
     pageNotice: "本頁為試算工具；扶養、長照、學前子女等資格仍應依實際申報條件判斷。若資格不符，試算結果可能與實際申報不同。",
     showHeaderSection: true,
     taxYear: 115,
-    siteVersion: "2026.10.02_v13",
+    siteVersion: "2026.10.02_v15",
     basicLivingExpense: 213000,
     exemption: 101000,
     seniorExemption: 151500,
@@ -44,7 +44,7 @@ const DEFAULT_TAX_CONFIG = {
         leftColumnPercent: 37,
         basicTitle: '一、輸入試算條件',
         resultTitle: '二、比較試算結果',
-        versionNoteText: '2026.10.02_v13：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示。',
+        versionNoteText: '2026.10.02_v15：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示；移除前台頂部功能標籤；列印／PDF 改為實際量測內容高度，自動放大到填滿一頁。',
         sections: {
             inputCard:{webVisible:true,printVisible:true},
             resultCard:{webVisible:true,printVisible:true},
@@ -183,7 +183,7 @@ function applyLayoutSettings(){
           .forEach(key=>{if(map[key] && map[key].parentElement===resultCard) resultCard.appendChild(map[key]);});
     }
     const vv=document.getElementById('version-notes-version');
-    if(vv) vv.textContent=TAX_CONFIG.siteVersion || '2026.10.02_v13';
+    if(vv) vv.textContent=TAX_CONFIG.siteVersion || '2026.10.02_v15';
     const vt=document.getElementById('version-notes-text');
     if(vt) vt.textContent=ls.versionNoteText || defaults.versionNoteText;
 }
@@ -193,7 +193,7 @@ function applyTaxConfig(raw) {
     TAX_115 = TAX_CONFIG;
     BASIC_LIVING_EXPENSE_COMPARE = Number(TAX_CONFIG.basicLivingExpense || 0);
     const badge = document.querySelector('header .rounded-md.bg-emerald-100');
-    if (badge) badge.textContent = TAX_CONFIG.siteVersion || '2026.10.02_v13';
+    if (badge) badge.textContent = TAX_CONFIG.siteVersion || '2026.10.02_v15';
     const y = Number(TAX_CONFIG.taxYear || 115);
     const adYear = y + 1911;
     document.title = `${TAX_CONFIG.pageTitle || '115年度創業稅負決策試算'}｜${y}年所得最佳化`;
