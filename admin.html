@@ -627,13 +627,14 @@ function gasRequest(action,payload={}){
   const params=new URLSearchParams({action,requestId,payload:JSON.stringify(payload)});
   return fetch(endpoint,{method:'POST',mode:'no-cors',body:params}).then(()=>new Promise((resolve,reject)=>{
     const started=Date.now();
+    let consecutiveErrors=0;
     const poll=()=>{
       const callback='cb_'+Math.random().toString(36).slice(2);
       const script=document.createElement('script');
-      const timer=setTimeout(()=>{cleanup();if(Date.now()-started>20000)reject(new Error('Apps Script 回應逾時'));else setTimeout(poll,350);},5000);
+      const timer=setTimeout(()=>{cleanup();consecutiveErrors++;if(consecutiveErrors>=2||Date.now()-started>15000)reject(new Error('Apps Script 回應逾時，請確認部署網址與網路連線'));else setTimeout(poll,250);},5000);
       function cleanup(){clearTimeout(timer);delete window[callback];script.remove();}
-      window[callback]=result=>{cleanup();if(result?.pending){if(Date.now()-started>20000)reject(new Error('Apps Script 回應逾時'));else setTimeout(poll,350);}else if(!result?.ok)reject(new Error(result?.error||'Apps Script 請求失敗'));else resolve(result);};
-      script.onerror=()=>{cleanup();if(Date.now()-started>20000)reject(new Error('無法讀取 Apps Script 回應'));else setTimeout(poll,500);};
+      window[callback]=result=>{cleanup();consecutiveErrors=0;if(result?.pending){if(Date.now()-started>15000)reject(new Error('Apps Script 回應逾時'));else setTimeout(poll,250);}else if(!result?.ok)reject(new Error(result?.error||'Apps Script 請求失敗'));else resolve(result);};
+      script.onerror=()=>{cleanup();consecutiveErrors++;if(consecutiveErrors>=2||Date.now()-started>15000)reject(new Error('無法讀取 Apps Script 回應，請確認部署網址與網路連線'));else setTimeout(poll,250);};
       script.src=endpoint+'?callback='+callback+'&requestId='+encodeURIComponent(requestId)+'&ts='+Date.now();
       document.head.appendChild(script);
     };

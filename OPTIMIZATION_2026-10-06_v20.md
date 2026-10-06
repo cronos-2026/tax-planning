@@ -7,3 +7,4 @@
 - Documented the current deployment and GitHub fine-grained token permissions.
 
 The Apps Script publicConfig smoke check succeeded (HTTP 200 for POST and JSONP result retrieval). The browser login still needs the updated `admin.html` to be published and manually verified using the administrator's own credentials.
+- Replaced stale local API URL settings with the current deployment endpoint and shortened repeated JSONP failure retries so an unreadable response does not wait through the former 20-second retry window.
