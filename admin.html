@@ -612,9 +612,10 @@
 const ADMIN_ACCOUNT='admin';
 const DESIGNER_ACCOUNT='admins';
 const GAS_API_URL_KEY='tax_gas_api_url_v1';
+const GAS_API_URL_DEFAULT='https://script.google.com/macros/s/AKfycbzE0gt0imZZ5eV8Lr_DfbqzmUIar2drmq0CgY4FWpkJPH4zBBLr1zFsM2M1ZSj2suy8/exec';
 const GAS_SESSION_KEY='tax_gas_session_v1';
 let GAS_SESSION='';
-const savedGasUrl=localStorage.getItem(GAS_API_URL_KEY)||'';
+const savedGasUrl=localStorage.getItem(GAS_API_URL_KEY)||GAS_API_URL_DEFAULT;
 document.getElementById('gasApiUrl').value=savedGasUrl;
 document.getElementById('gasApiUrl').addEventListener('change',e=>localStorage.setItem(GAS_API_URL_KEY,e.target.value.trim()));
 
