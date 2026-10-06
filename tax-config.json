@@ -72,8 +72,8 @@
       "locked": true
     },
     "seniorExemption": {
-      "enabled": false,
-      "visible": false
+      "enabled": true,
+      "visible": true
     },
     "salarySpecialDeduction": {
       "enabled": false
@@ -100,8 +100,8 @@
       "enabled": false
     },
     "minorChildExemption": {
-      "enabled": false,
-      "visible": false
+      "enabled": true,
+      "visible": true
     }
   },
   "pageNotice": "本工具供稅負情境試算使用；實際申報仍應依當年度法規、申報身分、所得性質及可適用扣除額確認。",
