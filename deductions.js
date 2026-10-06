@@ -84,7 +84,7 @@ function renderOptionalDeductionFields(){
 
   const active=Object.entries(OPTIONAL_DEDUCTION_FRONT_META).filter(([k])=>deductionEnabled(k));
   const visibleActive=active.filter(([k])=>deductionVisible(k));
-  section.classList.toggle('hidden', visibleActive.length===0);
+  section.classList.toggle('hidden', visibleActive.length===0 && !minorChildFieldShown());
   box.innerHTML='';
 
   if(visibleActive.length){
