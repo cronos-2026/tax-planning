@@ -72,7 +72,7 @@
       "locked": true
     },
     "seniorExemption": {
-      "enabled": true,
+      "enabled": false,
       "visible": true
     },
     "salarySpecialDeduction": {
@@ -106,7 +106,7 @@
   },
   "pageNotice": "本工具供稅負情境試算使用；實際申報仍應依當年度法規、申報身分、所得性質及可適用扣除額確認。",
   "showHeaderSection": true,
-  "siteVersion": "2026.10.02_v16",
+  "siteVersion": "2026.10.06_v18",
   "customFields": [],
   "customCalculationFields": [],
   "sourcePublishDate": "2025-11-27",
@@ -139,7 +139,7 @@
     "leftColumnPercent": 37,
     "basicTitle": "一、輸入試算條件",
     "resultTitle": "二、比較試算結果",
-    "versionNoteText": "2026.10.02_v16：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示；移除前台頂部功能標籤；列印／PDF 改為實際量測內容高度，自動放大到填滿一頁；「70歲以上」與「未成年子女」可在後台分別設定是否納入計算、是否於前台顯示。",
+    "versionNoteText": "2026.10.06_v18：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示；移除前台頂部功能標籤；列印／PDF 改為實際量測內容高度，自動放大到填滿一頁；「70歲以上」與「未成年子女」可在後台分別設定是否納入計算、是否於前台顯示；「未成年子女人數」欄位移入「已啟用免稅額／特別扣除額」區塊並刪除「其中：」字樣；列印／PDF 時隱藏「立即計算比較」按鈕。",
     "sections": {
       "inputCard": {
         "webVisible": true,

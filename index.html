@@ -949,6 +949,7 @@
   body.print-fit-one-page .preschool-deduction-group > .font-semibold{font-size:6.4pt !important;line-height:1.1 !important;}
 }
 </style>
+<style media="print">#calc-btn,#basic-data-print-grid > #calc-btn,body.print-fit-one-page #calc-btn{display:none !important;}</style>
 </head>
 <body class="flex min-h-screen flex-col bg-white font-sans text-slate-900 selection:bg-emerald-100 selection:text-emerald-900">
 <div class="custom-fields-zone" id="custom-fields-topmost"></div>
@@ -1072,7 +1073,7 @@
 </div>
 <p class="mt-2 text-xs leading-5 text-slate-500" id="ownership-hint">獨資商號固定按 100% 歸課；合夥時依合夥契約之盈餘分配比例；公司則依本人持股比例。</p>
 </div>
-<button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors bg-slate-900 text-white shadow hover:bg-slate-800 h-11 rounded-md px-8 w-full cursor-pointer" id="calc-btn">立即計算比較</button>
+<button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors bg-slate-900 text-white shadow hover:bg-slate-800 h-11 rounded-md px-8 w-full cursor-pointer no-print" id="calc-btn">立即計算比較</button>
 <div class="mt-3 no-print space-y-2">
 <div class="flex flex-wrap gap-2 justify-center">
 <button class="px-4 py-2 rounded-md border border-slate-300 bg-white text-slate-700 hover:bg-slate-50" id="save-data-btn" type="button">💾 儲存目前資料</button>
@@ -1209,14 +1210,14 @@
 
 <div id="version-notes-block">
   <details>
-    <summary>版本說明｜<span id="version-notes-version">2026.10.02_v16</span></summary>
-    <div id="version-notes-text" style="margin-top:6px">2026.10.02_v16：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示；移除前台頂部功能標籤；列印／PDF 改為實際量測內容高度，自動放大到填滿一頁；「70歲以上」與「未成年子女」可在後台分別設定是否納入計算、是否於前台顯示。</div>
+    <summary>版本說明｜<span id="version-notes-version">2026.10.06_v18</span></summary>
+    <div id="version-notes-text" style="margin-top:6px">2026.10.06_v18：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示；移除前台頂部功能標籤；列印／PDF 改為實際量測內容高度，自動放大到填滿一頁；「70歲以上」與「未成年子女」可在後台分別設定是否納入計算、是否於前台顯示；「未成年子女人數」欄位移入「已啟用免稅額／特別扣除額」區塊並刪除「其中：」字樣；列印／PDF 時隱藏「立即計算比較」按鈕。</div>
   </details>
 </div>
 <!-- Footer -->
 <footer class="border-t border-slate-200 bg-white py-8">
 <div class="mx-auto max-w-7xl px-5 text-center text-sm text-slate-400">
-            © 2026.10.02_v16
+            © 2026.10.06_v18
         </div>
 </footer>
 <!-- 計算邏輯 Script -->

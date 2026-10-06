@@ -10,7 +10,7 @@ const DEFAULT_TAX_CONFIG = {
     pageNotice: "本頁為試算工具；扶養、長照、學前子女等資格仍應依實際申報條件判斷。若資格不符，試算結果可能與實際申報不同。",
     showHeaderSection: true,
     taxYear: 115,
-    siteVersion: "2026.10.02_v16",
+    siteVersion: "2026.10.06_v18",
     basicLivingExpense: 213000,
     exemption: 101000,
     seniorExemption: 151500,
@@ -44,7 +44,7 @@ const DEFAULT_TAX_CONFIG = {
         leftColumnPercent: 37,
         basicTitle: '一、輸入試算條件',
         resultTitle: '二、比較試算結果',
-        versionNoteText: '2026.10.02_v16：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示；移除前台頂部功能標籤；列印／PDF 改為實際量測內容高度，自動放大到填滿一頁；「70歲以上」與「未成年子女」可在後台分別設定是否納入計算、是否於前台顯示。',
+        versionNoteText: '2026.10.06_v18：新增未成年子女免稅額加計 50%、納入基本生活費差額、股利抵減退稅處理；列印／PDF 改依內容量自動放大並維持單頁；退稅以「可退稅 ○○ 元」顯示；移除前台頂部功能標籤；列印／PDF 改為實際量測內容高度，自動放大到填滿一頁；「70歲以上」與「未成年子女」可在後台分別設定是否納入計算、是否於前台顯示；「未成年子女人數」欄位移入「已啟用免稅額／特別扣除額」區塊並刪除「其中：」字樣；列印／PDF 時隱藏「立即計算比較」按鈕。',
         sections: {
             inputCard:{webVisible:true,printVisible:true},
             resultCard:{webVisible:true,printVisible:true},
@@ -183,7 +183,7 @@ function applyLayoutSettings(){
           .forEach(key=>{if(map[key] && map[key].parentElement===resultCard) resultCard.appendChild(map[key]);});
     }
     const vv=document.getElementById('version-notes-version');
-    if(vv) vv.textContent=TAX_CONFIG.siteVersion || '2026.10.02_v16';
+    if(vv) vv.textContent=TAX_CONFIG.siteVersion || '2026.10.06_v18';
     const vt=document.getElementById('version-notes-text');
     if(vt) vt.textContent=ls.versionNoteText || defaults.versionNoteText;
 }
@@ -193,7 +193,7 @@ function applyTaxConfig(raw) {
     TAX_115 = TAX_CONFIG;
     BASIC_LIVING_EXPENSE_COMPARE = Number(TAX_CONFIG.basicLivingExpense || 0);
     const badge = document.querySelector('header .rounded-md.bg-emerald-100');
-    if (badge) badge.textContent = TAX_CONFIG.siteVersion || '2026.10.02_v16';
+    if (badge) badge.textContent = TAX_CONFIG.siteVersion || '2026.10.06_v18';
     const y = Number(TAX_CONFIG.taxYear || 115);
     const adYear = y + 1911;
     document.title = `${TAX_CONFIG.pageTitle || '115年度創業稅負決策試算'}｜${y}年所得最佳化`;
@@ -221,15 +221,29 @@ function getBrowserTemporaryTaxConfig() {
     }
 }
 
+// 網站版本與版本說明屬於「網站本身」的資訊，不是稅務參數：
+// 即使瀏覽器留有後台暫存設定，也一律以正式檔（或內建預設）的版本與版本說明為準，避免顯示舊版本。
+function overlaySiteVersionInfo(temporary, source) {
+    if (!temporary || !source) return temporary;
+    const merged = Object.assign({}, temporary);
+    if (source.siteVersion) merged.siteVersion = source.siteVersion;
+    const srcNote = source.layoutSettings && source.layoutSettings.versionNoteText;
+    if (srcNote) {
+        merged.layoutSettings = Object.assign({}, temporary.layoutSettings || {}, { versionNoteText: srcNote });
+    }
+    return merged;
+}
+
 async function loadTaxConfig() {
     try {
         const res = await fetch('./tax-config.json?ts=' + Date.now(), {cache:'no-store'});
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const official=await res.json();
         const temporary=getBrowserTemporaryTaxConfig();
-        applyTaxConfig(temporary || official);
+        applyTaxConfig(temporary ? overlaySiteVersionInfo(temporary, official) : official);
     } catch (err) {
         console.warn('tax-config.json 載入失敗，使用目前瀏覽器暫時設定或內建預設參數：', err);
-        applyTaxConfig(getBrowserTemporaryTaxConfig() || DEFAULT_TAX_CONFIG);
+        const temporary=getBrowserTemporaryTaxConfig();
+        applyTaxConfig(temporary ? overlaySiteVersionInfo(temporary, DEFAULT_TAX_CONFIG) : DEFAULT_TAX_CONFIG);
     }
 }
