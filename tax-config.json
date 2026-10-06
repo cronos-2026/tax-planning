@@ -73,7 +73,7 @@
       "locked": true
     },
     "seniorExemption": {
-      "enabled": false,
+      "enabled": true,
       "visible": true
     },
     "salarySpecialDeduction": {
