@@ -20,7 +20,6 @@
     "basicLivingExpense": 210000,
     "exemption": 97000,
     "seniorExemption": 145500,
-    "minorChildExemption": 0,
     "standardDeductionSingle": 131000,
     "standardDeductionMarried": 262000,
     "salarySpecialDeduction": 218000,
@@ -74,8 +73,7 @@
         "locked": true
       },
       "seniorExemption": {
-        "enabled": false,
-        "visible": true
+        "enabled": false
       },
       "salarySpecialDeduction": {
         "enabled": false
@@ -100,10 +98,6 @@
       },
       "houseRentDeduction": {
         "enabled": false
-      },
-      "minorChildExemption": {
-        "enabled": true,
-        "visible": true
       }
     },
     "customFields": [],
@@ -141,7 +135,6 @@
     "basicLivingExpense": 213000,
     "exemption": 97000,
     "seniorExemption": 145500,
-    "minorChildExemption": 0,
     "standardDeductionSingle": 131000,
     "standardDeductionMarried": 262000,
     "salarySpecialDeduction": 218000,
@@ -195,8 +188,7 @@
         "locked": true
       },
       "seniorExemption": {
-        "enabled": false,
-        "visible": true
+        "enabled": false
       },
       "salarySpecialDeduction": {
         "enabled": false
@@ -221,10 +213,6 @@
       },
       "houseRentDeduction": {
         "enabled": false
-      },
-      "minorChildExemption": {
-        "enabled": true,
-        "visible": true
       }
     },
     "customFields": [],
@@ -262,7 +250,6 @@
     "basicLivingExpense": 213000,
     "exemption": 101000,
     "seniorExemption": 151500,
-    "minorChildExemption": 151500,
     "standardDeductionSingle": 136000,
     "standardDeductionMarried": 272000,
     "salarySpecialDeduction": 227000,
@@ -316,8 +303,7 @@
         "locked": true
       },
       "seniorExemption": {
-        "enabled": false,
-        "visible": true
+        "enabled": false
       },
       "salarySpecialDeduction": {
         "enabled": false
@@ -342,10 +328,6 @@
       },
       "houseRentDeduction": {
         "enabled": false
-      },
-      "minorChildExemption": {
-        "enabled": true,
-        "visible": true
       }
     },
     "customFields": [],
