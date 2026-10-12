@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-22T15:44:00+08:00",
+  "generatedAt": "2026-10-12T01:34:16+00:00",
   "activeTaxYear": 115,
   "monitorPolicy": "detect-compare-confirm",
   "officialFeed": "https://www.mof.gov.tw/Rss/384fb3077bb349ea973e7fc6f13b6974",
-  "monitorError": "",
+  "monitorError": "RSS check failed; kept previous candidate data: ReadTimeout: HTTPSConnectionPool(host='www.mof.gov.tw', port=443): Read timed out. (read timeout=30)",
   "checks": [
     {
       "id": "active-basic-living",
